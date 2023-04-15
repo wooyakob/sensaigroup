@@ -1,9 +1,3 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,12 +26,24 @@
     </div>
 
     <script>
-        document.getElementById("chat-submit").addEventListener("click", function () {
+        document.getElementById("chat-submit").addEventListener("click", function (event) {
+            event.preventDefault();
+            submitQuestion();
+        });
+
+        document.getElementById("chat-input").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                submitQuestion();
+            }
+        });
+
+        function submitQuestion() {
             let userInput = document.getElementById("chat-input").value;
             if (userInput) {
                 askChatbot(userInput);
             }
-        });
+        }
 
         function askChatbot(userInput) {
             fetch('/chatbot', {
