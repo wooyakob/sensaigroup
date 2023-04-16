@@ -26,7 +26,7 @@ def chatbot():
         presence_penalty=0.6
     )
 
-    response_text = response.choices[0].text.strip().replace("Salesperson", "Sales Sensei")
+    response_text = response.choices[0].text.strip().replace("Salesperson", "Sales Sensei").replace("iObject", "Sales Sensei")
 
     return jsonify(response_text)
 
