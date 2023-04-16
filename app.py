@@ -16,7 +16,6 @@ def index():
 def chatbot():
     user_input = request.json.get('user_input')
     
-    # Your OpenAI API code here
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=f"Salesperson: {user_input}\n\niObject:",
@@ -27,7 +26,6 @@ def chatbot():
         presence_penalty=0.6
     )
 
-    # Replace "Salesperson" with "iObject" in the response text
     response_text = response.choices[0].text.strip().replace("Salesperson", "iObject")
 
     return jsonify(response_text)
