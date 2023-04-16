@@ -18,7 +18,7 @@ def chatbot():
     
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt=f"Salesperson: {user_input}\n\niObject:",
+        prompt=f"Salesperson: {user_input}\n\nSales Sensei:",
         temperature=0.9,
         max_tokens=1000,
         top_p=1,
@@ -26,7 +26,7 @@ def chatbot():
         presence_penalty=0.6
     )
 
-    response_text = response.choices[0].text.strip().replace("Salesperson", "iObject")
+    response_text = response.choices[0].text.strip().replace("Salesperson", "Sales Sensei")
 
     return jsonify(response_text)
 
