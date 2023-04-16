@@ -27,6 +27,7 @@ def chatbot():
     )
 
     response_text = response.choices[0].text.strip().replace("Salesperson", "Sales Sensei").replace("iObject", "Sales Sensei")
+    print(response_text)
 
     return jsonify(response_text)
 
