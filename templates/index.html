@@ -114,21 +114,17 @@ document.getElementById("chat-submit").addEventListener("click", async () => {
     if (message) {
         const chatOutput = document.getElementById("chat-output");
         const response = await sendChatMessage(message);
-
-        // Add user message to chat-output
+      
         const userMessage = document.createElement("div");
         userMessage.innerHTML = `<strong>Salesperson:</strong> ${message}`;
         chatOutput.appendChild(userMessage);
-
-        // Add chatbot response to chat-output
+        
         const chatbotMessage = document.createElement("div");
         chatbotMessage.innerHTML = `<strong>iObject:</strong> ${response}`;
         chatOutput.appendChild(chatbotMessage);
-
-        // Scroll to the bottom of chat-output
+      
         chatOutput.scrollTop = chatOutput.scrollHeight;
 
-        // Clear chat-input value
         chatInput.value = "";
     }
 });
