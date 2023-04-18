@@ -1,3 +1,4 @@
+import re
 from flask import Flask, render_template, request, jsonify
 import os
 import openai
@@ -36,6 +37,7 @@ def chatbot():
     )
 
     response_text = response.choices[0].text.strip()
+    response_text = re.search(r'(.*[.!?])', response_text).group(0)  # Extract the response up to the last complete sentence
 
     return jsonify(response_text)
 
