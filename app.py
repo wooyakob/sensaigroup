@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+server_name = 'salesensei.app'
+
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -31,4 +33,4 @@ def chatbot():
     return jsonify(response_text)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
