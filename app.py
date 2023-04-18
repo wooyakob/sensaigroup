@@ -1,9 +1,14 @@
+
+ 
+
 from flask import Flask, render_template, request, jsonify
 import os
 import openai
 from dotenv import load_dotenv
 
 load_dotenv()
+
+server_name = 'salesensei.app'
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -16,10 +21,9 @@ def index():
 def chatbot():
     user_input = request.json.get('user_input')
     
-    # Your OpenAI API code here
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt=f"Salesperson: {user_input}\n\niObject:",
+        prompt=f"Salesperson: {user_input}\n\nSales Sensei:",
         temperature=0.9,
         max_tokens=1000,
         top_p=1,
@@ -27,10 +31,9 @@ def chatbot():
         presence_penalty=0.6
     )
 
-    # Replace "Salesperson" with "iObject" in the response text
-    response_text = response.choices[0].text.strip().replace("Salesperson", "iObject")
+    response_text = response.choices[0].text.strip().replace("iObject", "Sales Sensei")
 
     return jsonify(response_text)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='104.236.66.35', port=80, debug=True)

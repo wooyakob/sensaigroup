@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iObject</title>
+    <title>Sales Sensei</title>
+    <link rel="icon" type="image/png" href="./apple_ninja.png" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -28,7 +29,8 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center mt-4">iObject</h1>
+        <h1 class="text-center mt-4">Sales Sensei</h1>
+        <img src="./apple_ninja.png" alt="Apple Ninja Emoji" class="mx-auto d-block">
         <div id="chat-container" class="card mt-4">
             <div id="chat-output" class="card-body" style="height: 400px; overflow-y: scroll;"></div>
             <div class="card-footer">
@@ -115,20 +117,16 @@ document.getElementById("chat-submit").addEventListener("click", async () => {
         const chatOutput = document.getElementById("chat-output");
         const response = await sendChatMessage(message);
 
-        // Add user message to chat-output
         const userMessage = document.createElement("div");
         userMessage.innerHTML = `<strong>Salesperson:</strong> ${message}`;
         chatOutput.appendChild(userMessage);
 
-        // Add chatbot response to chat-output
         const chatbotMessage = document.createElement("div");
         chatbotMessage.innerHTML = `<strong>iObject:</strong> ${response}`;
         chatOutput.appendChild(chatbotMessage);
 
-        // Scroll to the bottom of chat-output
         chatOutput.scrollTop = chatOutput.scrollHeight;
 
-        // Clear chat-input value
         chatInput.value = "";
     }
 });
