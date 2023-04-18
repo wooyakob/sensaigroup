@@ -33,4 +33,4 @@ def chatbot():
     return jsonify(response_text)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='104.236.66.35', port=80, debug=True)
