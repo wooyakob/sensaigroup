@@ -5,10 +5,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-server_name = 'salesensei.app'
-
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+objections = {
+    "We're using your competitor": "And how are you finding them? If you don’t mind me asking, why did you choose to go with them?",
+    "Your product is too expensive": "Cost is an important consideration but I believe we can actually save you money. Can we set up a time for me to explain how?",
+    "I don't see any ROI potential": "There’s definitely potential. I’d love to show you and explain how. Are you available this week for a more detailed call?",
+}
 
 @app.route('/')
 def index():
@@ -17,18 +21,21 @@ def index():
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     user_input = request.json.get('user_input')
-    
+
+    prompt = f"A prospective client mentioned, \"{user_input}\" How would you address this concern?\n\nSales Sensei:"
+
     response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=f"Salesperson: {user_input}\n\nSales Sensei:",
-        temperature=0.9,
-        max_tokens=1000,
+        model="davinci:ft-personal-2023-04-17-22-02-12",
+        prompt=prompt,
+        temperature=0,
+        max_tokens=300,
         top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0.6
+        frequency_penalty=2,
+        presence_penalty=2,
+        stop=["END", "A prospective client mentioned"]
     )
 
-    response_text = response.choices[0].text.strip().replace("iObject", "Sales Sensei")
+    response_text = response.choices[0].text.strip()
 
     return jsonify(response_text)
 
