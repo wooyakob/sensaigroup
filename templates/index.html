@@ -8,34 +8,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     
-    <style>
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .prompt {
-            cursor: pointer;
-            display: inline-block;
-            margin: 5px;
-            padding: 5px;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            color: #007bff;
-        }
-
-        .prompt:hover {
-            background-color: #007bff;
-            color: #ffffff;
-        }
-    </style>
 </head>
 <body>
     <div class="header">
         <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
-        <h1 class="text-center mt-4">Sales Sensei</h1>
     </div>
     <div class="container">
         <div id="chat-container" class="card mt-4">

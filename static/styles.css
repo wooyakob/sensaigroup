@@ -1,0 +1,51 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Impact', sans-serif;
+    text-shadow: 2px 2px 4px #000;
+    color: #FFF;
+    background-color: #000;
+}
+
+.header h1 {
+    font-size: 4rem;
+    letter-spacing: 0.5rem;
+    margin-top: 1rem;
+}
+
+.prompt {
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    border: 2px solid #0f0d0d;
+    border-radius: 50px;
+    background-color: transparent;
+    color: #0b0a0a;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.prompt:hover {
+    background-color: #FFF;
+    color: #b50b0b;
+}
+
+.btn-primary {
+    background-color: #000000;
+    border-color: #000000;
+    color: #FF0000;
+}
+
+.btn-primary:hover {
+    background-color: #000000;
+    border-color: #000000;
+    color: #FF0000;
+}
+
+#chat-submit:hover {
+    background-color: black;
+    color: red;
+  }

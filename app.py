@@ -37,7 +37,7 @@ def chatbot():
     )
 
     response_text = response.choices[0].text.strip()
-    response_text = re.search(r'(.*[.!?])', response_text).group(0)  # Extract the response up to the last complete sentence
+    response_text = re.search(r'(.*[.!?])', response_text).group(0)
 
     return jsonify(response_text)
 
