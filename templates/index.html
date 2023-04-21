@@ -8,6 +8,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     
 </head>
@@ -35,34 +38,19 @@
 
     <script>
         const examplePrompts = [
-            "Can you just send me the information in an email?",
-            "Is this a sales call?",
             "This isn’t a good time",
             "I’m the wrong person to talk to about this",
             "I need to get more quotes first",
             "I don’t want to sign a long contract",
-            "We’re using your competitor",
             "Your competitor is cheaper",
             "I don’t see any ROI potential",
-            "I’m not interested",
-            "I’m busy",
-            "How did you get my information?",
-            "I’ve never heard of your company",
             "This looks too complicated for my team to learn",
             "We’re using this budget elsewhere",
-            "Can you call me back next quarter?",
             "This is too expensive",
             "We’re happy with the way things are",
             "We don’t have a big enough team for this",
-            "I saw a bad review of your company",
-            "There's no money",
-            "We don't have any budget left this year",
-            "I don't want to get stuck in a contract",
-            "I can get a cheaper version of your product somewhere else",
             "I'm not authorized to sign off on this purchase",
             "I can't sell this internally",
-            "My boss isn't convinced",
-            "We're being downsized / bought out",
         ];
 
         function displayExamplePrompts() {

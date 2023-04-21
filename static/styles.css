@@ -1,51 +1,106 @@
-.header {
+:root {
+    --primary-color: #343a40; /* Dark gray */
+    --secondary-color: #007bff; /* Blue */
+    --background-color: #f8f9fa; /* Light gray */
+    --text-color: #212529; /* Dark text */
+    --hover-color: #495057; /* Darker gray */
+  }
+  
+  body {
+    background-color: var(--background-color);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .header {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Impact', sans-serif;
     text-shadow: 2px 2px 4px #000;
     color: #FFF;
-    background-color: #000;
-}
-
-.header h1 {
+    background-color: var(--primary-color);
+  }
+  
+  .header h1 {
     font-size: 4rem;
     letter-spacing: 0.5rem;
     margin-top: 1rem;
-}
-
-.prompt {
+  }
+  
+  .prompt {
     cursor: pointer;
     display: inline-block;
-    margin: 5px;
+    margin: 0.5rem;
     padding: 10px 20px;
-    border: 2px solid #0f0d0d;
+    border: 2px solid var(--text-color);
     border-radius: 50px;
     background-color: transparent;
-    color: #0b0a0a;
+    color: var(--text-color);
     font-weight: bold;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-}
-
-.prompt:hover {
-    background-color: #FFF;
-    color: #b50b0b;
-}
-
-.btn-primary {
-    background-color: #000000;
-    border-color: #000000;
-    color: #FF0000;
-}
-
-.btn-primary:hover {
-    background-color: #000000;
-    border-color: #000000;
-    color: #FF0000;
-}
-
-#chat-submit:hover {
-    background-color: black;
-    color: red;
   }
+  
+  .prompt:hover {
+    background-color: var(--hover-color);
+    color: #FFF;
+  }
+  
+  .btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #FFF;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+    color: #FFF;
+  }
+  
+  #chat-submit:hover {
+    background-color: var(--hover-color);
+    color: #FFF;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .card {
+    margin-bottom: 2rem;
+  }
+  
+  #chat-output {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #chat-output > div {
+    margin-bottom: 1rem;
+  }
+  
+  #chat-output strong {
+    font-weight: 700;
+  }
+  
+  .user-message,
+  .chatbot-message {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-message strong,
+  .chatbot-message strong {
+    margin-right: 0.5rem;
+  }
+  
+  .user-message {
+    justify-content: flex-end;
+  }
+  
+  .chatbot-message {
+    justify-content: flex-start;
+  }  
