@@ -104,3 +104,8 @@
   .chatbot-message {
     justify-content: flex-start;
   }  
+
+  footer {
+    display: flex;
+    justify-content: flex-end;
+  }
