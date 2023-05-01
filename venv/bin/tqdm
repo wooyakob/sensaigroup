@@ -1,4 +1,6 @@
-#!/Users/yakobwood/Desktop/iObject/venv/bin/python3
+#!/bin/sh
+'''exec' "/Users/yakobwood/Desktop/Sales Sensei/venv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
