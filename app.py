@@ -73,16 +73,12 @@ objections = {
 }
 @app.route('/')
 def index():
-    if 'questions_asked' not in session:
-        session['questions_asked'] = 0
     session['unlimited'] = current_user.is_authenticated
     return render_template('index.html')
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     questions_asked = session.get('questions_asked', 0)
     unlimited = session.get('unlimited', False)
-    if not unlimited and questions_asked >= 3:
-        return jsonify("You have reached the question limit. Please sign up or log in to continue.")
     user_input = request.json.get('user_input')
     prompt = f"A prospective client mentioned, \"{user_input}\" How would you address this concern?\n\nSales Sensei:"
     response = openai.Completion.create(
@@ -97,9 +93,6 @@ def chatbot():
     )
     response_text = response.choices[0].text.strip()
     response_text = re.search(r'(.*[.!?])', response_text).group(0)
-    if not current_user.is_authenticated:
-        questions_asked += 1
-        session['questions_asked'] = questions_asked
     return jsonify(response_text)
 
 class Feedback(db.Model):
