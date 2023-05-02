@@ -82,8 +82,8 @@ def index():
 def chatbot():
     questions_asked = session.get('questions_asked', 0)
     unlimited = session.get('unlimited', False)
-    if not unlimited and questions_asked >= 2:
-        return jsonify("You have reached the limit of 2 questions. Please sign up or log in to continue.")
+    if not unlimited and questions_asked >= 3:
+        return jsonify("You have reached the question limit. Please sign up or log in to continue.")
     user_input = request.json.get('user_input')
     prompt = f"A prospective client mentioned, \"{user_input}\" How would you address this concern?\n\nSales Sensei:"
     response = openai.Completion.create(
