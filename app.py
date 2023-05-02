@@ -46,7 +46,6 @@ def logout():
 @app.route('/protected')
 @login_required
 def protected():
-    session['unlimited'] = True
     return redirect(url_for('index'))
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -102,6 +101,29 @@ def chatbot():
         questions_asked += 1
         session['questions_asked'] = questions_asked
     return jsonify(response_text)
+
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_input = db.Column(db.String(500), nullable=False)
+    ai_response = db.Column(db.String(500), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref=db.backref('feedback', lazy=True))
+
+@app.route('/feedback', methods=['POST'])
+@login_required
+def feedback():
+    user_input = request.form['user_input']
+    ai_response = request.form['ai_response']
+    rating = request.form['rating']
+
+    feedback_entry = Feedback(user_input=user_input, ai_response=ai_response, rating=rating, user=current_user)
+    db.session.add(feedback_entry)
+    db.session.commit()
+
+    flash('Thank you for your feedback!', 'success')
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
