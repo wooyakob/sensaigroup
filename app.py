@@ -15,10 +15,14 @@ Session(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 db = SQLAlchemy(app)
+
+#classes for info that's stored in SQL database
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -61,16 +65,35 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+#Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form['username'].strip()
+        password = request.form['password'].strip()
+        email = request.form['email'].strip()
+
+        if not username or not password:
+            flash('Username and password cannot be empty.', 'danger')
+            return render_template('signup.html')
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            flash('Username already exists. Please choose a different one.', 'danger')
+            return render_template('signup.html')
+
         user = User(username=username, password=password)
         db.session.add(user)
         db.session.commit()
+        
         return redirect(url_for('login'))
     return render_template('signup.html')
+
+
+
 @app.after_request
 def add_header(response):
     response.cache_control.no_store = True
