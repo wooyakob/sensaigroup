@@ -45,7 +45,6 @@
             </ul>
         </div>
     </nav>
-
     <div class="header">
         <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
     </div>
@@ -66,24 +65,14 @@
             <div id="prompts"></div>
         </div>
     </div>
-
     <script>
         const examplePrompts = [
-            "This isn’t a good time",
-            "I’m the wrong person to talk to about this",
-            "I need to get more quotes first",
-            "I don’t want to sign a long contract",
             "Your competitor is cheaper",
-            "I don’t see any ROI potential",
             "This looks too complicated for my team to learn",
             "We’re using this budget elsewhere",
             "This is too expensive",
-            "We’re happy with the way things are",
             "We don’t have a big enough team for this",
-            "I'm not authorized to sign off on this purchase",
-            "I can't sell this internally",
         ];
-
         function displayExamplePrompts() {
             const container = document.getElementById("prompts");
             examplePrompts.forEach(prompt => {
@@ -96,10 +85,8 @@
                 container.appendChild(div);
             });
         }
-
         displayExamplePrompts();
     </script>
-
 <script>
 async function sendChatMessage(message) {
     const response = await fetch('/chatbot', {
@@ -112,36 +99,27 @@ async function sendChatMessage(message) {
 
     return await response.json();
 }
-
 document.getElementById("chat-submit").addEventListener("click", async () => {
     const chatInput = document.getElementById("chat-input");
     const message = chatInput.value;
-
     if (message) {
         const chatOutput = document.getElementById("chat-output");
         const response = await sendChatMessage(message);
-
         const userMessage = document.createElement("div");
         userMessage.innerHTML = `<strong>Salesperson:</strong> ${message}`;
         chatOutput.appendChild(userMessage);
-
         const chatbotMessage = document.createElement("div");
         chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response}`;
         chatOutput.appendChild(chatbotMessage);
-
         chatOutput.scrollTop = chatOutput.scrollHeight;
-
         chatInput.value = "";
     }
 });
 </script>
-
 </body>
-
 <footer>
     <a href="https://www.producthunt.com/posts/sales-sensei?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sales&#0045;sensei" target="_blank">
         <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=391473&theme=dark" alt="Sales Sensei - Eviscerate any sales objection | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
     </a>
 </footer>
-
 </html>
