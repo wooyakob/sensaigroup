@@ -89,14 +89,14 @@
 <script>
 
 async function sendChatMessage(message) {
-    // ...
+
 }
 
 document.getElementById("chat-submit").addEventListener("click", async () => {
     const chatInput = document.getElementById("chat-input");
     const message = chatInput.value;
     if (message) {
-        // ...
+
 
         const response = await sendChatMessage(message);
         const userMessage = document.createElement("div");
@@ -104,9 +104,8 @@ document.getElementById("chat-submit").addEventListener("click", async () => {
         chatOutput.appendChild(userMessage);
         
         const chatbotMessage = document.createElement("div");
-        chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response.response_text}`; // Change this line
+        chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response.response_text}`;
 
-        // Add the following code to create and handle the feedback button
         const feedbackBtn = $("<button>")
             .addClass("btn btn-sm btn-primary")
             .text("Rate this response")

@@ -25,6 +25,21 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@app.route('/landing')
+def landing():
+    return render_template('landing.html')
+
+@app.route('/')
+def index():
+    if current_user.is_authenticated:
+        session['unlimited'] = current_user.is_authenticated
+        return render_template('index.html')
+    else:
+        return redirect(url_for('landing'))
+    
+
+#Login Route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -33,20 +48,19 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             login_user(user)
-            return redirect(url_for('protected'))
+            return redirect(url_for('index'))
         else:
             flash('Invalid credentials.', 'danger')
     return render_template('login.html')
+
+#Logout Route
 @app.route('/logout')
 @login_required
 def logout():
     session.pop('questions_asked', None)
     logout_user()
     return redirect(url_for('index'))
-@app.route('/protected')
-@login_required
-def protected():
-    return redirect(url_for('index'))
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -66,15 +80,13 @@ def add_header(response):
     response.expires = 0
     response.pragma = 'no-cache'
     return response
+
 objections = {
     "We're using your competitor": "And how are you finding them? If you don’t mind me asking, why did you choose to go with them?",
     "Your product is too expensive": "Cost is an important consideration but I believe we can actually save you money. Can we set up a time for me to explain how?",
     "I don't see any ROI potential": "There’s definitely potential. I’d love to show you and explain how. Are you available this week for a more detailed call?",
 }
-@app.route('/')
-def index():
-    session['unlimited'] = current_user.is_authenticated
-    return render_template('index.html')
+
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     questions_asked = session.get('questions_asked', 0)
