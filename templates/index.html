@@ -55,13 +55,13 @@
                 <div class="input-group">
                     <input type="text" id="chat-input" class="form-control" placeholder="Enter a sales objection: ">
                     <div class="input-group-append">
-                        <button id="chat-submit" class="btn btn-primary">Send</button>
+                        <button id="chat-submit" class="btn btn-primary">Ask</button>
                     </div>
                 </div>
             </div>
         </div>
         <div id="prompt-container" class="mt-4">
-            <h5>Sales Objection Examples:</h5>
+            <h5>Objection Examples:</h5>
             <div id="prompts"></div>
         </div>
     </div>
@@ -71,7 +71,6 @@
             "This looks too complicated for my team to learn",
             "We’re using this budget elsewhere",
             "This is too expensive",
-            "We don’t have a big enough team for this",
         ];
         function displayExamplePrompts() {
             const container = document.getElementById("prompts");
