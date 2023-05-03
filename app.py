@@ -1,3 +1,4 @@
+#imports
 import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 import os
@@ -6,6 +7,9 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_session import Session
+
+
+
 load_dotenv()
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -19,9 +23,8 @@ db = SQLAlchemy(app)
 #classes for info that's stored in SQL database
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -41,15 +44,14 @@ def index():
         return render_template('index.html')
     else:
         return redirect(url_for('landing'))
-    
 
 #Login Route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
         if user and user.password == password:
             login_user(user)
             return redirect(url_for('index'))
@@ -66,33 +68,35 @@ def logout():
     return redirect(url_for('index'))
 
 #Signup Route
+
+def is_valid_email(email):
+    regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+    return re.match(regex, email)
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
 
     if request.method == 'POST':
-        username = request.form['username'].strip()
-        password = request.form['password'].strip()
         email = request.form['email'].strip()
+        password = request.form['password'].strip()
 
-        if not username or not password:
-            flash('Username and password cannot be empty.', 'danger')
+        if not email or not password:
+            flash('Email and password cannot be empty.', 'danger')
             return render_template('signup.html')
 
-        existing_user = User.query.filter_by(username=username).first()
+        existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            flash('Username already exists. Please choose a different one.', 'danger')
+            flash('Email already exists. Please choose a different one.', 'danger')
             return render_template('signup.html')
 
-        user = User(username=username, password=password)
+        user = User(email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        
+
         return redirect(url_for('login'))
     return render_template('signup.html')
-
-
 
 @app.after_request
 def add_header(response):
@@ -152,7 +156,8 @@ def feedback():
     flash('Thank you for your feedback!', 'success')
     return redirect(url_for('index'))
 
+
+with app.app_context():
+    db.create_all()
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(host='0.0.0.0', port=8080, debug=False)
