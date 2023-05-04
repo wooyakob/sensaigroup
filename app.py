@@ -37,6 +37,7 @@ def load_user(user_id):
 def landing():
     return render_template('landing.html')
 
+# Authentication Route, if authenticated display index, if not display landing
 @app.route('/')
 def index():
     if current_user.is_authenticated:
