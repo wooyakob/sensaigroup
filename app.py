@@ -7,11 +7,12 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_session import Session
-from flask_bcrypt import Bcrypt
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 
 load_dotenv()
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
+ph = PasswordHasher()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './flask_session/'
@@ -54,11 +55,13 @@ def login():
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
-        if user and bcrypt.check_password_hash(user.password, password):
-            login_user(user)
-            return redirect(url_for('index'))
-        else:
-            flash('Invalid credentials.', 'danger')
+        try:
+            if user and ph.verify(user.password, password):
+                login_user(user)
+                return redirect(url_for('index'))
+        except VerifyMismatchError:
+            pass
+        flash('Invalid credentials.', 'danger')
     return render_template('login.html')
 
 #Logout Route
@@ -100,7 +103,7 @@ def signup():
             flash('Email already exists. Please choose a different one.', 'danger')
             return render_template('signup.html')
 
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        hashed_password = ph.hash(password)
         user = User(email=email, password=hashed_password)
         db.session.add(user)
         db.session.commit()
