@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_session import Session
-
-
+from flask_bcrypt import Bcrypt
 
 load_dotenv()
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './flask_session/'
@@ -19,6 +19,7 @@ Session(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 db = SQLAlchemy(app)
+
 
 #classes for info that's stored in SQL database
 class User(UserMixin, db.Model):
@@ -37,6 +38,7 @@ def load_user(user_id):
 def landing():
     return render_template('landing.html')
 
+# Authentication Route, if authenticated display index, if not display landing
 @app.route('/')
 def index():
     if current_user.is_authenticated:
@@ -52,7 +54,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
-        if user and user.password == password:
+        if user and bcrypt.check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('index'))
         else:
@@ -63,7 +65,6 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('questions_asked', None)
     logout_user()
     return redirect(url_for('index'))
 
@@ -72,11 +73,14 @@ def logout():
 def home():
     return render_template('landing.html')
 
-#Signup Route
+#Email Validation
 
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
+
+
+#Signup Route
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -96,7 +100,8 @@ def signup():
             flash('Email already exists. Please choose a different one.', 'danger')
             return render_template('signup.html')
 
-        user = User(email=email, password=password)
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        user = User(email=email, password=hashed_password)
         db.session.add(user)
         db.session.commit()
 
@@ -111,6 +116,8 @@ def add_header(response):
     response.cache_control.proxy_revalidate = True
     response.expires = 0
     response.pragma = 'no-cache'
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
+    response.headers['Expires'] = '-1'
     return response
 
 objections = {
@@ -160,7 +167,6 @@ def feedback():
 
     flash('Thank you for your feedback!', 'success')
     return redirect(url_for('index'))
-
 
 with app.app_context():
     db.create_all()
