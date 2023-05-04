@@ -4,21 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Sales Sensei</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .jumbotron {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .container {
-            max-width: 800px;
-        }
-    </style>
 </head>
 <body>
     <div class="jumbotron text-center">
@@ -44,6 +31,7 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
         <p>Don't have an account? <a href="/signup">Sign up</a></p>
+        <p><a href="{{ url_for('home') }}" class="btn btn-secondary">Return to Home</a></p>
     </div>
 </body>
 </html>
