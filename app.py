@@ -168,7 +168,6 @@ def feedback():
     flash('Thank you for your feedback!', 'success')
     return redirect(url_for('index'))
 
-
 with app.app_context():
     db.create_all()
 if __name__ == '__main__':
