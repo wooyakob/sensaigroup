@@ -67,6 +67,11 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+#Return Home
+@app.route('/landing')
+def home():
+    return render_template('landing.html')
+
 #Signup Route
 
 def is_valid_email(email):
