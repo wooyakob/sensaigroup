@@ -151,6 +151,15 @@ document.getElementById("chat-submit").addEventListener("click", async () => {
     }
 });
 </script>
+<!--This should resolve caching issues, force browser refresh-->
+<script>
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    });
+</script>
+
 </body>
 <footer>
     <a href="https://www.producthunt.com/posts/sales-sensei?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sales&#0045;sensei" target="_blank">

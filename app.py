@@ -111,6 +111,8 @@ def add_header(response):
     response.cache_control.proxy_revalidate = True
     response.expires = 0
     response.pragma = 'no-cache'
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
+    response.headers['Expires'] = '-1'
     return response
 
 objections = {
