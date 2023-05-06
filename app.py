@@ -48,20 +48,24 @@ def index():
     else:
         return redirect(url_for('landing'))
 
-#Login Route
+# Login Route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        if not is_valid_email(email):
+            flash('Invalid email format.', 'danger')
+            return render_template('login.html')
         user = User.query.filter_by(email=email).first()
-        try:
-            if user and ph.verify(user.password, password):
-                login_user(user)
-                return redirect(url_for('index'))
-        except VerifyMismatchError:
-            pass
-        flash('Invalid credentials.', 'danger')
+        if user:
+            try:
+                if ph.verify(user.password, password):
+                    login_user(user)
+                    return redirect(url_for('index'))
+            except VerifyMismatchError:
+                pass
+        flash('Invalid email or password.', 'danger')
     return render_template('login.html')
 
 #Logout Route
@@ -82,9 +86,7 @@ def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
 
-
-#Signup Route
-
+# Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
@@ -96,6 +98,10 @@ def signup():
 
         if not email or not password:
             flash('Email and password cannot be empty.', 'danger')
+            return render_template('signup.html')
+
+        if not is_valid_email(email):
+            flash('Invalid email format.', 'danger')
             return render_template('signup.html')
 
         existing_user = User.query.filter_by(email=email).first()
@@ -139,11 +145,11 @@ def chatbot():
         model="davinci:ft-personal-2023-04-17-22-02-12",
         prompt=prompt,
         temperature=0,
-        max_tokens=300,
+        max_tokens=100,
         top_p=1,
         frequency_penalty=2,
         presence_penalty=2,
-        stop=["END", "A prospective client mentioned"]
+        stop=["END",]
     )
     response_text = response.choices[0].text.strip()
     response_text = re.search(r'(.*[.!?])', response_text).group(0)
@@ -173,5 +179,3 @@ def feedback():
 
 with app.app_context():
     db.create_all()
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=False)
