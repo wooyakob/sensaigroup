@@ -1,1 +1,1 @@
-/workspace/.heroku/python/bin/gunicorn app:app --bind 0.0.0.0:8000
+web: /workspace/venv/bin/gunicorn app:app --bind 0.0.0.0:8000
