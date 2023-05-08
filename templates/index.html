@@ -99,22 +99,6 @@ document.getElementById("chat-submit").addEventListener("click", async () => {
         const chatbotMessage = document.createElement("div");
         chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response.response_text}`;
 
-        const feedbackBtn = $("<button>")
-            .addClass("btn btn-sm btn-primary")
-            .text("Rate this response")
-            .click(function () {
-                var feedbackForm = $("<form>")
-                    .attr("action", "/feedback")
-                    .attr("method", "POST")
-                    .css("display", "none")
-                    .append($("<input>").attr("type", "hidden").attr("name", "user_input").val(response.user_input))
-                    .append($("<input>").attr("type", "hidden").attr("name", "ai_response").val(response.response_text))
-                    .append($("<input>").attr("type", "hidden").attr("name", "rating").val(prompt("Rate the response from 1 to 5")));
-                $("body").append(feedbackForm);
-                feedbackForm.submit();
-            });
-        chatbotMessage.append(feedbackBtn);
-
         chatOutput.appendChild(chatbotMessage);
         chatOutput.scrollTop = chatOutput.scrollHeight;
         chatInput.value = "";
@@ -161,9 +145,4 @@ document.getElementById("chat-submit").addEventListener("click", async () => {
 </script>
 
 </body>
-<footer>
-    <a href="https://www.producthunt.com/posts/sales-sensei?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-sales&#0045;sensei" target="_blank">
-        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=391473&theme=dark" alt="Sales Sensei - Eviscerate any sales objection | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
-    </a>
-</footer>
 </html>

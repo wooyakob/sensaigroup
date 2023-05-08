@@ -140,6 +140,10 @@ def chatbot():
     questions_asked = session.get('questions_asked', 0)
     unlimited = session.get('unlimited', False)
     user_input = request.json.get('user_input')
+
+    if len(user_input) > 140:
+        return jsonify("Objection is too long. Please limit your objection to 140 characters, or less.")
+
     prompt = f"A prospective client mentioned, \"{user_input}\" How would you address this concern?\n\nSales Sensei:"
     response = openai.Completion.create(
         model="davinci:ft-personal-2023-04-17-22-02-12",
@@ -154,28 +158,6 @@ def chatbot():
     response_text = response.choices[0].text.strip()
     response_text = re.search(r'(.*[.!?])', response_text).group(0)
     return jsonify(response_text)
-
-class Feedback(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_input = db.Column(db.String(500), nullable=False)
-    ai_response = db.Column(db.String(500), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('feedback', lazy=True))
-
-@app.route('/feedback', methods=['POST'])
-@login_required
-def feedback():
-    user_input = request.form['user_input']
-    ai_response = request.form['ai_response']
-    rating = request.form['rating']
-
-    feedback_entry = Feedback(user_input=user_input, ai_response=ai_response, rating=rating, user=current_user)
-    db.session.add(feedback_entry)
-    db.session.commit()
-
-    flash('Thank you for your feedback!', 'success')
-    return redirect(url_for('index'))
 
 with app.app_context():
     db.create_all()
