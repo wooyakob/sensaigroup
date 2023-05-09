@@ -141,3 +141,23 @@ footer {
   display: flex;
   justify-content: flex-end;
 }
+
+.footer-links {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 30px;
+}
+.social-icons, .policy-links {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+.social-icons li, .policy-links li {
+  margin-right: 10px;
+}
+.social-icons a, .policy-links a {
+  text-decoration: none;
+}
+.policy-links {
+  justify-content: flex-end;
+}
