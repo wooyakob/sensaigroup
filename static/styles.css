@@ -10,7 +10,7 @@ body {
 :root {
   --primary-color: #0c162d;
   --secondary-color: #438eac;
-  --background-color: #f3f3f3;
+  --background-color: #f8f9fa;
   --text-color: #212529;
   --hover-color: #6baed1;
   --ninja-accent: #c0392b;
@@ -23,7 +23,7 @@ body {
   font-family: 'Roboto', sans-serif;
   text-shadow: 2px 2px 4px #000;
   color: #FFF;
-  background-color: var(--primary-color);
+  background-color: #0c162d;
   position: relative;
   padding: 1rem 0;
 }
@@ -46,6 +46,23 @@ body {
   font-size: 4rem;
   letter-spacing: 0.5rem;
   margin-top: 1rem;
+}
+
+.header-button {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.header-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .prompt {

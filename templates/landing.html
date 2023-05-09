@@ -15,9 +15,17 @@
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">    
 </head>
 <body>
+
     <div class="header">
-        <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
+        <div class="container d-flex justify-content-between align-items-center">
+            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
+            <div>
+                <a href="/login" class="header-button">Login</a>
+                <a href="/signup" class="header-button">Sign Up</a>
+            </div>
+        </div>
     </div>
+
     <div class="jumbotron text-center">
         <h1>Sales Sensei</h1>
         <p>AI-enabled Sales Assistant</p>
@@ -40,9 +48,12 @@
             </div>
         </div>
         <hr>
-        <p>To access the Sales Sensei, please <a href="/login">log in</a> or <a href="/signup">sign up</a> if you don't have an account.</p>
-        <a href="mailto:jake_wood@mac.com?subject=Request%20Demo%20-%20Sales%20Sensei" class="btn btn-primary">Request a Demo</a>
+        <div class="text-left">
+            <a href="mailto:jake_wood@mac.com?subject=Request%20Demo%20-%20Sales%20Sensei" class="btn btn-primary">Request a Demo</a>
+        </div>
     </div>
+
+
     <footer class="footer">
         <div class="container">
             <div class="row">
