@@ -27,6 +27,10 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    role = db.Column(db.String(50), nullable=False, default="user")
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    company = db.Column(db.String(100), nullable=False)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -95,25 +99,21 @@ def signup():
     if request.method == 'POST':
         email = request.form['email'].strip()
         password = request.form['password'].strip()
+        first_name = request.form['first_name'].strip()
+        last_name = request.form['last_name'].strip()
+        company = request.form['company'].strip()
 
-        if not email or not password:
-            flash('Email and password cannot be empty.', 'danger')
+        if not all([email, password, first_name, last_name, company]):
+            flash('All fields are required.', 'danger')
             return render_template('signup.html')
 
-        if not is_valid_email(email):
-            flash('Invalid email format.', 'danger')
-            return render_template('signup.html')
-
-        existing_user = User.query.filter_by(email=email).first()
-        if existing_user:
-            flash('Email already exists. Please choose a different one.', 'danger')
-            return render_template('signup.html')
-
+        ph = PasswordHasher()
         hashed_password = ph.hash(password)
-        user = User(email=email, password=hashed_password)
+        user = User(email=email, password=hashed_password, first_name=first_name, last_name=last_name, company=company)
         db.session.add(user)
         db.session.commit()
 
+        flash('Thank you for signing up! Please log in to continue your Sales Sensei journey.', 'success')
         return redirect(url_for('login'))
     return render_template('signup.html')
 
