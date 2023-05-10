@@ -15,7 +15,7 @@ ph = PasswordHasher()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Connect to managed Postgresl database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://db:AVNS_8HHCo4vabaDgSheCvZe@app-bf3c2239-03ed-4029-9d5a-44aad76520b9-do-user-11635524-0.b.db.ondigitalocean.com:25060/db?sslmode=require')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db = SQLAlchemy(app)
 
