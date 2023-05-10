@@ -37,10 +37,6 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route('/landing')
-def landing():
-    return render_template('landing.html')
-
 # Authentication Route, if authenticated display index, if not display landing
 @app.route('/')
 def index():
