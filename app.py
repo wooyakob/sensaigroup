@@ -6,7 +6,7 @@ import openai
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from flask_session import Session
+
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
@@ -14,9 +14,8 @@ load_dotenv()
 app = Flask(__name__)
 ph = PasswordHasher()
 openai.api_key = os.getenv("OPENAI_API_KEY")
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = './flask_session/'
-Session(app)
+
+# Configure Postgres Database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = SQLAlchemy(app)
 
@@ -136,8 +135,6 @@ objections = {
 
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
-    questions_asked = session.get('questions_asked', 0)
-    unlimited = session.get('unlimited', False)
     user_input = request.json.get('user_input')
 
     if len(user_input) > 140:
