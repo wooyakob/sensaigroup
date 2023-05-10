@@ -6,7 +6,6 @@ import openai
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from flask_session import Session
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
@@ -14,13 +13,11 @@ load_dotenv()
 app = Flask(__name__)
 ph = PasswordHasher()
 openai.api_key = os.getenv("OPENAI_API_KEY")
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = './flask_session/'
-Session(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
-app.config['SECRET_KEY'] = 'your_secret_key_here'
-db = SQLAlchemy(app)
 
+# Connect to managed Postgresl database
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://db:AVNS_8HHCo4vabaDgSheCvZe@app-bf3c2239-03ed-4029-9d5a-44aad76520b9-do-user-11635524-0.b.db.ondigitalocean.com:25060/db?sslmode=require')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+db = SQLAlchemy(app)
 
 #classes for info that's stored in SQL database
 class User(UserMixin, db.Model):
@@ -47,7 +44,6 @@ def landing():
 @app.route('/')
 def index():
     if current_user.is_authenticated:
-        session['unlimited'] = current_user.is_authenticated
         return render_template('index.html')
     else:
         return redirect(url_for('landing'))
@@ -137,8 +133,6 @@ objections = {
 
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
-    questions_asked = session.get('questions_asked', 0)
-    unlimited = session.get('unlimited', False)
     user_input = request.json.get('user_input')
 
     if len(user_input) > 140:
