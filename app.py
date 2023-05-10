@@ -157,4 +157,4 @@ with app.app_context(): # Create all tables in database
     db.create_all() # Create all tables in database
 
 if __name__ == "__main__": # Run app
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 25060)))
