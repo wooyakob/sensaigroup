@@ -1,24 +1,33 @@
-#imports
+# Import python regular expression module, which allows for pattern matching and text manipulation
 import re
+# Modules from the Flask web framework, which provides tools and utilities for building web applications in Python
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
+# Operating system module, which provides a way to interact with the operating system
 import os
+# OpenAI API module, which provides a way to interact with the OpenAI API
 import openai
+# Module for loading environment variables from a .env file
 from dotenv import load_dotenv
+# Module for interacting with a Postgres database
 from flask_sqlalchemy import SQLAlchemy
+# Module for user authentication
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-
+# Module for password hashing
 from argon2 import PasswordHasher
+# Module for password verification
 from argon2.exceptions import VerifyMismatchError
 
+# Load environment variables from .env file
 load_dotenv()
+# Create Flask app
 app = Flask(__name__)
+# Configure Flask app
 ph = PasswordHasher()
+# Configure OpenAI API
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
 # Configure Postgres Database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = SQLAlchemy(app)
-
 
 #classes for info that's stored in SQL database
 class User(UserMixin, db.Model):
@@ -30,6 +39,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     company = db.Column(db.String(100), nullable=False)
 
+# Configure Login Manager
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -79,7 +89,6 @@ def home():
     return render_template('landing.html')
 
 #Email Validation
-
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
@@ -107,38 +116,31 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
-        flash('Thank you for signing up! Please log in to continue your Sales Sensei journey.', 'success')
+        flash('Thank you for signing up. Please log in to continue your Sales Sensei journey!')
         return redirect(url_for('login'))
     return render_template('signup.html')
 
-@app.after_request
-def add_header(response):
-    response.cache_control.no_store = True
-    response.cache_control.no_cache = True
-    response.cache_control.must_revalidate = True
-    response.cache_control.proxy_revalidate = True
-    response.expires = 0
-    response.pragma = 'no-cache'
-    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
-    response.headers['Expires'] = '-1'
-    return response
 
+# Objection Training
 objections = {
     "We're using your competitor": "And how are you finding them? If you don’t mind me asking, why did you choose to go with them?",
     "Your product is too expensive": "Cost is an important consideration but I believe we can actually save you money. Can we set up a time for me to explain how?",
     "I don't see any ROI potential": "There’s definitely potential. I’d love to show you and explain how. Are you available this week for a more detailed call?",
 }
 
+# Chatbot Route
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     user_input = request.json.get('user_input')
 
+# Manage User Objection Input
     if len(user_input) > 140:
         return jsonify("Objection is too long. Please limit your objection to 140 characters, or less.")
 
+# Prompt Engineering
     prompt = f"A prospective client mentioned, \"{user_input}\" How would you address this concern?\n\nSales Sensei:"
     response = openai.Completion.create(
-        model="davinci:ft-personal-2023-04-17-22-02-12",
+        model="davinci:ft-personal-2023-04-17-22-02-12", # Fine Tuned Model
         prompt=prompt,
         temperature=0,
         max_tokens=100,
@@ -147,12 +149,12 @@ def chatbot():
         presence_penalty=2,
         stop=["END",]
     )
-    response_text = response.choices[0].text.strip()
-    response_text = re.search(r'(.*[.!?])', response_text).group(0)
-    return jsonify(response_text)
+    response_text = response.choices[0].text.strip() # Remove leading and trailing whitespace
+    response_text = re.search(r'(.*[.!?])', response_text).group(0) # Remove trailing text after punctuation
+    return jsonify(response_text) # Return response to user
 
-with app.app_context():
-    db.create_all()
+with app.app_context(): # Create all tables in database
+    db.create_all() # Create all tables in database
 
-if __name__ == "__main__":
+if __name__ == "__main__": # Run app
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
