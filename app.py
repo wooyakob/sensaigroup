@@ -17,8 +17,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './flask_session/'
 Session(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
-app.config['SECRET_KEY'] = 'your_secret_key_here'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = SQLAlchemy(app)
 
 
