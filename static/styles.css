@@ -65,6 +65,18 @@ body {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.header-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .header-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
 .prompt {
   cursor: pointer;
   display: inline-block;
