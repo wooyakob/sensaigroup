@@ -29,9 +29,12 @@ ph = PasswordHasher()
 # Initialize OpenAI API
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+
+# Database Configuration
+
 # Initialize SQLAlchemy Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
-app.config = os.getenv ("SECRET_KEY")
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 db = SQLAlchemy(app)
 
 # User Model With Signup Form Fields
@@ -42,6 +45,46 @@ class User(UserMixin, db.Model):
     company = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+
+# Signup Route
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        company = request.form['company']
+        email = request.form['email'].strip()
+        password = request.form['password'].strip()
+
+        if not email or not password:
+            flash('Email and password cannot be empty.', 'danger')
+            return render_template('signup.html')
+
+        if not is_valid_email(email):
+            flash('Invalid email format.', 'danger')
+            return render_template('signup.html')
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email already exists. Please choose a different one.', 'danger')
+            return render_template('signup.html')
+
+        hashed_password = ph.hash(password)
+        user = User(
+            first_name=first_name,
+            last_name=last_name,
+            company=company,
+            email=email,
+            password=hashed_password
+        )
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('login'))
+    return render_template('signup.html')
 
 # Login Manager
 login_manager = LoginManager()
@@ -100,37 +143,6 @@ def home():
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
-
-# Signup Route
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-
-    if request.method == 'POST':
-        email = request.form['email'].strip()
-        password = request.form['password'].strip()
-
-        if not email or not password:
-            flash('Email and password cannot be empty.', 'danger')
-            return render_template('signup.html')
-
-        if not is_valid_email(email):
-            flash('Invalid email format.', 'danger')
-            return render_template('signup.html')
-
-        existing_user = User.query.filter_by(email=email).first()
-        if existing_user:
-            flash('Email already exists. Please choose a different one.', 'danger')
-            return render_template('signup.html')
-
-        hashed_password = ph.hash(password)
-        user = User(email=email, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-
-        return redirect(url_for('login'))
-    return render_template('signup.html')
 
 # Prompt Generation
 
