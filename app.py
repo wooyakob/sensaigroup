@@ -29,7 +29,6 @@ ph = PasswordHasher()
 # Initialize OpenAI API
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-
 # Database Configuration
 
 # Initialize SQLAlchemy Database
@@ -135,7 +134,7 @@ def logout():
     return redirect(url_for('index'))
 
 #Return Home
-@app.route('/landing')
+@app.route('/')
 def home():
     return render_template('landing.html')
 
@@ -145,7 +144,6 @@ def is_valid_email(email):
     return re.match(regex, email)
 
 # Prompt Generation
-
 objections = {
     "We're using your competitor": "And how are you finding them? If you don’t mind me asking, why did you choose to go with them?",
     "Your product is too expensive": "Cost is an important consideration but I believe we can actually save you money. Can we set up a time for me to explain how?",
@@ -153,7 +151,6 @@ objections = {
 }
 
 # Chatbot Functionality
-
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     user_input = request.json.get('user_input')
