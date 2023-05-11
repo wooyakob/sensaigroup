@@ -24,13 +24,14 @@
         <p>Overcome sales objections skillfully and close more deals!</p>
     </div>
 
+<!-- Display message after successful signup -->
     <div class="container">
         <h2>Sign up to use Sales Sensei</h2>
         {% for message in get_flashed_messages() %}
             <p>{{ message }}</p>
         {% endfor %}
 
-
+<!-- Signup Form -->
         <form method="POST" action="/signup">
             <div class="form-group">
                 <label for="first_name">First Name:</label>

@@ -82,6 +82,9 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
+        # Add success message after successful sign-up
+        flash("You have successfully signed up to use Sales Sensei! Please log in to begin handling your objections.")
+
         return redirect(url_for('login'))
     return render_template('signup.html')
 
