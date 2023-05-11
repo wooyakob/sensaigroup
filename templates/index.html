@@ -1,21 +1,38 @@
+<!-- Basic HTML structure with language set to English -->
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Head section of the webpage -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Sensei</title>
+
+<!-- Importing custom stylesheet and bootstrap CSS for styling -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<!-- Importing required JavaScript libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<!-- Importing Google Fonts for custom typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Adding favicon for the webpage -->
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
+
+
+
 <body>
 
+<!-- Navbar with Sales Sensei branding and login/signup options -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Sales Sensei</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,9 +55,13 @@
             </ul>
         </div>
     </nav>
+
+<!-- Header with Apple Ninja image -->
     <div class="header">
         <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
     </div>
+
+<!-- Chat container and input form -->
     <div class="container">
         <div id="chat-container" class="card mt-4">
             <div id="chat-output" class="card-body" style="height: 400px; overflow-y: scroll;"></div>
@@ -53,11 +74,16 @@
                 </div>
             </div>
         </div>
+
+<!-- Objection examples container -->
         <div id="prompt-container" class="mt-4">
             <h5>Objection Examples:</h5>
             <div id="prompts"></div>
         </div>
     </div>
+
+
+<!-- JavaScript for displaying example prompts -->
     <script>
         const examplePrompts = [
             "Your competitor is cheaper",
@@ -65,6 +91,8 @@
             "We’re using this budget elsewhere",
             "This is too expensive",
         ];
+
+// Function to display example prompts as clickable elements
         function displayExamplePrompts() {
             const container = document.getElementById("prompts");
             examplePrompts.forEach(prompt => {
@@ -79,63 +107,45 @@
         }
         displayExamplePrompts();
     </script>
+
+
+<!-- Handling click event on chat-submit button with updated sendChatMessage function -->
 <script>
+    document.getElementById("chat-submit").addEventListener("click", async () => {
+        const chatInput = document.getElementById("chat-input");
+        const message = chatInput.value;
+        if (message) {
+            const chatOutput = document.getElementById("chat-output");
+            const response = await sendChatMessage(message);
+            const userMessage = document.createElement("div");
+            userMessage.innerHTML = `<strong>Salesperson:</strong> ${message}`;
+            chatOutput.appendChild(userMessage);
 
-async function sendChatMessage(message) {
-
-}
-
-document.getElementById("chat-submit").addEventListener("click", async () => {
-    const chatInput = document.getElementById("chat-input");
-    const message = chatInput.value;
-    if (message) {
-
-
-        const response = await sendChatMessage(message);
-        const userMessage = document.createElement("div");
-        userMessage.innerHTML = `<strong>Salesperson:</strong> ${message}`;
-        chatOutput.appendChild(userMessage);
-        
-        const chatbotMessage = document.createElement("div");
-        chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response.response_text}`;
-
-        chatOutput.appendChild(chatbotMessage);
-        chatOutput.scrollTop = chatOutput.scrollHeight;
-        chatInput.value = "";
-    }
-});
-</script>
-
-<script>
-async function sendChatMessage(message) {
-    const response = await fetch('/chatbot', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user_input: message })
+            const chatbotMessage = document.createElement("div");
+            chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response}`;
+            chatOutput.appendChild(chatbotMessage);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+            chatInput.value = "";
+        }
     });
-
-    return await response.json();
-}
-document.getElementById("chat-submit").addEventListener("click", async () => {
-    const chatInput = document.getElementById("chat-input");
-    const message = chatInput.value;
-    if (message) {
-        const chatOutput = document.getElementById("chat-output");
-        const response = await sendChatMessage(message);
-        const userMessage = document.createElement("div");
-        userMessage.innerHTML = `<strong>Salesperson:</strong> ${message}`;
-        chatOutput.appendChild(userMessage);
-        const chatbotMessage = document.createElement("div");
-        chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response}`;
-        chatOutput.appendChild(chatbotMessage);
-        chatOutput.scrollTop = chatOutput.scrollHeight;
-        chatInput.value = "";
-    }
-});
 </script>
 
+<!-- Function to send chat message to server -->
+<script>
+    async function sendChatMessage(message) {
+        const response = await fetch('/chatbot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user_input: message })
+        });
+
+        return await response.json();
+    }
+</script>
+
+<!-- Script to handle the reloading of the page when using browser back button -->
 <script>
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
