@@ -1,39 +1,57 @@
-#imports
+# Import Python Regular Expression Package
 import re
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
+# Import Flask Package
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
+# Import Operating System Package
 import os
+# Import OpenAI API
 import openai
+# Import Dotenv Package
 from dotenv import load_dotenv
+# Import SQLAlchemy Package
 from flask_sqlalchemy import SQLAlchemy
+# Import Flask Login Package
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from flask_session import Session
+
+# Import Argon2 Package
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
+# Load Environment Variables
 load_dotenv()
+
+# Initialize Flask App
 app = Flask(__name__)
+
+# Password Hashing
 ph = PasswordHasher()
+
+# Initialize OpenAI API
 openai.api_key = os.getenv("OPENAI_API_KEY")
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = './flask_session/'
-Session(app)
+
+# Initialize SQLAlchemy Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
-app.config['SECRET_KEY'] = 'your_secret_key_here'
+app.config = os.getenv ("SECRET_KEY")
 db = SQLAlchemy(app)
 
-
-#classes for info that's stored in SQL database
+# User Model With Signup Form Fields
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
+    company = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
+# Login Manager
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+# Application Routing
 
 # Home Page
 @app.route('/')
@@ -114,17 +132,7 @@ def signup():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
-@app.after_request
-def add_header(response):
-    response.cache_control.no_store = True
-    response.cache_control.no_cache = True
-    response.cache_control.must_revalidate = True
-    response.cache_control.proxy_revalidate = True
-    response.expires = 0
-    response.pragma = 'no-cache'
-    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
-    response.headers['Expires'] = '-1'
-    return response
+# Prompt Generation
 
 objections = {
     "We're using your competitor": "And how are you finding them? If you don’t mind me asking, why did you choose to go with them?",
@@ -132,18 +140,19 @@ objections = {
     "I don't see any ROI potential": "There’s definitely potential. I’d love to show you and explain how. Are you available this week for a more detailed call?",
 }
 
+# Chatbot Functionality
+
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
-    questions_asked = session.get('questions_asked', 0)
-    unlimited = session.get('unlimited', False)
     user_input = request.json.get('user_input')
 
-    if len(user_input) > 140:
-        return jsonify("Objection is too long. Please limit your objection to 140 characters, or less.")
+    if len(user_input) > 140: # Limit Objection Input to 140 Characters
+        return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters, or less."})
 
+# Prompt Generation
     prompt = f"A prospective client mentioned, \"{user_input}\" How would you address this concern?\n\nSales Sensei:"
     response = openai.Completion.create(
-        model="davinci:ft-personal-2023-04-17-22-02-12",
+        model="davinci:ft-personal-2023-04-17-22-02-12", # Model ID
         prompt=prompt,
         temperature=0,
         max_tokens=100,
@@ -156,8 +165,10 @@ def chatbot():
     response_text = re.search(r'(.*[.!?])', response_text).group(0)
     return jsonify(response_text)
 
+# Database Creation
 with app.app_context():
     db.create_all()
 
+# Run Application
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
