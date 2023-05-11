@@ -35,18 +35,16 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route('/landing')
-def landing():
-    return render_template('landing.html')
-
-# Authentication Route, if authenticated display index, if not display landing
+# Home Page
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
-        session['unlimited'] = current_user.is_authenticated
-        return render_template('index.html')
-    else:
-        return redirect(url_for('landing'))
+    return render_template('landing.html')
+
+# Application for Authenticated Users
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('index.html')
 
 # Login Route
 @app.route('/login', methods=['GET', 'POST'])
@@ -62,13 +60,13 @@ def login():
             try:
                 if ph.verify(user.password, password):
                     login_user(user)
-                    return redirect(url_for('index'))
+                    return redirect(url_for('dashboard'))
             except VerifyMismatchError:
                 pass
         flash('Invalid email or password.', 'danger')
     return render_template('login.html')
 
-#Logout Route
+# Logout Route
 @app.route('/logout')
 @login_required
 def logout():
@@ -81,7 +79,6 @@ def home():
     return render_template('landing.html')
 
 #Email Validation
-
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
