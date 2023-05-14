@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Forgot Username</h1>
+    <form method="POST" action="{{ url_for('forgot_username') }}">
+        <div class="form-group">
+            <label for="email">Email:</label> 
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <a href="{{ url_for('login') }}" class="btn btn-primary">Return to Login</a>
+{% endblock %}
