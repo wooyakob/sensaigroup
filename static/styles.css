@@ -1,12 +1,16 @@
+/* Set the global styles for the body */
 body {
   background-color: #f8f9fa;
   font-family: 'Roboto', sans-serif;
 }
 
+/* Set the width of the container */
 .container {
   max-width: 800px;
 }
 
+
+/* Define the custom CSS variables for easy reference */
 :root {
   --primary-color: #0c162d;
   --secondary-color: #438eac;
@@ -16,6 +20,7 @@ body {
   --ninja-accent: #c0392b;
 }
 
+/* Set the header styles */
 .header {
   display: flex;
   flex-direction: column;
@@ -28,6 +33,8 @@ body {
   padding: 1rem 0;
 }
 
+
+/* Set the header background image */
 .header::before {
   content: "";
   background-image: url('ninja-silhouette.png');
@@ -42,12 +49,15 @@ body {
   z-index: -1;
 }
 
+
+/* Set the header title styles */
 .header h1 {
   font-size: 4rem;
   letter-spacing: 0.5rem;
   margin-top: 1rem;
 }
 
+/* Set the header button styles */
 .header-button {
   background-color: transparent;
   border: none;
@@ -61,15 +71,18 @@ body {
   transition: background-color 0.3s;
 }
 
+/* Set the header button hover styles */
 .header-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Set the header buttons container styles */
 .header-buttons {
   display: flex;
   gap: 0.5rem;
 }
 
+/* Set the responsive styles for header buttons */
 @media (max-width: 768px) {
   .header-buttons {
     flex-direction: column;
@@ -77,6 +90,7 @@ body {
   }
 }
 
+/* Set the prompt button styles */
 .prompt {
   cursor: pointer;
   display: inline-block;
@@ -91,23 +105,28 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Set the prompt button hover styles */
 .prompt:hover {
   background-color: var(--hover-color);
   color: #FFF;
 }
 
+/* Set the primary button styles */
 .btn-primary {
   background-color: var(--secondary-color);
   border-color: var(--secondary-color);
   color: #FFF;
 }
 
+
+/* Set the primary button hover styles */
 .btn-primary:hover {
   background-color: var(--hover-color);
   border-color: var(--hover-color);
   color: #FFF;
 }
 
+/* Set the chat submit button hover styles */
 #chat-submit:hover {
   background-color: var(--hover-color);
   color: #FFF;
@@ -189,4 +208,9 @@ footer {
 }
 .policy-links {
   justify-content: flex-end;
+}
+
+/* Custom jumbotron styles */
+.custom-jumbotron {
+  background-color: transparent;
 }
