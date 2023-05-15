@@ -1,7 +1,14 @@
+# Import Logging Package
+import logging
+
 # Import Python Regular Expression Package
 import re
 # Import Flask Package
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
+
+# Email Package: Generate secure tokens that can be used for tasks like password resets, email confirmation links
+from itsdangerous import URLSafeTimedSerializer
+
 # Import Operating System Package
 import os
 # Import OpenAI API
@@ -13,6 +20,9 @@ from flask_sqlalchemy import SQLAlchemy
 # Import Flask Login Package
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
+# Import Flask SMTP Email Package (Simple Mail Transfer Protocol is a TCP/IP protocol used in sending and receiving email)
+from flask_mail import Mail, Message
+
 # Import Argon2 Package
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
@@ -23,11 +33,121 @@ load_dotenv()
 # Initialize Flask App
 app = Flask(__name__)
 
+# Configure Logging Settings
+logging.basicConfig(level=logging.DEBUG)
+
 # Password Hashing
 ph = PasswordHasher()
 
 # Initialize OpenAI API
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Email configuration
+# Apple ICloud Settings
+app.config["MAIL_SERVER"] = "smtp.mail.me.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "jake_wood@mac.com"
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
+app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
+
+mail = Mail(app)
+
+# Email Routes
+# Forgot Email
+@app.route("/forgot_username", methods=["GET", "POST"])
+def forgot_username():
+    if request.method == "POST":
+        email = request.form["email"]
+        user = User.query.filter_by(email=email).first()
+        if user:
+            send_username_email(user)
+            flash("An email with your username has been sent to your email address.")
+        else:
+            flash("No account found with that email address.")
+        return redirect(url_for("login"))  # Redirect to the login page
+
+    return render_template("forgot_username.html")
+
+# Forgot Password
+@app.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
+    if request.method == "POST":
+        email = request.form["email"]
+        user = User.query.filter_by(email=email).first()
+        if user:
+            send_password_reset_email(user)
+            flash("An email with password reset instructions has been sent to your email address.")
+            return redirect(url_for("login"))  # Redirect to the login page after sending the reset email
+        else:
+            flash("No account found with that email address.")
+    
+    return render_template("forgot_password.html")
+
+# Reset Password
+@app.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    if request.method == "POST":
+        new_password = request.form["new_password"]
+        confirm_password = request.form["confirm_password"]
+
+        # Validate new password and confirm password
+        if new_password != confirm_password:
+            flash("New password and confirm password do not match.")
+            return redirect(url_for("reset_password", token=token))
+
+        # Retrieve user based on token
+        email = token_to_email(token)
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            flash("Invalid or expired token.")
+            return redirect(url_for("forgot_password"))
+
+        # Update password
+        hashed_password = ph.hash(new_password)
+        user.password = hashed_password
+        db.session.commit()
+
+        flash("Your password has been successfully reset. Please log in with your new password.")
+        return redirect(url_for("login"))
+
+    return render_template("reset_password.html", token=token)
+
+# Password and Email Reset Token Generation Function
+def generate_password_reset_token(user):
+    serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
+    return serializer.dumps(user.email, salt="password-reset")
+
+def send_username_email(user):
+    msg = Message("Your Sales Sensei Username", recipients=[user.email])
+    msg.body = f"Your Sales Sensei username is: {user.username}"
+    mail.send(msg)
+
+def send_password_reset_email(user):
+    token = generate_password_reset_token(user)
+    reset_url = url_for("reset_password", token=token, _external=True)
+
+    msg = Message("Sales Sensei Password Reset", recipients=[user.email])
+    msg.body = f"To reset your password, please click the following link: {reset_url}"
+    mail.send(msg)
+
+
+# define token to email function
+def token_to_email(token):
+    serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
+    try:
+        email = serializer.loads(token, salt="password-reset", max_age=3600)  # Token expiration time: 1 hour
+        return email
+    except:
+        return None
+
+
+# Define Valid Email
+
+def is_valid_email(email):
+    regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+    return re.match(regex, email)
 
 # Database Configuration
 
@@ -43,6 +163,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     company = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
 # Signup Route
@@ -56,19 +177,20 @@ def signup():
         last_name = request.form['last_name']
         company = request.form['company']
         email = request.form['email'].strip()
+        username = request.form['username'].strip()
         password = request.form['password'].strip()
 
-        if not email or not password:
-            flash('Email and password cannot be empty.', 'danger')
+        if not email or not password or not username:
+            flash('Email, username, and password cannot be empty.', 'danger')
             return render_template('signup.html')
 
         if not is_valid_email(email):
             flash('Invalid email format.', 'danger')
             return render_template('signup.html')
 
-        existing_user = User.query.filter_by(email=email).first()
+        existing_user = User.query.filter((User.email == email) | (User.username == username)).first()
         if existing_user:
-            flash('Email already exists. Please choose a different one.', 'danger')
+            flash('Email or username already exists. Please choose a different one.', 'danger')
             return render_template('signup.html')
 
         hashed_password = ph.hash(password)
@@ -77,6 +199,7 @@ def signup():
             last_name=last_name,
             company=company,
             email=email,
+            username=username,
             password=hashed_password
         )
         db.session.add(user)
@@ -85,7 +208,7 @@ def signup():
         # Add success message after successful sign-up
         flash("You have successfully signed up to use Sales Sensei! Please log in to begin handling your objections.")
 
-        return redirect(url_for('login'))
+        return redirect(url_for('dashboard'))
     return render_template('signup.html')
 
 # Login Manager
@@ -113,12 +236,10 @@ def dashboard():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
+        username = request.form['username'] 
         password = request.form['password']
-        if not is_valid_email(email):
-            flash('Invalid email format.', 'danger')
-            return render_template('login.html')
-        user = User.query.filter_by(email=email).first()
+        
+        user = User.query.filter_by(username=username).first()
         if user:
             try:
                 if ph.verify(user.password, password):
@@ -126,7 +247,7 @@ def login():
                     return redirect(url_for('dashboard'))
             except VerifyMismatchError:
                 pass
-        flash('Invalid email or password.', 'danger')
+        flash('Invalid username or password.', 'danger') 
     return render_template('login.html')
 
 # Logout Route
@@ -134,12 +255,8 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
-
-#Return Home
-@app.route('/')
-def home():
-    return render_template('landing.html')
 
 #Email Validation
 def is_valid_email(email):
