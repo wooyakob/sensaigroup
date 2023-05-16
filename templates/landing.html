@@ -33,8 +33,8 @@
         <div class="container d-flex justify-content-between align-items-center">
             <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
             <div class="header-buttons">
-                <a href="/login" class="header-button">Login</a>
-                <a href="/signup" class="header-button">Sign Up</a>
+                <a href="{{ url_for('login') }}" class="header-button">Login</a>
+                <a href="{{ url_for('signup') }}" class="header-button">Sign Up</a>
             </div>
         </div>
     </div>

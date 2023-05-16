@@ -206,9 +206,9 @@ def signup():
         db.session.commit()
 
         # Add success message after successful sign-up
-        flash("You have successfully signed up to use Sales Sensei! Please log in to begin handling your objections.")
+        flash("You have successfully signed up to use Sales Sensei! Please log in to begin handling your objections.", 'success')
 
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('login'))
     return render_template('signup.html')
 
 # Login Manager
@@ -273,18 +273,18 @@ objections = {
 # Chatbot Functionality
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
-    user_input = request.json.get('user_input')
+    user_objection = request.json.get('user_objection')
+    user_response = request.json.get('user_response')
 
-    if len(user_input) > 140: # Limit Objection Input to 140 Characters
+    if len(user_objection) > 140: # Limit Objection Input to 140 Characters
         return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters, or less."})
 
-# Prompt Generation
-    prompt = f"A prospective client mentioned, \"{user_input}\" How would you address this concern?\n\nSales Sensei:"
+    prompt = f"A prospective client mentioned, \"{user_objection}\" The salesperson responded, \"{user_response}\" How can this response be improved?\n\nSales Sensei:"
     response = openai.Completion.create(
         model="davinci:ft-personal-2023-04-17-22-02-12", # Model ID
         prompt=prompt,
-        temperature=0,
-        max_tokens=100,
+        temperature=0.5,
+        max_tokens=200,
         top_p=1,
         frequency_penalty=2,
         presence_penalty=2,

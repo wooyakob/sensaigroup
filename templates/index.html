@@ -59,87 +59,89 @@
     </div>
 
 <!-- Chat container and input form -->
-    <div class="container">
-        <div id="chat-container" class="card mt-4">
-            <div id="chat-output" class="card-body" style="height: 400px; overflow-y: scroll;"></div>
-            <div class="card-footer">
-                <div class="input-group">
-                    <input type="text" id="chat-input" class="form-control" placeholder="Enter a sales objection: ">
-                    <div class="input-group-append">
-                        <button id="chat-submit" class="btn btn-primary">Ask</button>
-                    </div>
+<div class="container">
+    <div id="chat-container" class="card mt-4">
+        <div id="chat-output" class="card-body" style="height: 400px; overflow-y: scroll;"></div>
+        <div class="card-footer">
+            <div class="input-group">
+                <input type="text" id="objection-input" class="form-control" placeholder="Enter a sales objection: ">
+                <input type="text" id="response-input" class="form-control" placeholder="Enter your proposed response: ">
+                <div class="input-group-append">
+                    <button id="chat-submit" class="btn btn-primary">Ask</button>
                 </div>
             </div>
         </div>
-
-<!-- Objection examples container -->
-        <div id="prompt-container" class="mt-4">
-            <h5>Objection Examples:</h5>
-            <div id="prompts"></div>
-        </div>
     </div>
 
+<!-- Objection examples container -->
+<div id="prompt-container" class="mt-4">
+    <h5>Objection Examples:</h5>
+    <div id="prompts"></div>
+</div>
 
 <!-- JavaScript for displaying example prompts -->
-    <script>
-        const examplePrompts = [
-            "Your competitor is cheaper",
-            "This looks too complicated for my team to learn",
-            "We’re using this budget elsewhere",
-            "This is too expensive",
-        ];
+<script>
+    const examplePrompts = [
+        "Your competitor is cheaper",
+        "This looks too complicated for my team to learn",
+        "We’re using this budget elsewhere",
+        "This is too expensive"
+    ];
 
-// Function to display example prompts as clickable elements
-        function displayExamplePrompts() {
-            const container = document.getElementById("prompts");
-            examplePrompts.forEach(prompt => {
-                const div = document.createElement("div");
-                div.classList.add("prompt");
-                div.textContent = prompt;
-                div.onclick = () => {
-                    document.getElementById("chat-input").value = prompt;
-                };
-                container.appendChild(div);
-            });
-        }
-        displayExamplePrompts();
-    </script>
+    function displayExamplePrompts() {
+        const container = document.getElementById("prompts");
+        examplePrompts.forEach(prompt => {
+            const div = document.createElement("div");
+            div.classList.add("prompt");
+            div.textContent = prompt;
+            div.onclick = () => {
+                document.getElementById("objection-input").value = prompt;
+            };
+            container.appendChild(div);
+        });
+    }
 
+    displayExamplePrompts();
+</script>
 
 <!-- Handling click event on chat-submit button with updated sendChatMessage function -->
 <script>
-    document.getElementById("chat-submit").addEventListener("click", async () => {
-        const chatInput = document.getElementById("chat-input");
-        const message = chatInput.value;
-        if (message) {
-            const chatOutput = document.getElementById("chat-output");
-            const response = await sendChatMessage(message);
-            const userMessage = document.createElement("div");
-            userMessage.innerHTML = `<strong>Salesperson:</strong> ${message}`;
-            chatOutput.appendChild(userMessage);
+document.getElementById("chat-submit").addEventListener("click", async () => {
+    const objectionInput = document.getElementById("objection-input");
+    const responseInput = document.getElementById("response-input");
+    const objection = objectionInput.value;
+    const response = responseInput.value;
+    if (objection || response) {
+        const chatOutput = document.getElementById("chat-output");
+        const serverResponse = await sendChatMessage(objection, response);
 
-            const chatbotMessage = document.createElement("div");
-            chatbotMessage.innerHTML = `<strong>Sales Sensei:</strong> ${response}`;
-            chatOutput.appendChild(chatbotMessage);
-            chatOutput.scrollTop = chatOutput.scrollHeight;
-            chatInput.value = "";
-        }
-    });
+        const userMessage = document.createElement("div");
+        userMessage.innerHTML = `<strong>Salesperson:</strong><br>Objection: ${objection}<br>Response: ${response}`;
+        chatOutput.appendChild(userMessage);
+
+        const aiMessage = document.createElement("div");
+        aiMessage.innerHTML = `<strong>Sales Sensei:</strong> ${serverResponse}`;
+        chatOutput.appendChild(aiMessage);
+
+        objectionInput.value = "";
+        responseInput.value = "";
+    }
+});
 </script>
 
 <!-- Function to send chat message to server -->
 <script>
-    async function sendChatMessage(message) {
-        const response = await fetch('/chatbot', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ user_input: message })
-        });
+async function sendChatMessage(objection, response) {
+    const serverResponse = await fetch('/chatbot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_objection: objection, user_response: response })
+    });
 
-        return await response.json();
-    }
+    return await serverResponse.json();
+}
 </script>
 
 <!-- Script to handle the reloading of the page when using browser back button -->
@@ -150,6 +152,10 @@
         }
     });
 </script>
+
+
+
+
 
 </body>
 </html>
