@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Sensei | AI-enabled Sales Assistant</title>
+    <title>Paragon 28 | AI-enabled Sales Training</title>
 
 <!--CSS Stylesheet and Bootstrap Style Sheet-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -22,8 +22,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Adding favicon for the webpage -->
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">    
 </head>
 
 
@@ -31,7 +29,7 @@
 <!-- Login and Signup Buttons, Header Button Class Styling to ensure Mobile Optimized, see CSS--> 
     <div class="header">
         <div class="container d-flex justify-content-between align-items-center">
-            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
+            <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
             <div class="header-buttons">
                 <a href="{{ url_for('login') }}" class="header-button">Login</a>
                 <a href="{{ url_for('signup') }}" class="header-button">Sign Up</a>
@@ -41,62 +39,10 @@
 
 <!-- Title, Tagline, Beneath the Header--> 
     <div class="jumbotron text-center custom-jumbotron">
-        <h1>Sales Sensei</h1>
-        <p>AI-enabled Sales Assistant</p>
+        <h1>Paragon 28</h1>
+        <p>AI-enabled Sales Training</p>
         <p>Overcome sales objections skillfully and close more deals!</p>
     </div>
-
-<!-- Main Body -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Why Sales Sensei?</h2>
-                <p>Sales Sensei is an innovative AI-enabled sales assistant that helps you overcome objections, identify opportunities, and close more deals. Our powerful AI engine learns from your interactions to provide personalized, data-driven insights that help you make smarter decisions in real-time.</p>
-            </div>
-
-<!-- Application Features -->
-            <div class="col-md-6">
-                <h2>Features</h2>
-                <ul>
-                    <li>Real-time sales coaching</li>
-                    <li>Conversation analysis</li>
-                    <li>Objection handling suggestions</li>
-                </ul>
-            </div>
-        </div>
-
-<!-- Demo Request -->
-        <hr>
-        <div class="text-left">
-            <a href="mailto:jake_wood@mac.com?subject=Request%20Demo%20-%20Sales%20Sensei" class="btn btn-primary">Request a Demo</a>
-        </div>
-    </div>
-
-<!-- Website Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; Sales Sensei 2023. All rights reserved.</p>
-                </div>
-
-<!-- Social Icons -->
-                <div class="col-md-6">
-                    <div class="footer-links">
-                        <ul class="social-icons">
-                            <li><a href="https://www.linkedin.com/company/sales-sensei/" target="_blank">LinkedIn</a></li>
-                            <li><a href="https://www.producthunt.com/posts/sales-sensei" target="_blank">Product Hunt</a></li>
-                            <li><a href="https://twitter.com/sale_sensei" target="_blank">Twitter</a></li>
-                        </ul>
-<!-- Website Policies -->
-                        <ul class="policy-links">
-                            <li><a href="https://app.termly.io/document/privacy-policy/072a8aef-e879-45cc-91d4-4e5b8d8c3804">Privacy</a></li>
-                            <li><a href="https://app.termly.io/document/cookie-policy/19c5578c-8e72-4d3c-8f7d-c09ff48e5894">Cookies</a></li>
-                            <li><a href="https://app.termly.io/document/terms-of-service/45ab0415-1be1-4f4d-bcc2-ac4d89a23847">Terms</a></li>
-                        </ul>
-                    </div>
-                </div>
-    </footer>
 
 </body>
 

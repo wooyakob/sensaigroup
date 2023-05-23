@@ -1,23 +1,15 @@
 /* Set the global styles for the body */
 body {
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
+  color: #000000;
 }
 
 /* Set the width of the container */
 .container {
   max-width: 800px;
-}
-
-
-/* Define the custom CSS variables for easy reference */
-:root {
-  --primary-color: #0c162d;
-  --secondary-color: #438eac;
-  --background-color: #f8f9fa;
-  --text-color: #212529;
-  --hover-color: #6baed1;
-  --ninja-accent: #c0392b;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 /* Set the header styles */
@@ -27,28 +19,11 @@ body {
   align-items: center;
   font-family: 'Roboto', sans-serif;
   text-shadow: 2px 2px 4px #000;
-  color: #FFF;
-  background-color: #0c162d;
+  color: #ffffff;
+  background-color: #4A317A; /* Purple color */
   position: relative;
   padding: 1rem 0;
 }
-
-
-/* Set the header background image */
-.header::before {
-  content: "";
-  background-image: url('ninja-silhouette.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  opacity: 0.2;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
 
 /* Set the header title styles */
 .header h1 {
@@ -96,10 +71,10 @@ body {
   display: inline-block;
   margin: 0.5rem;
   padding: 10px 20px;
-  border: 2px solid var(--ninja-accent);
+  border: 2px solid #000000; /* Black color */
   border-radius: 50px;
   background-color: transparent;
-  color: var(--ninja-accent);
+  color: #000000;
   font-weight: bold;
   letter-spacing: 1px;
   transition: all 0.3s ease;
@@ -107,110 +82,81 @@ body {
 
 /* Set the prompt button hover styles */
 .prompt:hover {
-  background-color: var(--hover-color);
-  color: #FFF;
+  background-color: #4A317A; /* Purple color */
+  color: #ffffff;
 }
 
 /* Set the primary button styles */
 .btn-primary {
-  background-color: var(--secondary-color);
-  border-color: var(--secondary-color);
-  color: #FFF;
+  background-color: #4A317A; /* Purple color */
+  border-color: #4A317A; /* Purple color */
+  color: #ffffff;
 }
-
 
 /* Set the primary button hover styles */
 .btn-primary:hover {
-  background-color: var(--hover-color);
-  border-color: var(--hover-color);
-  color: #FFF;
+  background-color: #000000; /* Black color */
+  border-color: #000000; /* Black color */
+  color: #ffffff;
 }
 
 /* Set the chat submit button hover styles */
 #chat-submit:hover {
-  background-color: var(--hover-color);
-  color: #FFF;
+  background-color: #4A317A; /* Purple color */
+  color: #ffffff;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
+/* Set the card styles */
 .card {
   margin-bottom: 2rem;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-#chat-output {
-  display: flex;
-  flex-direction: column;
-}
-
-#chat-output > div {
-  margin-bottom: 1rem;
-}
-
-#chat-output strong {
-  font-weight: 700;
-}
-
-.user-message,
-.chatbot-message {
-  display: flex;
-  align-items: center;
-}
-
-.user-message strong,
-.chatbot-message strong {
-  margin-right: 0.5rem;
-}
-
-.user-message {
-  justify-content: flex-end;
-}
-
-.chatbot-message {
-  justify-content: flex-start;
-}
-
+/* Set the chat container styles */
 #chat-container {
   background-color: #ffffff;
   border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-              0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
+/* Set the chat message styles */
 .chat-message {
   margin-bottom: 10px;
 }
 
+/* Set the footer styles */
 footer {
   display: flex;
   justify-content: flex-end;
+  background-color: #000000; /* Black color */
+  color: #ffffff;
+  padding: 1rem;
 }
 
+/* Set the footer links styles */
 .footer-links {
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 30px;
 }
-.social-icons, .policy-links {
+
+/* Set the social icons and policy links styles */
+.social-icons,
+.policy-links {
   display: flex;
   list-style-type: none;
   padding: 0;
 }
-.social-icons li, .policy-links li {
+
+.social-icons li,
+.policy-links li {
   margin-right: 10px;
 }
-.social-icons a, .policy-links a {
-  text-decoration: none;
-}
-.policy-links {
-  justify-content: flex-end;
-}
 
-/* Custom jumbotron styles */
-.custom-jumbotron {
-  background-color: transparent;
+.social-icons a,
+.policy-links a {
+  text-decoration: none;
+  color: #ffffff;
 }
