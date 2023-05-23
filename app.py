@@ -258,6 +258,15 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
+
+@app.route('/rate', methods=['POST'])
+def rate():
+    rating = request.json.get('rating')
+    # Handle the rating. For example, you might store it in a database.
+    # TODO: Add your code here.
+    return jsonify({"message": "Rating received"})
+
+
 #Email Validation
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
@@ -280,18 +289,24 @@ def chatbot():
         return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters, or less."})
 
     prompt = f"A prospective client mentioned, \"{user_objection}\" The salesperson responded, \"{user_response}\" How can this response be improved?\n\nSales Sensei:"
-    response = openai.Completion.create(
-        model="davinci:ft-personal-2023-04-17-22-02-12", # Model ID
-        prompt=prompt,
-        temperature=0.5,
-        max_tokens=200,
-        top_p=1,
-        frequency_penalty=2,
-        presence_penalty=2,
-        stop=["END",]
-    )
-    response_text = response.choices[0].text.strip()
-    response_text = re.search(r'(.*[.!?])', response_text).group(0)
+    
+    min_length = 200  # Set your minimum response length here
+    response_text = ""
+
+    while len(response_text) < min_length: 
+        response = openai.Completion.create(
+            model="davinci:ft-personal-2023-04-17-22-02-12", # Model ID
+            prompt=prompt,
+            temperature=0.5,
+            max_tokens=200,
+            top_p=1,
+            frequency_penalty=2,
+            presence_penalty=2,
+            stop=["END",]
+        )
+        response_text = response.choices[0].text.strip()
+        response_text = re.search(r'(.*[.!?])', response_text).group(0)
+
     return jsonify(response_text)
 
 # Database Creation

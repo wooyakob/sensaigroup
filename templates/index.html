@@ -61,23 +61,65 @@
 <div class="container chat-container">
     <div id="chat-container" class="card mt-4" style="max-width: 1600px;">
         <div class="card-body">
-            <div id="chat-output" style="height: 400px; overflow-y: scroll;"></div>
+            <!-- Moved input fields to top of chat container -->
             <div class="row mt-3">
                 <div class="col-12">
-                    <input type="text" id="objection-input" class="form-control input-expand input-large" placeholder="Enter a sales objection: ">
+                    <input type="text" id="objection-input" class="form-control input-expand input-large" placeholder="Enter or select a sales objection ">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-12">
-                    <input type="text" id="response-input" class="form-control input-expand input-large" placeholder="Enter your proposed response: ">
+                    <input type="text" id="response-input" class="form-control input-expand input-large" placeholder="Enter your proposed response to the objection ">
                 </div>
                 <div class="col-12 mt-2">
                     <button id="chat-submit" class="btn btn-primary btn-block">Get Advice</button>
                 </div>
             </div>
+            <!-- End of input fields -->
+            <div id="chat-output" style="height: 400px; overflow-y: scroll;"></div>
+
+            <!-- Moved Rate Response and rating input here -->
+            <div class="row mt-3">
+                <div class="col-12 mt-2">
+                    <input type="number" id="rating-input" class="form-control" placeholder="Enter a rating (1-5) "> <!--Removed 'hidden' attribute-->
+                </div>
+                <div class="col-12 mt-2">
+                    <button id="rate-submit" class="btn btn-secondary btn-block">Rate Response</button>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById("rate-submit").addEventListener("click", async () => {
+    const ratingInput = document.getElementById("rating-input");
+    const rating = ratingInput.value;
+    if (rating && rating >= 1 && rating <= 5) {
+        const ratingResponse = await sendRating(rating);
+        alert("Thank you for your rating!");
+        ratingInput.value = "";
+    } else {
+        alert("Please enter a valid rating (1-5)");
+    }
+});
+</script>
+
+<script>
+async function sendRating(rating) {
+    const ratingResponse = await fetch('/rate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ rating: rating })
+    });
+
+    return await ratingResponse.json();
+}
+</script>
+
 
 <!-- Objection examples container -->
 <div id="prompt-container" class="mt-4">
