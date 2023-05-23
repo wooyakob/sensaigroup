@@ -80,6 +80,13 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Set the container to use Flexbox and justify content to the center */
+#prompt-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* Set the prompt button hover styles */
 .prompt:hover {
   background-color: #4A317A; /* Purple color */
@@ -114,49 +121,44 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-/* Set the chat container styles */
-#chat-container {
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
 /* Set the chat message styles */
 .chat-message {
   margin-bottom: 10px;
 }
 
-/* Set the footer styles */
-footer {
-  display: flex;
-  justify-content: flex-end;
-  background-color: #000000; /* Black color */
-  color: #ffffff;
-  padding: 1rem;
+
+
+
+
+.input-expand {
+  min-width: 20px;
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  resize: horizontal;
 }
 
-/* Set the footer links styles */
-.footer-links {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 30px;
+
+#chat-submit {
+  background-color: #4A317A; /* Any color you want for the background */
+  color: #ffffff; /* Any color you want for the text */
+  font-size: 18px; /* Adjust font size as needed */
+  border-radius: 5px; /* Adjust border radius as needed */
+  max-width: 400px;
+  margin: 0 auto; /* Add auto margin to left and right */
+  display: block; /* Make the button block level */
+  /* Add other styles as needed */
 }
 
-/* Set the social icons and policy links styles */
-.social-icons,
-.policy-links {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
+
+
+
+.input-large {
+  height: 50px;
+  width: 100%;
 }
 
-.social-icons li,
-.policy-links li {
-  margin-right: 10px;
-}
-
-.social-icons a,
-.policy-links a {
-  text-decoration: none;
-  color: #ffffff;
+.container.chat-container {
+  max-width: 1600px;
+  /* Other styles you want to apply specifically to this container */
 }
