@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paragon 28 | AI-enabled Sales Training</title>
+    <title>Sales Sensei | AI-enabled Sales Training</title>
 
 <!--CSS Stylesheet and Bootstrap Style Sheet-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -31,7 +31,7 @@
     <!-- Login and Signup Buttons, Header Button Class Styling to ensure Mobile Optimized, see CSS--> 
     <div class="header">
         <div class="container d-flex justify-content-between align-items-center">
-            <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
+            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
             <div class="header-buttons">
                 <a href="{{ url_for('login') }}" class="header-button">Login</a>
                 <a href="{{ url_for('signup') }}" class="header-button">Sign Up</a>
@@ -41,14 +41,46 @@
 
     <!-- Title, Tagline, Beneath the Header--> 
     <div class="jumbotron text-center custom-jumbotron">
-        <h1>Paragon 28</h1>
+        <h1>Sales Sensei</h1>
         <p>AI-enabled Sales Training</p>
     </div>
 
-    <!-- Paragon Philosophy Section -->
-    <div class="philosophy-section text-center">
-        <img src="{{ url_for('static', filename='paragon_philo.png') }}" alt="Paragon Philosophy">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Why Sales Sensei?</h2>
+                <p>Sales Sensei is an innovative AI-enabled sales assistant that helps you overcome objections, identify opportunities and close more deals. Our powerful AI engine provides advice on how to handle sales objections effectively</p>
+            </div>
+            <div class="col-md-6">
+                <h2>Features</h2>
+                <ul>
+                    <li>Bespoke AI Sales Engine</li>
+                    <li>Unique Prompt Engineering</li>
+                    <li>Rating System & Continous Improvement</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p>To access the Sales Sensei, please <a href="/login">log in</a> or <a href="/signup">sign up</a> if you don't have an account.</p>
+        <p><a href="/request-demo" class="btn btn-primary">Request a Demo</a></p>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; Sales Sensei 2023. All rights reserved.</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="social-icons">
+                        <a href="https://www.linkedin.com/company/sales-sensei/" target="_blank">LinkedIn</a> |
+                        <a href="https://twitter.com/sale_sensei" target="_blank">Twitter</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 <footer>

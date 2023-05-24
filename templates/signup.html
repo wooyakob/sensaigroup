@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paragon 28 | AI-enabled Sales Assistant</title>
+    <title>Sales Sensei | AI-enabled Sales Assistant</title>
 
 <!--CSS Stylesheet and Bootstrap Style Sheet-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -28,16 +28,16 @@
 <!-- Body section of the webpage -->
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
+        <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
     </div>
     <div class="jumbotron text-center">
-        <h1>Paragon 28</h1>
+        <h1>Sales Sensei</h1>
         <p>Overcome sales objections skillfully and close more deals!</p>
     </div>
 
 <!-- Display message after successful signup -->
     <div class="container">
-        <h2>Access Paragon 28's AI Enabled Sales Training</h2>
+        <h2>Access Sales Sensei: AI Enabled Sales Training</h2>
         {% for message in get_flashed_messages() %}
             <p>{{ message }}</p>
         {% endfor %}
@@ -57,7 +57,7 @@
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="email">Paragon 28 Email:</label>
+                <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">
