@@ -6,32 +6,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Sensei</title>
+    <title>Paragon 28 AI Enabled Sales Training</title>
 
-<!--CSS Stylesheet and Bootstrap Style Sheet-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- CSS Stylesheet and Bootstrap Style Sheet -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
-<!-- Importing required JavaScript libraries -->
+    <!-- Importing required JavaScript libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-<!-- Importing Google Fonts for custom typography -->
+    <!-- Importing Google Fonts for custom typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Adding favicon for the webpage -->
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"> 
 </head>
 
-
 <body>
-<!-- Navbar with Sales Sensei branding and login/signup options -->
+    <!-- Navbar with Sales Sensei branding and login/signup options -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Sales Sensei</a>
+        <a class="navbar-brand" href="#">Paragon 28 AI Enabled Sales Training</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -53,109 +50,157 @@
         </div>
     </nav>
 
-<!-- Header with Apple Ninja image -->
     <div class="header">
-        <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
+        <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
+    </div>
+
+    <!-- Prompt examples container -->
+    <div id="prompt-container" class="mt-4">
+        <div id="prompts"></div>
     </div>
 
 <!-- Chat container and input form -->
-<div class="container">
+<div class="container chat-container">
     <div id="chat-container" class="card mt-4">
-        <div id="chat-output" class="card-body" style="height: 400px; overflow-y: scroll;"></div>
-        <div class="card-footer">
-            <div class="input-group">
-                <input type="text" id="objection-input" class="form-control" placeholder="Enter a sales objection: ">
-                <input type="text" id="response-input" class="form-control" placeholder="Enter your proposed response: ">
-                <div class="input-group-append">
-                    <button id="chat-submit" class="btn btn-primary">Ask</button>
+        <div class="card-body">
+            <!-- Input fields -->
+            <div class="form-group">
+                <input type="text" id="objection-input" class="form-control" placeholder="Enter or select a sales objection">
+            </div>
+            <div class="form-group">
+                <input type="text" id="response-input" class="form-control" placeholder="Enter your proposed response to the objection">
+            </div>
+            <div class="text-center">
+                <button id="chat-submit" class="btn btn-primary">Get Advice</button>
+            </div>
+            <!-- End of input fields -->
+
+            <div id="chat-output" class="mt-4"></div>
+
+            <!-- Rate Response and rating input -->
+            <div class="rate-response mt-4">
+                <div class="form-group">
+                    <input type="number" id="rating-input" class="form-control" placeholder="Enter a rating (1-5)">
+                </div>
+                <div class="text-center">
+                    <button id="rate-submit" class="btn btn-secondary">Rate Response</button>
                 </div>
             </div>
         </div>
     </div>
-
-<!-- Objection examples container -->
-<div id="prompt-container" class="mt-4">
-    <h5>Objection Examples:</h5>
-    <div id="prompts"></div>
 </div>
 
-<!-- JavaScript for displaying example prompts -->
-<script>
-    const examplePrompts = [
-        "Your competitor is cheaper",
-        "This looks too complicated for my team to learn",
-        "We’re using this budget elsewhere",
-        "This is too expensive"
-    ];
 
-    function displayExamplePrompts() {
-        const container = document.getElementById("prompts");
-        examplePrompts.forEach(prompt => {
-            const div = document.createElement("div");
-            div.classList.add("prompt");
-            div.textContent = prompt;
-            div.onclick = () => {
-                document.getElementById("objection-input").value = prompt;
-            };
-            container.appendChild(div);
+    <script>
+        document.getElementById("rate-submit").addEventListener("click", async () => {
+            const ratingInput = document.getElementById("rating-input");
+            const rating = ratingInput.value;
+            if (rating && rating >= 1 && rating <= 5) {
+                const ratingResponse = await sendRating(rating);
+                alert("Thank you for your rating!");
+                ratingInput.value = "";
+            } else {
+                alert("Please enter a valid rating (1-5)");
+            }
         });
-    }
+    </script>
 
-    displayExamplePrompts();
-</script>
+    <script>
+        async function sendRating(rating) {
+            const ratingResponse = await fetch('/rate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ rating: rating })
+            });
 
-<!-- Handling click event on chat-submit button with updated sendChatMessage function -->
-<script>
-document.getElementById("chat-submit").addEventListener("click", async () => {
-    const objectionInput = document.getElementById("objection-input");
-    const responseInput = document.getElementById("response-input");
-    const objection = objectionInput.value;
-    const response = responseInput.value;
-    if (objection || response) {
-        const chatOutput = document.getElementById("chat-output");
-        const serverResponse = await sendChatMessage(objection, response);
-
-        const userMessage = document.createElement("div");
-        userMessage.innerHTML = `<strong>Salesperson:</strong><br>Objection: ${objection}<br>Response: ${response}`;
-        chatOutput.appendChild(userMessage);
-
-        const aiMessage = document.createElement("div");
-        aiMessage.innerHTML = `<strong>Sales Sensei:</strong> ${serverResponse}`;
-        chatOutput.appendChild(aiMessage);
-
-        objectionInput.value = "";
-        responseInput.value = "";
-    }
-});
-</script>
-
-<!-- Function to send chat message to server -->
-<script>
-async function sendChatMessage(objection, response) {
-    const serverResponse = await fetch('/chatbot', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user_objection: objection, user_response: response })
-    });
-
-    return await serverResponse.json();
-}
-</script>
-
-<!-- Script to handle the reloading of the page when using browser back button -->
-<script>
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted) {
-            window.location.reload();
+            return await ratingResponse.json();
         }
-    });
-</script>
+    </script>
 
+    <!-- JavaScript for displaying example prompts -->
+    <script>
+        const examplePrompts = [
+            "Your competitor is cheaper",
+            "This looks too complicated for my team to learn",
+            "We’re using this budget elsewhere",
+            "This is too expensive"
+        ];
 
+        function displayExamplePrompts() {
+            const container = document.getElementById("prompts");
+            examplePrompts.forEach(prompt => {
+                const div = document.createElement("div");
+                div.classList.add("prompt");
+                div.textContent = prompt;
+                div.onclick = () => {
+                    document.getElementById("objection-input").value = prompt;
+                };
+                container.appendChild(div);
+            });
+        }
 
+        displayExamplePrompts();
+    </script>
 
+    <!-- Handling click event on chat-submit button with updated sendChatMessage function -->
+    <script>
+        document.getElementById("chat-submit").addEventListener("click", async () => {
+            const objectionInput = document.getElementById("objection-input");
+            const responseInput = document.getElementById("response-input");
+            const objection = objectionInput.value;
+            const response = responseInput.value;
+            if (objection && (objection.length > 0 || response.length > 0)) {
+                const chatOutput = document.getElementById("chat-output");
 
+                // Create objection and response elements
+                const objectionElement = document.createElement("p");
+                objectionElement.textContent = "Objection: " + objection;
+                const responseElement = document.createElement("p");
+                responseElement.textContent = "Your response: " + response;
+
+                // Append these to chat output
+                chatOutput.appendChild(objectionElement);
+                chatOutput.appendChild(responseElement);
+
+                const serverResponse = await sendChatMessage(objection, response);
+                
+                // Create Sales Sensei feedback
+                const feedbackElement = document.createElement("p");
+                feedbackElement.innerHTML = `<strong>Sales Sensei says:</strong> ${serverResponse}`;
+                chatOutput.appendChild(feedbackElement);
+
+                objectionInput.value = "";
+                responseInput.value = "";
+            } else if (response.length > 0) {
+                alert('Please enter an objection before providing a response');
+            }
+        });
+    </script>
+
+    <!-- Function to send chat message to server -->
+    <script>
+        async function sendChatMessage(objection, response) {
+            const serverResponse = await fetch('/chatbot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_objection: objection, user_response: response })
+            });
+
+            return await serverResponse.json();
+        }
+    </script>
+
+    <!-- Script to handle the reloading of the page when using browser back button -->
+    <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 </html>

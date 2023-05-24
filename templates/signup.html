@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Sensei | AI-enabled Sales Assistant</title>
+    <title>Paragon 28 | AI-enabled Sales Assistant</title>
 
 <!--CSS Stylesheet and Bootstrap Style Sheet-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -21,24 +21,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Adding favicon for the webpage -->
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"> 
+
 </head>
 
 <!-- Body section of the webpage -->
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
+        <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
     </div>
     <div class="jumbotron text-center">
-        <h1>Sales Sensei</h1>
-        <p>AI-enabled Sales Assistant</p>
+        <h1>Paragon 28</h1>
         <p>Overcome sales objections skillfully and close more deals!</p>
     </div>
 
 <!-- Display message after successful signup -->
     <div class="container">
-        <h2>Sign up to use Sales Sensei</h2>
+        <h2>Access Paragon 28's AI Enabled Sales Training</h2>
         {% for message in get_flashed_messages() %}
             <p>{{ message }}</p>
         {% endfor %}
@@ -54,15 +53,11 @@
                 <input type="text" class="form-control" id="last_name" name="last_name" required>
             </div>
             <div class="form-group">
-                <label for="company">Company Name:</label>
-                <input type="text" class="form-control" id="company" name="company" required>
-            </div>
-            <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
+                <label for="email">Paragon 28 Email:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Sales Sensei</title>
+    <title>Login | Paragon 28 AI Enabled Sales Training</title>
 
 <!--CSS Stylesheet and Bootstrap Style Sheet-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -22,28 +22,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- Adding favicon for the webpage -->
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"> 
 </head>
 
 <!-- Body section of the webpage -->
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
+        <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
     </div>
 
 
 <!-- Title, Tagline, Beneath the Header--> 
     <div class="jumbotron text-center">
-        <h1>Sales Sensei</h1>
-        <p>AI-enabled Sales Assistant</p>
+        <h1>Paragon 28 AI Enabled Sales Training</h1>
         <p>Overcome sales objections skillfully and close more deals!</p>
     </div>
 
 
 <!-- Login message, Login form --> 
     <div class="container">
-        <h2>Login to Sales Sensei</h2>
+        <h2>Login to Paragon 28's AI Enabled Sales Training</h2>
         {% for message in get_flashed_messages() %}
             <p>{{ message }}</p>
         {% endfor %}
@@ -68,7 +66,7 @@
 </div>
 
 <!-- No account, sign up -->
-        <p>Don't have an account? <a href="{{ url_for('signup') }}" class="header-button">Sign Up</a></p>
+        <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
         <p><a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a></p>
     </div>
 
