@@ -105,19 +105,21 @@
         });
     </script>
 
-    <script>
-        async function sendRating(rating) {
-            const ratingResponse = await fetch('/rate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ rating: rating })
-            });
 
-            return await ratingResponse.json();
-        }
-    </script>
+
+<script>
+    async function sendRating(rating) {
+        const ratingResponse = await fetch('/rate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ rating: rating, interaction_id: interactionId }) // include the interaction ID
+        });
+
+        return await ratingResponse.json();
+    }
+</script>
 
     <!-- JavaScript for displaying example prompts -->
     <script>
@@ -181,6 +183,9 @@
 
     <!-- Function to send chat message to server -->
     <script>
+        // Global variable to store interactionId
+        let interactionId = null;
+    
         async function sendChatMessage(objection, response) {
             const serverResponse = await fetch('/chatbot', {
                 method: 'POST',
@@ -189,8 +194,10 @@
                 },
                 body: JSON.stringify({ user_objection: objection, user_response: response })
             });
-
-            return await serverResponse.json();
+    
+            const data = await serverResponse.json();
+            interactionId = data.interaction_id; // store the interaction ID
+            return data.response_text;
         }
     </script>
 
