@@ -191,9 +191,23 @@ class Interaction(db.Model):
 
 
 # Display Data Capture Model in Admin
+
 admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
+
+class InteractionModelView(ModelView):
+    column_list = ('id', 'user', 'objection', 'suggested_response', 'ai_response', 'rating', 'timestamp')
+    column_labels = {
+        'user': 'User',
+        'objection': 'Objection',
+        'suggested_response': 'Suggested Response',
+        'ai_response': 'AI Response',
+        'rating': 'Rating',
+        'timestamp': 'Timestamp'
+    }
+    column_searchable_list = ['user.first_name', 'user.last_name', 'user.email']
+
 admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Interaction, db.session))
+admin.add_view(InteractionModelView(Interaction, db.session))
 
 # Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
