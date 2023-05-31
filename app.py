@@ -12,6 +12,10 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, f
 # Import Flask Migrate Package
 from flask_migrate import Migrate
 
+# Import Flask Admin Package
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 # Email Package: Generate secure tokens that can be used for tasks like password resets, email confirmation links
 from itsdangerous import URLSafeTimedSerializer
 
@@ -184,6 +188,12 @@ class Interaction(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     user = db.relationship('User', backref='interactions') #This model has a foreign key reference to the User model, establishing a one-to-many relationship between users and interactions (one user can have many interactions)
+
+
+# Display Data Capture Model in Admin
+admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Interaction, db.session))
 
 # Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
