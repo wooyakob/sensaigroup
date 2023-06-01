@@ -1,10 +1,20 @@
 # Import Logging Package
 import logging
 
+# Import Python Datetime Package
+from datetime import datetime
+
 # Import Python Regular Expression Package
 import re
 # Import Flask Package
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
+
+# Import Flask Migrate Package
+from flask_migrate import Migrate
+
+# Import Flask Admin Package
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 # Email Package: Generate secure tokens that can be used for tasks like password resets, email confirmation links
 from itsdangerous import URLSafeTimedSerializer
@@ -155,6 +165,7 @@ def is_valid_email(email):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # User Model With Signup Form Fields
 class User(UserMixin, db.Model):
@@ -165,6 +176,38 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+
+# Data Capture Model
+class Interaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    objection = db.Column(db.Text, nullable=False)
+    suggested_response = db.Column(db.Text, nullable=False)
+    ai_response = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Float)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    user = db.relationship('User', backref='interactions') #This model has a foreign key reference to the User model, establishing a one-to-many relationship between users and interactions (one user can have many interactions)
+
+
+# Display Data Capture Model in Admin
+
+admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
+
+class InteractionModelView(ModelView):
+    column_list = ('id', 'user', 'objection', 'suggested_response', 'ai_response', 'rating', 'timestamp')
+    column_labels = {
+        'user': 'User',
+        'objection': 'Objection',
+        'suggested_response': 'Suggested Response',
+        'ai_response': 'AI Response',
+        'rating': 'Rating',
+        'timestamp': 'Timestamp'
+    }
+    column_searchable_list = ['user.first_name', 'user.last_name', 'user.email']
+
+admin.add_view(ModelView(User, db.session))
+admin.add_view(InteractionModelView(Interaction, db.session))
 
 # Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
@@ -264,12 +307,20 @@ def logout():
     return redirect(url_for('index'))
 
 
+# Feedback Rating Route
 @app.route('/rate', methods=['POST'])
+@login_required
 def rate():
+    interaction_id = request.json.get('interaction_id')
     rating = request.json.get('rating')
-    # Handle the rating. For example, you might store it in a database.
-    # TODO: Add your code here.
-    return jsonify({"message": "Rating received"})
+    interaction = Interaction.query.get(interaction_id)
+    if interaction and interaction.user_id == current_user.id:
+        interaction.rating = rating
+        db.session.commit()
+        return jsonify({"message": "Rating received"})
+    else:
+        return jsonify({"message": "Invalid interaction ID"}), 400
+
 
 
 #Email Validation
@@ -284,23 +335,26 @@ objections = {
     "I don't see any ROI potential": "There’s definitely potential. I’d love to show you and explain how. Are you available this week for a more detailed call?",
 }
 
-# Chatbot Functionality
+# Chabot Functionality and Route
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
+    if not current_user.is_authenticated:
+        return jsonify({"error": "User not authenticated"})
+    
     user_objection = request.json.get('user_objection')
     user_response = request.json.get('user_response')
 
-    if len(user_objection) > 140: # Limit Objection Input to 140 Characters
-        return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters, or less."})
+    if len(user_objection) > 140: 
+        return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters or less."})
 
     prompt = f"A prospective client mentioned, \"{user_objection}\" The salesperson responded, \"{user_response}\" How can this response be improved?\n\nSales Sensei:"
     
-    min_length = 200  # Set your minimum response length here
+    min_length = 200
     response_text = ""
 
     while len(response_text) < min_length: 
         response = openai.Completion.create(
-            model="davinci:ft-personal-2023-04-17-22-02-12", # Model ID
+            model="davinci:ft-personal-2023-04-17-22-02-12",
             prompt=prompt,
             temperature=0.5,
             max_tokens=200,
@@ -312,7 +366,17 @@ def chatbot():
         response_text = response.choices[0].text.strip()
         response_text = re.search(r'(.*[.!?])', response_text).group(0)
 
-    return jsonify(response_text)
+    interaction = Interaction(
+        user_id=current_user.id,
+        objection=user_objection,
+        suggested_response=user_response,
+        ai_response=response_text
+    )
+    db.session.add(interaction)
+    db.session.commit()
+
+    return jsonify({"response_text": response_text, "interaction_id": interaction.id})
+
 
 # Database Creation
 with app.app_context():
