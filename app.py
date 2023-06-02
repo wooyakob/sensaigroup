@@ -190,6 +190,7 @@ class Interaction(db.Model):
     user = db.relationship('User', backref='interactions') #This model has a foreign key reference to the User model, establishing a one-to-many relationship between users and interactions (one user can have many interactions)
 
 
+
 # Display Data Capture Model in Admin
 
 admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
@@ -204,7 +205,16 @@ class InteractionModelView(ModelView):
         'rating': 'Rating',
         'timestamp': 'Timestamp'
     }
-    column_searchable_list = ['user.first_name', 'user.last_name', 'user.email']
+    column_searchable_list = ['user.first_name', 'user.last_name', 'user.email', 'user.username']
+    
+    def _user_formatter(view, context, model, name):
+        if model.user:
+            return model.user.username
+        return ""
+    
+    column_formatters = {
+        'user': _user_formatter,  # apply formatter function for 'user' column
+    }
 
 admin.add_view(ModelView(User, db.session))
 admin.add_view(InteractionModelView(Interaction, db.session))
