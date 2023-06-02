@@ -92,25 +92,36 @@
 
 
     <script>
-        document.getElementById("rate-submit").addEventListener("click", async () => {
-            const ratingInput = document.getElementById("rating-input");
-            const rating = ratingInput.value;
-            if (rating && rating >= 1 && rating <= 5) {
-                const ratingResponse = await sendRating(rating);
-                alert("Thank you for your rating, we will use this to improve your experience!");
+document.getElementById("rate-submit").addEventListener("click", async () => {
+    const ratingInput = document.getElementById("rating-input");
+    const chatOutput = document.getElementById("chat-output");
+    const rating = ratingInput.value;
 
-                // Clear chat and input fields
-                document.getElementById("chat-output").innerHTML = "";
-                document.getElementById("objection-input").value = "";
-                document.getElementById("response-input").value = "";
-                ratingInput.value = "";
-            } else {
-                alert("How helpful was the advice you received (1 is unhelpful, 5 is very helpful)");
-            }
-        });
+    if (rating && rating >= 1 && rating <= 5) {
+        const ratingResponse = await sendRating(rating);
+
+        // Create rating response element
+        const ratingResponseElement = document.createElement("p");
+        ratingResponseElement.textContent = "Thank you for your rating, we use this to improve your experience!";
+        chatOutput.appendChild(ratingResponseElement);
+
+        // Clear input fields
+        document.getElementById("objection-input").value = "";
+        document.getElementById("response-input").value = "";
+        ratingInput.value = "";
+    } else {
+        alert("How helpful was the advice you received (1 is unhelpful, 5 is very helpful)");
+    }
+
+    // Once the user rates the response, hide the rate response section again
+    document.querySelector('.rate-response').style.display = 'none';
+
+    // Clear the chat output to start a new interaction
+    while (chatOutput.firstChild) {
+        chatOutput.removeChild(chatOutput.firstChild);
+    }
+});
     </script>
-
-
 
 <script>
     async function sendRating(rating) {
@@ -183,6 +194,8 @@
             } else if (response.length > 0) {
                 alert('Please enter an objection before providing a response');
             }
+            // Once the response is provided, display the rate response section
+            document.querySelector('.rate-response').style.display = 'block';
         });
     </script>
 
