@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Head section of the webpage -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Sensei | AI-enabled Sales Training</title>
 
-<!--CSS Stylesheet and Bootstrap Style Sheet-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
-<!-- Importing required JavaScript libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-<!-- Importing Google Fonts for custom typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"> 
 </head>
 
-
 <body>
-    <!-- Login and Signup Buttons, Header Button Class Styling to ensure Mobile Optimized, see CSS--> 
-    <div class="header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
-            <div class="header-buttons">
-                <a href="{{ url_for('login') }}" class="header-button">Login</a>
-                <a href="{{ url_for('blog') }}" class="header-button">Blog</a>
+    <div class="header sticky-top bg-light"> <!-- Added sticky-top and bg-light classes for a sticky, light-colored navbar -->
+        <div class="container d-flex justify-content-between align-items-center py-2"> <!-- Added py-2 for a bit of vertical padding -->
+            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Sales Sensei Logo" class="img-fluid"> <!-- Added img-fluid for responsive image -->
+            <div>
+                <a href="{{ url_for('login') }}" class="btn btn-primary mr-2">Login</a> <!-- Converted these into Bootstrap buttons for a more consistent look -->
+                <a href="{{ url_for('blog') }}" class="btn btn-secondary">Blog</a>
             </div>
         </div>
     </div>
 
-    <!-- Title, Tagline, Beneath the Header--> 
-    <div class="jumbotron text-center custom-jumbotron">
-        <h1>Sales Sensei</h1>
-        <p>AI-enabled Sales Training</p>
-    </div>
+    <section class="hero text-white text-center py-5"> <!-- Replaced jumbotron with a more custom section. bg-primary and text-white for a contrasting hero section -->
+        <div class="container">
+            <h1 class="display-4">Sales Sensei</h1> <!-- display-4 for a large, impactful headline -->
+            <p class="lead">AI-enabled Sales Training</p> <!-- lead for a subheading -->
+            <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Demo" class="btn btn-light btn-lg">Request a Demo</a> <!-- Added a call to action here in the hero -->
+        </div>
+    </section>
 
-    <div class="container">
+    <div class="container py-5">
         <div class="row">
             <div class="col-md-6">
                 <h2>Why Sales Sensei?</h2>
@@ -61,26 +55,25 @@
             </div>
         </div>
         <hr>
-        <p>To access the Sales Sensei, please <a href="/login">log in</a></p>
-        <p><a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Demo" class="btn btn-primary">Request a Demo</a></p>
+        <p class="lead">To access the Sales Sensei please <a href="/login">log in</a></p> <!-- Added lead class for emphasis -->
     </div>
-</body>
 
-
-    <footer class="footer">
+    <footer class="footer bg-dark text-white py-4"> <!-- Made the footer dark for contrast -->
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <p>&copy; Sales Sensei 2023. All rights reserved.</p>
                 </div>
                 <div class="col-md-6">
-                    <p class="social-icons">
-                        <a href="https://www.linkedin.com/company/sales-sensei/" target="_blank">LinkedIn</a> |
-                        <a href="https://twitter.com/sale_sensei" target="_blank">Twitter</a>
+                    <p>
+                        <a href="https://www.linkedin.com/company/sales-sensei/" target="_blank" class="text-white mr-2">LinkedIn</a> <!-- Removed vertical bar separators for a cleaner look -->
+                        <a href="https://twitter.com/sale_sensei" target="_blank" class="text-white">Twitter</a>
                     </p>
                 </div>
             </div>
         </div>
     </footer>
+
+</body>
 
 </html>
