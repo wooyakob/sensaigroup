@@ -20,7 +20,7 @@ body {
   font-family: 'Roboto', sans-serif;
   text-shadow: 2px 2px 4px #000;
   color: #ffffff;
-  background-color: #0C162C; /* Purple color */
+  background-color: #0C162C; 
   position: relative;
   padding: 1rem 0;
 }
@@ -176,4 +176,8 @@ textarea {
 
 .rate-response {
   display: none;
+}
+
+.hero {
+  background-color: #0B162B;
 }
