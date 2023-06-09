@@ -1,87 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Head section of the webpage -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Sensei | AI-enabled Sales Training</title>
+    <title>Sales Sensei | Revolutionize Your Sales Performance</title>
 
-<!--CSS Stylesheet and Bootstrap Style Sheet-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
-<!-- Importing required JavaScript libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-<!-- Importing Google Fonts for custom typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"> 
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 
-
 <body>
-    <!-- Login and Signup Buttons, Header Button Class Styling to ensure Mobile Optimized, see CSS--> 
-    <div class="header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
-            <div class="header-buttons">
-                <a href="{{ url_for('login') }}" class="header-button">Login</a>
-                <a href="{{ url_for('signup') }}" class="header-button">Sign Up</a>
-                <a href="{{ url_for('blog') }}" class="header-button">Blog</a>
+    <header class="sticky-top bg-light">
+        <div class="container d-flex justify-content-between align-items-center py-2">
+            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Sales Sensei Logo" class="img-fluid">
+            <div>
+                <a href="{{ url_for('login') }}" class="btn btn-primary mr-2">Login</a>
+                <a href="{{ url_for('blog') }}" class="btn btn-secondary">Blog</a>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Title, Tagline, Beneath the Header--> 
-    <div class="jumbotron text-center custom-jumbotron">
-        <h1>Sales Sensei</h1>
-        <p>AI-enabled Sales Training</p>
-    </div>
+    <section class="hero text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Sales Sensei</h1>
+            <p class="lead">Revolutionize Your Sales Performance With AI Powered Objection Handling</p>
+            <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Demo" class="btn btn-light btn-lg">Request a Demo</a>
+        </div>
+    </section>
 
-    <div class="container">
+    <div class="container py-5">
         <div class="row">
-            <div class="col-md-6">
-                <h2>Why Sales Sensei?</h2>
-                <p>Sales Sensei is an innovative AI-enabled sales assistant that helps you overcome objections, identify opportunities and close more deals. Our powerful AI engine provides advice on how to handle sales objections effectively</p>
-            </div>
-            <div class="col-md-6">
-                <h2>Features</h2>
-                <ul>
-                    <li>Bespoke AI Sales Engine</li>
-                    <li>Unique Prompt Engineering</li>
-                    <li>Rating System & Continous Improvement</li>
-                </ul>
+            <div class="col-md-12">
+                <h2>Welcome to Sales Sensei</h2>
+                <p>Experience our innovative approach to leveraging AI technology to provide intelligent guidance and actionable advice for effective sales engagement.</p>
             </div>
         </div>
-        <hr>
-        <p>To access the Sales Sensei, please <a href="/login">log in</a> or <a href="/signup">sign up</a> if you don't have an account.</p>
-        <p><a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Demo" class="btn btn-primary">Request a Demo</a></p>
+
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h3 class="text-center">Features</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Sales Engine</h4>
+                        <p class="card-text">Provides AI powered sales insight and strategies to handle an infinite number of sales objections.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Product Specific</h4>
+                        <p class="card-text">Understands the unique aspects of your product, business, and offerings.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Rating System</h4>
+                        <p class="card-text">Allows you to understand how our AI Sales Engine is influencing your sales reps.</p>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h3 class="text-center">Benefits</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Sales Reps</h4>
+                        <p class="card-text">Sales Sensei is a partner to carving out a successful sales career and becoming a to performing sales rep.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Sales Leaders</h4>
+                        <p class="card-text">Sales Sensei is your guide to managing an efficient, effective sales team with unique sales data and insights.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Sales Orgs</h4>
+                        <p class="card-text">Sales Sensei equips your organization with the tools to foster a culture of sales excellence, increasing average performance of all your sales reps.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
 
+    <section class="join-revolution text-center py-5">
+        <div class="container">
+            <h2>Join the Revolution: The Sensei Awaits</h2>
+            <p>Experience the transformative power of AI on your sales results. Embrace the future, embrace higher profits, embrace Sales Sensei.</p>
+            <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Trial" class="btn btn-primary btn-lg">Try Sales Sensei</a>
+        </div>
+    </section>
 
-    <footer class="footer">
+    <footer class="footer bg-dark text-white py-4"> <!-- Made the footer dark for contrast -->
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <p>&copy; Sales Sensei 2023. All rights reserved.</p>
                 </div>
                 <div class="col-md-6">
-                    <p class="social-icons">
-                        <a href="https://www.linkedin.com/company/sales-sensei/" target="_blank">LinkedIn</a> |
-                        <a href="https://twitter.com/sale_sensei" target="_blank">Twitter</a>
+                    <p>
+                        <a href="https://www.linkedin.com/company/sales-sensei/" target="_blank" class="text-white mr-2">LinkedIn</a> <!-- Removed vertical bar separators for a cleaner look -->
+                        <a href="https://twitter.com/sale_sensei" target="_blank" class="text-white">Twitter</a>
                     </p>
                 </div>
             </div>
         </div>
     </footer>
+
+</body>
 
 </html>
