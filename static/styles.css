@@ -168,31 +168,3 @@ body {
     padding: 1rem;
   }
 }
-
-textarea {
-  resize: vertical; /* user can resize vertically, but width is fixed */
-  overflow: auto;
-}
-
-.rate-response {
-  display: none;
-}
-
-.hero {
-  background-color: #0B162B;
-}
-
-/* Make the progress bar blue */
-.progress-bar {
-  background-color: #007bff; /* Bootstrap primary color */
-}
-
-/* Add animation */
-@keyframes loading {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-.progress-bar-animated {
-  animation: loading 2s linear infinite;
-}

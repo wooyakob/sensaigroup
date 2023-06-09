@@ -1,10 +1,10 @@
 import logging
-from datetime import datetime
+
+# Import Python Regular Expression Package
 import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from flask_migrate import Migrate
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
+
+# Email Package: Generate secure tokens that can be used for tasks like password resets, email confirmation links
 from itsdangerous import URLSafeTimedSerializer
 import os
 import openai
@@ -97,7 +97,8 @@ def is_valid_email(email):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
+# User Model With Signup Form Fields
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
@@ -106,37 +107,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-class Interaction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    objection = db.Column(db.Text, nullable=False)
-    suggested_response = db.Column(db.Text, nullable=False)
-    ai_response = db.Column(db.Text, nullable=False)
-    rating = db.Column(db.Float)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user = db.relationship('User', backref='interactions') 
-admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
-class InteractionModelView(ModelView):
-    column_list = ('id', 'user', 'objection', 'suggested_response', 'ai_response', 'rating', 'timestamp')
-    column_labels = {
-        'user': 'User',
-        'objection': 'Objection',
-        'suggested_response': 'Suggested Response',
-        'ai_response': 'AI Response',
-        'rating': 'Rating',
-        'timestamp': 'Timestamp'
-    }
-    column_searchable_list = ['user.first_name', 'user.last_name', 'user.email', 'user.username']
-    def _user_formatter(view, context, model, name):
-        if model.user:
-            return model.user.username
-        return ""
-    
-    column_formatters = {
-        'user': _user_formatter,
-    }
-admin.add_view(ModelView(User, db.session))
-admin.add_view(InteractionModelView(Interaction, db.session))
+
+# Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
@@ -211,11 +183,30 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
+
 @app.route('/rate', methods=['POST'])
+@login_required
 def rate():
+    interaction_id = request.json.get('interaction_id')
     rating = request.json.get('rating')
+    # Handle the rating. For example, you might store it in a database.
+    # TODO: Add your code here.
     return jsonify({"message": "Rating received"})
 
+
+#Email Validation
+def is_valid_email(email):
+    regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+    return re.match(regex, email)
+
+# Prompt Generation
+objections = {
+    "We're using your competitor": "And how are you finding them? If you don’t mind me asking, why did you choose to go with them?",
+    "Your product is too expensive": "Cost is an important consideration but I believe we can actually save you money. Can we set up a time for me to explain how?",
+    "I don't see any ROI potential": "There’s definitely potential. I’d love to show you and explain how. Are you available this week for a more detailed call?",
+}
+
+# Chatbot Functionality
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     if not current_user.is_authenticated:
@@ -224,41 +215,31 @@ def chatbot():
     user_objection = request.json.get('user_objection')
     user_response = request.json.get('user_response')
 
-    if len(user_objection) > 140: 
-        return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters or less."})
-    
-    messages = [
-        {"role": "system", "content": 
-        "You are stepping into the shoes of a top-tier sales expert, specifically tuned to hone in on relationship-building with the end goal of securing a sale. As this seasoned professional, you are called upon by other sales representatives seeking your advice on overcoming objections and challenges raised by potential customers – obstacles that hinder a sale.\n\n" 
-        "Your job is to provide these sales representatives with strategic advice tailored to each unique objection, considering both product and company context to ensure highly relevant and accurate guidance. Your advice should be concise, spanning no more than three paragraphs.\n\n" 
-        "Your conversation's primary objective is to train the representatives, leading them to an effective strategy for addressing the initial objection. By probing the representatives with insightful questions, you help them develop solutions and build their skills.\n\n" 
-        "The ultimate goal is to shape them into top performers, enhancing their abilities to professionally and skillfully respond to customer objections, queries, and challenges. A significant aspect of your guidance involves recognizing the stage in the sales lifecycle where the objection occurred and customizing your advice accordingly.\n\n"
-        "You rely on the best sales strategies, applying them to specific scenarios presented to you.\n\n"
-        "You provide responses in no more than three paragraphs and clearly separate out your points with paragraphs.\n\n"
-    },
-        {"role": "user", "content": user_objection},
-        {"role": "assistant", "content": user_response}
-]
+    if len(user_objection) > 140: # Limit Objection Input to 140 Characters
+        return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters, or less."})
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-        max_tokens=200,
-    )
+    prompt = f"A prospective client mentioned, \"{user_objection}\" The salesperson responded, \"{user_response}\" How can this response be improved?\n\nSales Sensei:"
     
-    response_text = response.choices[0].message.content.strip()
-    
-    interaction = Interaction(
-        user_id=current_user.id,
-        objection=user_objection,
-        suggested_response=user_response,
-        ai_response=response_text
-    )
-    db.session.add(interaction)
-    db.session.commit()
+    min_length = 200  # Set your minimum response length here
+    response_text = ""
 
-    return jsonify({"response_text": response_text, "interaction_id": interaction.id})
+    while len(response_text) < min_length: 
+        response = openai.Completion.create(
+            model="davinci:ft-personal-2023-04-17-22-02-12", # Model ID
+            prompt=prompt,
+            temperature=0.5,
+            max_tokens=200,
+            top_p=1,
+            frequency_penalty=2,
+            presence_penalty=2,
+            stop=["END",]
+        )
+        response_text = response.choices[0].text.strip()
+        response_text = re.search(r'(.*[.!?])', response_text).group(0)
 
+    return jsonify(response_text)
+
+# Database Creation
 with app.app_context():
     db.create_all()
 if __name__ == "__main__":
