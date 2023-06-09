@@ -48,16 +48,13 @@
         <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
     </div>
 
-    <!-- Prompt examples container -->
     <div id="prompt-container" class="mt-4">
         <div id="prompts"></div>
     </div>
 
-<!-- Chat container and input form -->
 <div class="container chat-container">
     <div id="chat-container" class="card mt-4">
         <div class="card-body">
-            <!-- Input fields -->
             <div class="form-group">
                 <h5>Enter Objection:</h5>
                 <textarea id="objection-input" class="form-control" placeholder="Enter a sales objection"></textarea>
@@ -69,16 +66,13 @@
             <div class="text-center">
                 <button id="chat-submit" class="btn btn-primary">Get Advice</button>
             </div>
-            <!-- End of input fields -->
 
             <div id="chat-output" class="mt-4"></div>
 
-            <!-- Loading bar for AI response -->
             <div id="loading-bar" class="progress d-none">
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <!-- Rate Response and rating input -->
             <div class="rate-response mt-4">
                 <div class="form-group">
                     <input type="number" id="rating-input" class="form-control" placeholder="How helpful was the advice you received (1 is unhelpful, 5 is very helpful)">
