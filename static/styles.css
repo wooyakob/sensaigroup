@@ -20,7 +20,7 @@ body {
   font-family: 'Roboto', sans-serif;
   text-shadow: 2px 2px 4px #000;
   color: #ffffff;
-  background-color: #0C162C; 
+  background-color: #4A317A; /* Purple color */
   position: relative;
   padding: 1rem 0;
 }
@@ -89,14 +89,14 @@ body {
 
 /* Set the prompt button hover styles */
 .prompt:hover {
-  background-color: #0C162C; /* Purple color */
+  background-color: #4A317A; /* Purple color */
   color: #ffffff;
 }
 
 /* Set the primary button styles */
 .btn-primary {
-  background-color: #0C162C; /* Purple color */
-  border-color: #0C162C; /* Purple color */
+  background-color: #4A317A; /* Purple color */
+  border-color: #4A317A; /* Purple color */
   color: #ffffff;
 }
 
@@ -110,7 +110,7 @@ body {
 /* Set the chat submit button hover styles */
 #chat-submit:hover,
 #rate-submit:hover {
-  background-color: #0C162C; /* Purple color */
+  background-color: #4A317A; /* Purple color */
   color: #ffffff;
 }
 
@@ -184,7 +184,7 @@ textarea {
 
 /* Make the progress bar blue */
 .progress-bar {
-  background-color: #007bff; /* Bootstrap primary color */
+  background-color: #4A317A; /* Bootstrap primary color */
 }
 
 /* Add animation */
@@ -195,4 +195,9 @@ textarea {
 
 .progress-bar-animated {
   animation: loading 2s linear infinite;
+}
+
+.custom-jumbotron {
+  background-color: #4A317A; /* Purple color */
+  color: white; /* White text color */
 }

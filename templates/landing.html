@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Sensei | Revolutionize Your Sales Performance</title>
+    <title>Paragon 28 | Revolutionize Your Sales Performance</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -23,7 +23,7 @@
 <body>
     <header class="sticky-top bg-light">
         <div class="container d-flex justify-content-between align-items-center py-2">
-            <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Sales Sensei Logo" class="img-fluid">
+            <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
             <div>
                 <a href="{{ url_for('login') }}" class="btn btn-primary mr-2">Login</a>
                 <a href="{{ url_for('blog') }}" class="btn btn-secondary">Blog</a>
@@ -31,106 +31,14 @@
         </div>
     </header>
 
-    <section class="hero text-white text-center py-5">
-        <div class="container">
-            <h1 class="display-4">Sales Sensei</h1>
-            <p class="lead">Revolutionize Your Sales Performance With AI Powered Objection Handling</p>
-            <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Demo" class="btn btn-light btn-lg">Request a Demo</a>
-        </div>
-    </section>
-
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Welcome to Sales Sensei</h2>
-                <p>Experience our innovative approach to leveraging AI technology to provide intelligent guidance and actionable advice for effective sales engagement.</p>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <h3 class="text-center">Features</h3>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Engine</h4>
-                        <p class="card-text">Provides AI powered sales insight and strategies to handle an infinite number of sales objections.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Product Specific</h4>
-                        <p class="card-text">Understands the unique aspects of your product, business, and offerings.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Rating System</h4>
-                        <p class="card-text">Allows you to understand how our AI Sales Engine is influencing your sales reps.</p>
-                    </div>
-                </div>
-            </div>
-
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <h3 class="text-center">Benefits</h3>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Reps</h4>
-                        <p class="card-text">Sales Sensei is a partner to carving out a successful sales career and becoming a to performing sales rep.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Leaders</h4>
-                        <p class="card-text">Sales Sensei is your guide to managing an efficient, effective sales team with unique sales data and insights.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Orgs</h4>
-                        <p class="card-text">Sales Sensei equips your organization with the tools to foster a culture of sales excellence, increasing average performance of all your sales reps.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="jumbotron text-center custom-jumbotron">
+        <h1>Paragon 28</h1>
+        <p>AI-enabled Sales Training</p>
     </div>
 
-    <section class="join-revolution text-center py-5">
-        <div class="container">
-            <h2>Join the Revolution: The Sensei Awaits</h2>
-            <p>Experience the transformative power of AI on your sales results. Embrace the future, embrace higher profits, embrace Sales Sensei.</p>
-            <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Trial" class="btn btn-primary btn-lg">Try Sales Sensei</a>
-        </div>
-    </section>
-
-    <footer class="footer bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; Sales Sensei 2023. All rights reserved.</p>
-                </div>
-                <div class="col-md-6">
-                    <p>
-                        <a href="https://www.linkedin.com/company/sales-sensei/" target="_blank" class="text-white mr-2">LinkedIn</a> <!-- Removed vertical bar separators for a cleaner look -->
-                        <a href="https://twitter.com/sale_sensei" target="_blank" class="text-white">Twitter</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <div class="philosophy-section text-center">
+        <img src="{{ url_for('static', filename='paragon_philo.png') }}" alt="Paragon Philosophy">
+    </div>
 
 </body>
-
 </html>

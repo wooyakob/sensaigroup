@@ -1,52 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Head section of the webpage -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Sales Sensei: AI Enabled Sales Training</title>
-
-<!--CSS Stylesheet and Bootstrap Style Sheet-->
+    <title>Login | Paragon 28: AI Enabled Sales Training</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
-
-<!-- Importing required JavaScript libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<!-- Importing Google Fonts for custom typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"> 
 </head>
-
-<!-- Body section of the webpage -->
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
+        <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo">
     </div>
-
-
-<!-- Title, Tagline, Beneath the Header--> 
     <div class="jumbotron text-center">
-        <h1>Sales Sensei: AI Enabled Sales Training</h1>
+        <h1>Parsgon 28: AI Enabled Sales Training</h1>
         <p>Overcome sales objections skillfully and close more deals!</p>
     </div>
-
-
-<!-- Login message, Login form --> 
     <div class="container">
-        <h2>Login to Sales Sensei: AI Enabled Sales Training</h2>
+        <h2>Login to Paragon 28: AI Enabled Sales Training</h2>
         {% for message in get_flashed_messages() %}
             <p>{{ message }}</p>
         {% endfor %}
-
-<!-- Login Form -->
         <form method="POST" action="/login">
             <div class="form-group">
                 <label for="username">Username:</label>
@@ -58,17 +38,11 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-
-<!--Forgot Username / Password-->
 <div class="text-center">
     <p><a href="/forgot_username">Forgot Username</a></p>
     <p><a href="/forgot_password">Forgot Password</a></p>
 </div>
-
-<!-- Return to Home Page -->
         <p><a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a></p>
     </div>
-
 </body>
-
 </html>
