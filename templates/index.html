@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paragon 28: AI Enabled Sales Training</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -52,45 +54,87 @@
         <div id="prompts"></div>
     </div>
 
-<div class="container chat-container">
-    <div id="chat-container" class="card mt-4">
-        <div class="card-body">
-            <div class="form-group">
-                <h5>Enter Objection:</h5>
-                <textarea id="objection-input" class="form-control" placeholder="Enter a sales objection"></textarea>
-            </div>
-            <div class="form-group">
-                <h5>Enter Your Suggested Way of Dealing with It (Optional):</h5>
-                <textarea id="response-input" class="form-control" placeholder="How would you address this objection?"></textarea>
-            </div>
-            <div class="text-center">
-                <button id="chat-submit" class="btn btn-primary">Get Advice</button>
-            </div>
+    <div class="container chat-container">
+        <div id="chat-container" class="card mt-4">
+            <div class="card-body">
 
-            <div id="chat-output" class="mt-4"></div>
-
-            <div id="loading-bar" class="progress d-none">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-
-            <div class="rate-response mt-4">
                 <div class="form-group">
-                    <input type="number" id="rating-input" class="form-control" placeholder="How helpful was the advice you received (1 is unhelpful, 5 is very helpful)">
+                    <h5>Select a Common Objection:
+                        <i class="bi bi-info-circle-fill" 
+                        data-toggle="tooltip" 
+                        data-placement="right" 
+                        title="Select a common objection from the list or enter your own in the next box.">
+                        </i>
+                    </h5>
+                    <select id="objection-select" class="form-control">
+                        <option selected disabled>Select a common objection</option>
+                    </select>
                 </div>
-                <div class="text-center">
-                    <button id="rate-submit" class="btn btn-secondary">Rate Response</button>
+
+                <div class="form-group">
+                    <h5>Or, Enter Your Objection: 
+                        <i class="bi bi-info-circle-fill" 
+                           data-toggle="tooltip" 
+                           data-placement="right" 
+                           title="Enter a common objection you encounter during sales discussions.">
+                        </i>
+                    </h5>
+                    <textarea id="objection-input" class="form-control" placeholder="Enter a sales objection"></textarea>
                 </div>
+
+                <div class="form-group">
+                    <h5>Enter Your Suggested Way of Dealing with It: 
+                        <i class="bi bi-info-circle-fill" 
+                           data-toggle="tooltip" 
+                           data-placement="right" 
+                           title="You may optionally suggest a way to address the objection here.">
+                        </i>
+                    </h5>
+                    <textarea id="response-input" class="form-control" placeholder="How would you address this objection?"></textarea>
+                    <div class="text-center mt-3">
+                    <button id="chat-submit" class="btn btn-primary">Get Advice</button>
+                </div>
+
+                <div id="chat-output" class="mt-4"></div>
+
+                <div id="loading-bar" class="progress d-none">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <div id="rating-thankyou" class="mt-4" style="display: none;">
+                    <h5>Thanks for ranking this response. Would you like to input another sales objection?</h5>
+                    <div class="mt-4 text-center">
+                        <button id="btn-yes" class="btn btn-success">Yes</button>
+                        <button id="btn-no" class="btn btn-danger">No</button>
+                    </div>
+                </div>
+
+                <div id="exit-options" class="mt-4" style="display: none;">
+                    <h5>Thanks for using the Sensei. </h5>
+                    <div class="mt-4 text-center">
+                        <button id="btn-save" class="btn btn-primary">Save as PDF</button>
+                        <button id="btn-exit" class="btn btn-secondary">Exit</button>
+                    </div>
+                </div>
+
+                <div class="rate-response mt-4">
+                    <div class="form-group">
+                        <input type="number" id="rating-input" class="form-control" placeholder="How helpful was the advice you received (1 is unhelpful, 5 is very helpful)">
+                    </div>
+                    <div class="text-center">
+                        <button id="rate-submit" class="btn btn-secondary">Rate Response</button>
+                    </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <script>
     document.getElementById("rate-submit").addEventListener("click", async () => {
         const ratingInput = document.getElementById("rating-input");
         const chatOutput = document.getElementById("chat-output");
         const rating = ratingInput.value;
+        const ratingThankyou = document.getElementById("rating-thankyou");
 
         if (rating && rating >= 1 && rating <= 5) {
             const ratingResponse = await sendRating(rating);
@@ -102,8 +146,9 @@
             document.getElementById("objection-input").value = "";
             document.getElementById("response-input").value = "";
             ratingInput.value = "";
+            ratingThankyou.style.display = "block"; // Display the thank you message
         } else {
-            alert("How helpful was the advice you received (1 is unhelpful, 5 is very helpful)");
+            alert("How helpful was the advice (1: unhelpful, 5: very helpful)");
         }
 
         document.querySelector('.rate-response').style.display = 'none';
@@ -136,20 +181,17 @@
     ];
 
     function displayExamplePrompts() {
-        const container = document.getElementById("prompts");
+        const select = document.getElementById("objection-select");
         examplePrompts.forEach(prompt => {
-            const div = document.createElement("div");
-            div.classList.add("prompt");
-            div.textContent = prompt;
-            div.onclick = () => {
-                document.getElementById("objection-input").value = prompt;
-            };
-            container.appendChild(div);
+            const option = document.createElement("option");
+            option.textContent = prompt;
+            select.appendChild(option);
         });
     }
 
     displayExamplePrompts();
 </script>
+
 
 <script>
     document.getElementById("chat-submit").addEventListener("click", async () => {
@@ -217,5 +259,54 @@
         }
     });
 </script>
+    
+<script>
+    $(function () {
+    $('i[data-toggle="tooltip"]').hover(
+        function(){
+            if ($(this).prev().text() === 'Enter Objection: ') {
+                $(this).attr('title', 'Enter a common objection you encounter during sales discussions.');
+            } else if ($(this).prev().text() === 'Enter Your Suggested Way of Dealing with It (Optional): ') {
+                $(this).attr('title', 'You may optionally suggest a way to address the objection here.');
+            }
+            $(this).tooltip('show');
+        },
+        function() {
+            $(this).tooltip('hide');
+        }
+    );
+
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+<script>
+document.getElementById("objection-select").addEventListener("change", function() {
+    document.getElementById("objection-input").value = this.value;
+});
+</script>
+
+<script>
+document.getElementById("btn-yes").addEventListener("click", function() {
+    document.getElementById("rating-thankyou").style.display = "none"; // Hide the thank you message
+    document.getElementById("chat-output").innerHTML = ""; // Clear chat output
+    // Reset any other elements to initial state as needed
+});
+</script>
+
+<script>
+document.getElementById("btn-no").addEventListener("click", function() {
+    document.getElementById("rating-thankyou").style.display = "none"; // Hide the thank you message
+    document.getElementById("exit-options").style.display = "block"; // Show exit options
+});
+</script>
+
+<script>
+document.getElementById("btn-exit").addEventListener("click", function() {
+    // Add code to properly exit, may just refresh page or redirect to homepage
+    location.reload();
+});
+</script>
+
 </body>
 </html>
