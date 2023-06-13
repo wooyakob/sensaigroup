@@ -285,7 +285,7 @@ def chatbot():
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=messages,
-        max_tokens=200,
+        max_tokens=500,
     )
 
     response_text = response.choices[0].message.content.strip()

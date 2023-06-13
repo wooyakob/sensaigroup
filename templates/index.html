@@ -68,11 +68,12 @@
                     </h5>
                     <select id="product-select" class="form-control">
                         <option selected disabled>Select a product</option>
+                        <option value="">-- None Selected --</option>
                         <option value="Gorilla Universal Hevans Plate">Gorilla Universal Hevans Plate</option>
                         <option value="Gorilla Calc Fracture Plating System">Gorilla Calc Fracture Plating System</option>
                     </select>
                 </div>
-
+                
                 <div class="form-group">
                     <h5>Select a Common Objection:
                         <i class="bi bi-info-circle-fill" 
@@ -83,6 +84,7 @@
                     </h5>
                     <select id="objection-select" class="form-control">
                         <option selected disabled>Select a common objection</option>
+                        <option value="">-- None Selected --</option>
                     </select>
                 </div>
 
@@ -250,6 +252,8 @@
 
             objectionInput.value = "";
             responseInput.value = "";
+            document.getElementById("product-select").selectedIndex = 0;
+            document.getElementById("objection-select").selectedIndex = 0;
         } else if (response.length > 0) {
             alert('Please enter an objection before providing a response');
         }
@@ -343,6 +347,14 @@ document.getElementById("btn-exit").addEventListener("click", function() {
     }),
     // other AJAX properties...
 });
+</script>
+
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById("product-select").options[0].disabled = true;
+        document.getElementById("objection-select").options[0].disabled = true;
+    });
 </script>
 
 </body>
