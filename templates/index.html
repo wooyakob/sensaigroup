@@ -211,9 +211,17 @@
 <script>
     document.getElementById("chat-submit").addEventListener("click", async () => {
         const objectionInput = document.getElementById("objection-input");
+        const objectionSelect = document.getElementById("objection-select");
         const responseInput = document.getElementById("response-input");
+
+        if (objectionSelect.value !== 'Select a common objection' && objectionInput.value === '') {
+        objectionInput.value = objectionSelect.value;
+    }
+
         const objection = objectionInput.value;
         const response = responseInput.value;
+
+
         if (objection && (objection.length > 0 || response.length > 0)) {
             const chatOutput = document.getElementById("chat-output");
 
@@ -297,7 +305,7 @@
 
 <script>
     document.getElementById("objection-select").addEventListener("change", function() {
-        document.getElementById("objection-input").value = this.value;
+        document.getElementById("objection-input").value = "";
     });
     </script>
 <script>
