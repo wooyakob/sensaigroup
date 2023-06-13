@@ -107,6 +107,12 @@ body {
   color: #ffffff;
 }
 
+/* Set the chat submit button styles */
+#chat-submit {
+  background-color: #4A317A; /* Purple color */
+  color: #ffffff;
+}
+
 /* Set the chat submit button hover styles */
 #chat-submit:hover,
 #rate-submit:hover {

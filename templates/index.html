@@ -59,6 +59,21 @@
             <div class="card-body">
 
                 <div class="form-group">
+                    <h5>Select a Product:
+                        <i class="bi bi-info-circle-fill" 
+                           data-toggle="tooltip" 
+                           data-placement="right" 
+                           title="Select a product from the list.">
+                        </i>
+                    </h5>
+                    <select id="product-select" class="form-control">
+                        <option selected disabled>Select a product</option>
+                        <option value="Gorilla Universal Hevans Plate">Gorilla Universal Hevans Plate</option>
+                        <option value="Gorilla Calc Fracture Plating System">Gorilla Calc Fracture Plating System</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <h5>Select a Common Objection:
                         <i class="bi bi-info-circle-fill" 
                         data-toggle="tooltip" 
@@ -281,11 +296,10 @@
 </script>
 
 <script>
-document.getElementById("objection-select").addEventListener("change", function() {
-    document.getElementById("objection-input").value = this.value;
-});
-</script>
-
+    document.getElementById("objection-select").addEventListener("change", function() {
+        document.getElementById("objection-input").value = this.value;
+    });
+    </script>
 <script>
 document.getElementById("btn-yes").addEventListener("click", function() {
     document.getElementById("rating-thankyou").style.display = "none"; // Hide the thank you message
@@ -305,6 +319,21 @@ document.getElementById("btn-no").addEventListener("click", function() {
 document.getElementById("btn-exit").addEventListener("click", function() {
     // Add code to properly exit, may just refresh page or redirect to homepage
     location.reload();
+});
+</script>
+
+
+<script>
+    $.ajax({
+    url: '/chatbot',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+        user_objection: $('#objection-input').val(),
+        user_response: $('#response-input').val(),
+        selected_product: $('#product-select').val()
+    }),
+    // other AJAX properties...
 });
 </script>
 
