@@ -163,7 +163,7 @@
             document.getElementById("objection-input").value = "";
             document.getElementById("response-input").value = "";
             ratingInput.value = "";
-            ratingThankyou.style.display = "block"; // Display the thank you message
+            ratingThankyou.style.display = "block";
         } else {
             alert("How helpful was the advice (1: unhelpful, 5: very helpful)");
         }
@@ -314,22 +314,20 @@
     </script>
 <script>
 document.getElementById("btn-yes").addEventListener("click", function() {
-    document.getElementById("rating-thankyou").style.display = "none"; // Hide the thank you message
-    document.getElementById("chat-output").innerHTML = ""; // Clear chat output
-    // Reset any other elements to initial state as needed
+    document.getElementById("rating-thankyou").style.display = "none"; 
+    document.getElementById("chat-output").innerHTML = ""; 
 });
 </script>
 
 <script>
 document.getElementById("btn-no").addEventListener("click", function() {
-    document.getElementById("rating-thankyou").style.display = "none"; // Hide the thank you message
-    document.getElementById("exit-options").style.display = "block"; // Show exit options
+    document.getElementById("rating-thankyou").style.display = "none";
+    document.getElementById("exit-options").style.display = "block"; 
 });
 </script>
 
 <script>
 document.getElementById("btn-exit").addEventListener("click", function() {
-    // Add code to properly exit, may just refresh page or redirect to homepage
     location.reload();
 });
 </script>
@@ -345,7 +343,7 @@ document.getElementById("btn-exit").addEventListener("click", function() {
         user_response: $('#response-input').val(),
         selected_product: $('#product-select').val()
     }),
-    // other AJAX properties...
+
 });
 </script>
 
