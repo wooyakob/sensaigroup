@@ -1,6 +1,5 @@
-
 document.addEventListener('DOMContentLoaded', (event) => {
-    
+
     document.getElementById("rate-submit").addEventListener("click", async () => {
         const ratingInput = document.getElementById("rating-input");
         const chatOutput = document.getElementById("chat-output");

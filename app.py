@@ -3,6 +3,7 @@ from datetime import datetime
 import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from flask_migrate import Migrate
+from models import db, User, Interaction
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer
@@ -14,10 +15,20 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from flask_mail import Mail, Message
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
+
 load_dotenv()
+
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+
+db.init_app(app)
+migrate = Migrate(app, db)
+
 logging.basicConfig(level=logging.DEBUG)
 ph = PasswordHasher()
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app.config["MAIL_SERVER"] = "smtp.mail.me.com"
 app.config["MAIL_PORT"] = 587
@@ -95,27 +106,6 @@ def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(100), nullable=False)
-    last_name = db.Column(db.String(100), nullable=False)
-    company = db.Column(db.String(120))
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-class Interaction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    objection = db.Column(db.Text, nullable=False)
-    suggested_response = db.Column(db.Text, nullable=False)
-    ai_response = db.Column(db.Text, nullable=False)
-    rating = db.Column(db.Float)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user = db.relationship('User', backref='interactions') 
 admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
 class InteractionModelView(ModelView):
     column_list = ('id', 'user', 'objection', 'suggested_response', 'ai_response', 'rating', 'timestamp')
