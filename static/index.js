@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             ratingInput.value = "";
             ratingThankyou.style.display = "block";
         } else {
-            alert("How helpful was the advice (1: unhelpful, 5: very helpful)");
+            alert("Rate the advice (1: bad, 5: exceptional)");
         }
 
         document.querySelector('.rate-response').style.display = 'none';
