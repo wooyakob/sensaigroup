@@ -58,4 +58,44 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("btn-exit").addEventListener("click", function () {
       location.reload();
     });
-  });
+
+    // Additional code
+    let interactionId; // define this variable if it's not defined elsewhere in your script
+
+    document.getElementById("rate-submit").addEventListener("click", async () => {
+        const ratingInput = document.getElementById("rating-input");
+        const chatOutput = document.getElementById("chat-output");
+        const rating = ratingInput.value;
+    
+        if (rating && rating >= 1 && rating <= 5) {
+            const ratingResponse = await sendRating(rating);
+    
+            const ratingResponseElement = document.createElement("p");
+            ratingResponseElement.textContent = "Thank you for your rating, we use this to improve your experience!";
+            chatOutput.appendChild(ratingResponseElement);
+    
+            document.getElementById("objection-input").value = "";
+            document.getElementById("response-input").value = "";
+            ratingInput.value = "";
+        } else {
+            alert("How helpful was the advice you received (1 is unhelpful, 5 is very helpful)");
+        }
+    
+        document.querySelector('.rate-response').style.display = 'none';
+        while (chatOutput.firstChild) {
+            chatOutput.removeChild(chatOutput.firstChild);
+        }
+    });
+
+    async function sendRating(rating) {
+        const ratingResponse = await fetch('/rate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ rating: rating, interaction_id: interactionId })
+        });
+    
+        return await ratingResponse.json();
+    }
+});
