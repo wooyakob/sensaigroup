@@ -223,13 +223,13 @@ def chatbot():
         return jsonify({"error": "User not authenticated"})
 
     user_objection = request.json.get('user_objection')
-    user_response = request.json.get('user_response')
-    selected_product = request.json.get('selected_product')
 
     if len(user_objection) > 140:
         return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters or less."})
 
     product_info = ""
+
+    selected_product = request.json.get('selected_product')
 
     if selected_product == "Gorilla Universal Hevans Plate":
         product_info = (
@@ -269,7 +269,6 @@ def chatbot():
                                      "You provide advice to these sales representatives to handle the specific objection."
         },
         {"role": "user", "content": user_objection},
-        {"role": "assistant", "content": user_response}
     ]
 
     response = openai.ChatCompletion.create(
@@ -283,7 +282,7 @@ def chatbot():
     interaction = Interaction(
         user_id=current_user.id,
         objection=user_objection,
-        suggested_response=user_response,
+        suggested_response="",
         ai_response=response_text
     )
     db.session.add(interaction)
