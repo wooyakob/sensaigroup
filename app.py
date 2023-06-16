@@ -212,11 +212,6 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
-@app.route('/rate', methods=['POST'])
-def rate():
-    rating = request.json.get('rating')
-    return jsonify({"message": "Rating received"})
-
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     if not current_user.is_authenticated:
