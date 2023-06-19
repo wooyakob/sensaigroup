@@ -185,6 +185,9 @@ def index():
 @login_required
 def dashboard():
     return render_template('index.html')
+@app.route('/health')
+def health_check():
+    return "OK", 200
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
