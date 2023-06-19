@@ -3,6 +3,7 @@ from datetime import datetime
 import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from flask_admin import Admin
+from flask_migrate import Migrate
 from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer
 import os
