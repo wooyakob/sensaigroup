@@ -2,7 +2,6 @@ import logging
 from datetime import datetime
 import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from flask_migrate import Migrate
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer
@@ -94,10 +93,16 @@ def token_to_email(token):
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+
+AZURE_POSTGRESQL_CONNECTIONSTRING = os.getenv("AZURE_POSTGRESQL_CONNECTIONSTRING")
+app.config['SQLALCHEMY_DATABASE_URI'] = AZURE_POSTGRESQL_CONNECTIONSTRING
+
+
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
