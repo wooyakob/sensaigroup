@@ -56,4 +56,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById("btn-exit").addEventListener("click", function () {
     location.reload();
   });
+
+  $('#btn-save').click(function() {
+    var doc = new jsPDF();
+    var chatOutput = $('#chat-output').html();
+    doc.text(chatOutput, 10, 10);
+    doc.save('conversation.pdf');
+});
+
+$('#btn-follow-up').click(function() {
+  // Append the follow up question to the existing conversation
+  var objectionText = $('#objection-input').val();
+  var chatOutput = $('#chat-output');
+  chatOutput.append('<div class="user-text">User: ' + objectionText + '</div>');
+
+  // Call your API to get the advice
+  // For example purposes, a timeout function is used to simulate the API call
+  setTimeout(function() {
+      var advice = "This is a follow up advice from the AI"; // Replace this with the actual advice from your AI
+      chatOutput.append('<div class="ai-text">AI: ' + advice + '</div>');
+  }, 2000);
+});
+
 });
