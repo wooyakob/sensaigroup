@@ -207,3 +207,14 @@ textarea {
   background-color: #4A317A; /* Purple color */
   color: white; /* White text color */
 }
+
+.active-item {
+  background-color: blue;
+  color: white;
+}
+
+#objectionExamplesModal ul li:hover {
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+}

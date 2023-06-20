@@ -127,49 +127,48 @@
                 </div>
                 <div class="modal-body">
                     <ul>
-                        <li>Can you just send me the information in an email?</li>
-                        <li>Is this a sales call?</li>
-                        <li>This isn’t a good time</li>
-                        <li>I’m the wrong person to talk to about this</li>
-                        <li>I need to get more quotes first</li>
-                        <li>I don’t want to sign a long contract</li>
-                        <li>We’re using your competitor</li>
-                        <li>Your competitor is cheaper</li>
-                        <li>I don’t see any ROI potential</li>
-                        <li>I’m not interested</li>
-                        <li>I’m busy</li>
-                        <li>How did you get my information?</li>
-                        <li>I’ve never heard of your company</li>
-                        <li>This looks too complicated for my team to learn</li>
-                        <li>We’re using this budget elsewhere</li>
-                        <li>Can you call me back next quarter?</li>
-                        <li>This is too expensive</li>
-                        <li>We’re happy with the way things are</li>
-                        <li>We don’t have a big enough team for this</li>
-                        <li>I saw a bad review of your company</li>
-                        <li>There's no money</li>
-                        <li>We don't have any budget left this year</li>
-                        <li>I don't want to get stuck in a contract</li>
-                        <li>I can get a cheaper version of your product somewhere else</li>
-                        <li>I'm not authorized to sign off on this purchase</li>
-                        <li>I can't sell this internally</li>
-                        <li>My boss isn't convinced</li>
-                        <li>We're being downsized / bought out</li>
-                        <li>There's too much going on right now</li>
-                        <li>I'm part of a buying group</li>
-                        <li>We don't have that business pain</li>
-                        <li>This problem isn't important right now</li>
-                        <li>I don't see what your product could do for me</li>
-                        <li>I don't understand your product</li>
-                        <li>We don't have capacity to implement the product</li>
-                        <li>Your product is too complicated</li>
-                        <li>You don't understand my business</li>
-                        <li>I don't see the potential for ROI</li>
-                        <li>Your product doesn't work with our current tools, set-up</li>
-                        <li>Just send me some information</li>
-                        <li>Sorry, I have to cancel. I'll get back to you with a better time</li>
+                        <li onclick="populateObjection(this)">Can you just send me the information in an email?</li>
+                        <li onclick="populateObjection(this)">Is this a sales call?</li>
+                        <li onclick="populateObjection(this)">This isn’t a good time</li>
+                        <li onclick="populateObjection(this)">I’m the wrong person to talk to about this</li>
+                        <li onclick="populateObjection(this)">I need to get more quotes first</li>
+                        <li onclick="populateObjection(this)">I don’t want to sign a long contract</li>
+                        <li onclick="populateObjection(this)">We’re using your competitor</li>
+                        <li onclick="populateObjection(this)">Your competitor is cheaper</li>
+                        <li onclick="populateObjection(this)">I don’t see any ROI potential</li>
+                        <li onclick="populateObjection(this)">I’m not interested</li>
+                        <li onclick="populateObjection(this)">I’m busy</li>
+                        <li onclick="populateObjection(this)">How did you get my information?</li>
+                        <li onclick="populateObjection(this)">I’ve never heard of your company</li>
+                        <li onclick="populateObjection(this)">This looks too complicated for my team to learn</li>
+                        <li onclick="populateObjection(this)">We’re using this budget elsewhere</li>
+                        <li onclick="populateObjection(this)">Can you call me back next quarter?</li>
+                        <li onclick="populateObjection(this)">This is too expensive</li>
+                        <li onclick="populateObjection(this)">We’re happy with the way things are</li>
+                        <li onclick="populateObjection(this)">We don’t have a big enough team for this</li>
+                        <li onclick="populateObjection(this)">I saw a bad review of your company</li>
+                        <li onclick="populateObjection(this)">There's no money</li>
+                        <li onclick="populateObjection(this)">We don't have any budget left this year</li>
+                        <li onclick="populateObjection(this)">I don't want to get stuck in a contract</li>
+                        <li onclick="populateObjection(this)">I can get a cheaper version of your product somewhere else</li>
+                        <li onclick="populateObjection(this)">I'm not authorized to sign off on this purchase</li>
+                        <li onclick="populateObjection(this)">I can't sell this internally</li>
+                        <li onclick="populateObjection(this)">My boss isn't convinced</li>
+                        <li onclick="populateObjection(this)">We're being downsized / bought out</li>
+                        <li onclick="populateObjection(this)">There's too much going on right now</li>
+                        <li onclick="populateObjection(this)">I'm part of a buying group</li>
+                        <li onclick="populateObjection(this)">We don't have that business pain</li>
+                        <li onclick="populateObjection(this)">This problem isn't important right now</li>
+                        <li onclick="populateObjection(this)">I don't see what your product could do for me</li>
+                        <li onclick="populateObjection(this)">I don't understand your product</li>
+                        <li onclick="populateObjection(this)">We don't have capacity to implement the product</li>
+                        <li onclick="populateObjection(this)">Your product is too complicated</li>
+                        <li onclick="populateObjection(this)">You don't understand my business</li>
+                        <li onclick="populateObjection(this)">I don't see the potential for ROI</li>
+                        <li onclick="populateObjection(this)">Your product doesn't work with our current tools, set-up</li>
+                        <li onclick="populateObjection(this)">Just send me some information</li>
+                        <li onclick="populateObjection(this)">Sorry, I have to cancel. I'll get back to you with a better time</li>
                     </ul>
-                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -177,14 +176,12 @@
             </div>
         </div>
     </div>
-    
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 <script src="/static/index.js"></script>
-
 
 </body>
 </html>

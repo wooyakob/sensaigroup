@@ -78,4 +78,30 @@ $('#btn-follow-up').click(function() {
   }, 2000);
 });
 
+let objections = document.querySelectorAll("#objectionExamplesModal ul li");
+objections.forEach((objection) => {
+  objection.addEventListener("click", function () {
+    // Remove the active class from all items
+    objections.forEach((item) => {
+      item.classList.remove('active-item');
+    });
+
+    populateObjection(this);
+  });
+});
+
+function populateObjection(element) {
+  const objection = element.textContent; // get the text of the clicked li
+  const objectionInput = document.getElementById('objection-input'); // get the textarea
+  objectionInput.value = objection; // set the value of the textarea
+  $('#objectionExamplesModal').modal('hide'); // close the modal
+}
+
+$('#objectionExamplesModal').on('hidden.bs.modal', function () {
+  // Remove the active class when the modal is closed
+  objections.forEach((item) => {
+    item.classList.remove('active-item');
+  });
+});
+
 });
