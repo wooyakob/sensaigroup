@@ -17,7 +17,6 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from flask_migrate import Migrate
 
-
 load_dotenv()
 
 def create_app():
