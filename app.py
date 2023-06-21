@@ -2,8 +2,8 @@ import logging
 from datetime import datetime
 import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from flask_migrate import Migrate
-from models import db, User, Interaction
+from models import User, Interaction
+from extensions import db, init_app
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer
@@ -15,16 +15,23 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from flask_mail import Mail, Message
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
+from flask_migrate import Migrate
+
 
 load_dotenv()
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    migrate = Migrate(app, db)
+    init_app(app)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+    return app
+
+app = create_app()
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+
 
 logging.basicConfig(level=logging.DEBUG)
 ph = PasswordHasher()
