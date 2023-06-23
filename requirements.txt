@@ -77,12 +77,14 @@ openai==0.27.6
 packaging==21.3
 pandocfilters==1.5.0
 parso==0.8.3
+pdfkit==1.0.0
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==9.1.1
 prometheus-client==0.14.1
 prompt-toolkit==3.0.29
 psutil==5.9.1
+psycopg2==2.9.6
 psycopg2-binary==2.9.3
 ptyprocess==0.7.0
 pure-eval==0.2.2
@@ -101,7 +103,7 @@ Send2Trash==1.8.0
 six==1.16.0
 sniffio==1.2.0
 soupsieve==2.3.2.post1
-SQLAlchemy==2.0.13
+SQLAlchemy==2.0.16
 sqlparse==0.4.2
 stack-data==0.2.0
 terminado==0.15.0
