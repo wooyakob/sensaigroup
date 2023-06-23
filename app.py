@@ -8,6 +8,7 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer
 import os
+from openai.error import OpenAIError
 import openai
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
@@ -260,7 +261,7 @@ def chatbot():
 
     messages = [
         {"role": "system", "content": product_info +
-                                     "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.n\n"
+                                     "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
                                      "You always address the specific objection raised by a customer and deal with it in a structured and logical way.\n\n"
                                      "You lead by example. Sales representatives will come to you with objections, challenges, queries and questions that have been raised by prospective customers.\n\n"
                                      "It is your job to explain to the sales representative how to handle the objection in order to progress the conversation. You are focused on handling objections to generate a sale.\n\n"
@@ -272,21 +273,51 @@ def chatbot():
         {"role": "user", "content": user_objection},
     ]
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-        max_tokens=500,
-    )
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=500,
+        )
+    except openai.error.ServiceUnavailableError:
+        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
 
     response_text = response.choices[0].message.content.strip()
 
-    interaction = Interaction(
-        user_id=current_user.id,
-        objection=user_objection,
-        suggested_response="",
-        ai_response=response_text
-    )
-    db.session.add(interaction)
+    try:
+        interaction = Interaction(
+            user_id=current_user.id,
+            objection=user_objection,
+            suggested_response="",
+            ai_response=response_text
+        )
+        db.session.add(interaction)
+        db.session.commit()
+    except SQLAlchemyError as e:
+        return jsonify({"error": f"Database error occurred: {str(e)}"}), 500
+
+    return jsonify({"response_text": response_text, "interaction_id": interaction.id, "regenerate": True})
+
+@app.route('/chatbot/regenerate', methods=['POST'])
+def regenerate_response():
+    interaction_id = request.json.get('interaction_id')
+    interaction = Interaction.query.get(interaction_id)
+    
+    if not interaction:
+        return jsonify({"error": "No such interaction found."}), 404
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=500,
+        )
+    except openai.error.ServiceUnavailableError:
+        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+
+    response_text = response.choices[0].message.content.strip()
+
+    interaction.ai_response = response_text
     db.session.commit()
 
     return jsonify({"response_text": response_text, "interaction_id": interaction.id})
