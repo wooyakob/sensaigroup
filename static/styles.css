@@ -218,3 +218,16 @@ textarea {
   color: white;
   cursor: pointer;
 }
+
+.example-objections {
+  display: flex;
+  align-items: center;
+}
+
+.example-objections textarea {
+  flex: 1;
+}
+
+.example-objections a {
+  margin-left: 10px;
+}
