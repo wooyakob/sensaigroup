@@ -12,7 +12,6 @@ body {
   padding: 2rem;
 }
 
-/* Set the header styles */
 .header {
   display: flex;
   flex-direction: column;
@@ -20,19 +19,22 @@ body {
   font-family: 'Roboto', sans-serif;
   text-shadow: 2px 2px 4px #000;
   color: #ffffff;
-  background-color: #4A317A; /* Purple color */
+  background-color: #4A317A;
   position: relative;
   padding: 1rem 0;
+  font-size: 2rem;
 }
 
-/* Set the header title styles */
+.header img {
+  max-width: 200px;
+}
+
 .header h1 {
-  font-size: 4rem;
+  font-size: 3rem;
   letter-spacing: 0.5rem;
   margin-top: 1rem;
 }
 
-/* Set the header button styles */
 .header-button {
   background-color: transparent;
   border: none;
