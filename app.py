@@ -265,6 +265,7 @@ def chatbot():
                                      "The name “Paragon 28” was chosen to show that we are exclusively a foot and ankle company, with the “28” representing the number of bones in the foot."
                                      "Paragon 28’s sales representatives are coming to you with objections they are facing from a prospective customer when they try to sell Paragon 28’s foot and ankle based medical devices.\n\n"
                                      "You provide advice to these sales representatives to handle the specific objection."
+                                     "Break your advice into clear paragraphs and always end your response with a full stop and completed sentence."
         },
         {"role": "user", "content": user_objection},
     ]
@@ -273,7 +274,7 @@ def chatbot():
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages,
-            max_tokens=500,
+            max_tokens=300
         )
     except openai.error.ServiceUnavailableError:
         return jsonify({"error": "AI service is currently unavailable. Please try again later."})

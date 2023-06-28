@@ -92,6 +92,16 @@
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
+                <div class="rate-response mt-4" id="rate-response" style="display: none;">
+                    <h5>Rate Advice:</h5>
+                    <div class="form-group">
+                      <input type="number" id="rating-input" class="form-control" min="1" max="5" placeholder="Rate Advice (1: Bad, 5: Exceptional)">
+                    </div>
+                    <div class="text-center">
+                      <button id="rate-submit" class="btn btn-secondary">Rate Advice</button>
+                    </div>
+                  </div>
+
                 <div id="follow-up-options" class="mt-4" style="display: none;">
                     <h5>What would you like to do next?</h5>
                     <div class="mt-4 text-center">
@@ -104,15 +114,7 @@
                     </div>
                 </div>
     
-                <div class="rate-response mt-4" id="rate-response" style="display: none;">
-                    <h5>Please rate the AI response:</h5>
-                    <div class="form-group">
-                      <input type="number" id="rating-input" class="form-control" min="1" max="5" placeholder="Rate Advice (1: Bad, 5: Exceptional)">
-                    </div>
-                    <div class="text-center">
-                      <button id="rate-submit" class="btn btn-secondary">Rate Response</button>
-                    </div>
-                  </div>
+
             </div>
         </div>
     </div>
