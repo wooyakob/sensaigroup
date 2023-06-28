@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Sales Sensei: AI Enabled Sales Training</title>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -17,49 +17,96 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="shortcut icon" type="image/x-icon" href="/static/apple_ninja.ico"> 
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 
     <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
 
         .header {
             background-color: #0B162B;
+            color: #fff;
         }
 
-        .header-button {
-          background-color: #000000 !important;
-          color: #ffffff !important;
+        .header img {
+            max-width: 100%;
+            height: auto;
         }
-    
-        .header-button:hover {
-          background-color: #000000 !important;
+
+        .jumbotron {
+            background-color: #4A317A;
+            color: #fff;
+            padding: 40px 0;
         }
-    
+
+        .jumbotron h1 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .jumbotron p {
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group label {
+            font-weight: 700;
+        }
+
+        .form-control {
+            border-radius: 0;
+        }
+
         .btn-primary {
-          background-color: #000000 !important;
-          border-color: #000000 !important;
+            background-color: #4A317A !important;
+            border-color: #4A317A !important;
         }
-    
+
         .btn-primary:hover {
-          background-color: #000000 !important;
-          border-color: #000000 !important;
+            background-color: #4A317A !important;
+            border-color: #4A317A !important;
         }
-      </style>
+
+        .text-center p {
+            margin-bottom: 0;
+        }
+
+        .text-center p a {
+            color: #4A317A;
+        }
+
+        .text-center p a:hover {
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background-color: #4A317A;
+            border-color: #4A317A;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4A317A;
+            border-color: #4A317A;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="header">
-        <img src="{{ url_for('static', filename='apple_ninja.png') }}" alt="Apple Ninja">
-    </div>
-
     <div class="jumbotron text-center">
-        <h1>Sales Sensei: AI Enabled Sales Training</h1>
+        <h1>Paragon 28: AI Enabled Sales Training</h1>
         <p>Overcome sales objections skillfully and close more deals!</p>
     </div>
- 
+
     <div class="container">
-        <h2>Login to Sales Sensei: AI Enabled Sales Training</h2>
+        <h2>Login</h2>
         {% for message in get_flashed_messages() %}
-            <p>{{ message }}</p>
+        <p>{{ message }}</p>
         {% endfor %}
 
         <form method="POST" action="/login">
@@ -74,10 +121,10 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
-<div class="text-center">
-    <p><a href="/forgot_username">Forgot Username</a></p>
-    <p><a href="/forgot_password">Forgot Password</a></p>
-</div>
+        <div class="text-center">
+            <p><a href="/forgot_username">Forgot Username</a></p>
+            <p><a href="/forgot_password">Forgot Password</a></p>
+        </div>
 
         <p><a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a></p>
     </div>
