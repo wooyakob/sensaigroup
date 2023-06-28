@@ -274,7 +274,7 @@ def chatbot():
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages,
-            max_tokens=300
+            max_tokens=400
         )
     except openai.error.ServiceUnavailableError:
         return jsonify({"error": "AI service is currently unavailable. Please try again later."})
@@ -294,30 +294,6 @@ def chatbot():
         return jsonify({"error": f"Database error occurred: {str(e)}"}), 500
 
     return jsonify({"response_text": response_text, "interaction_id": interaction.id, "regenerate": True})
-
-@app.route('/chatbot/regenerate', methods=['POST'])
-def regenerate_response():
-    interaction_id = request.json.get('interaction_id')
-    interaction = Interaction.query.get(interaction_id)
-    
-    if not interaction:
-        return jsonify({"error": "No such interaction found."}), 404
-
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=500,
-        )
-    except openai.error.ServiceUnavailableError:
-        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
-
-    response_text = response.choices[0].message.content.strip()
-
-    interaction.ai_response = response_text
-    db.session.commit()
-
-    return jsonify({"response_text": response_text, "interaction_id": interaction.id})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
