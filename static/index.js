@@ -56,13 +56,6 @@ document.getElementById("rate-submit").addEventListener("click", function () {
     return data.response_text;
   }
 
-  document.getElementById("btn-follow-up").addEventListener("click", function () {
-    document.getElementById("follow-up-options").style.display = "none";
-    document.getElementById("chat-output").innerHTML = "";
-    document.getElementById("objection-input").value = lastObjection;
-    document.getElementById("product-select").selectedIndex = lastProductIndex;
-  });
-
   document.getElementById("btn-another-objection").addEventListener("click", function () {
     document.getElementById("follow-up-options").style.display = "none";
     document.getElementById("chat-output").innerHTML = "";
@@ -70,29 +63,6 @@ document.getElementById("rate-submit").addEventListener("click", function () {
     document.getElementById("product-select").selectedIndex = 0;
     lastObjection = "";
     lastProductIndex = 0;
-  });
-
-  document.getElementById("btn-save").addEventListener("click", function () {
-    var doc = new jsPDF();
-    var chatOutput = $('#chat-output').html();
-    doc.text(chatOutput, 10, 10);
-    doc.save('conversation.pdf');
-    document.getElementById("objection-input").value = lastObjection;
-    document.getElementById("product-select").selectedIndex = lastProductIndex; 
-  });
-
-  document.getElementById("btn-exit").addEventListener("click", function () {
-    location.reload();
-  });
-
-  $('#btn-follow-up').click(function() {
-    var objectionText = $('#objection-input').val();
-    var chatOutput = $('#chat-output');
-    chatOutput.append('<div class="user-text">User: ' + objectionText + '</div>');
-    setTimeout(function() {
-        var advice = "This is a follow up advice from the AI"; 
-        chatOutput.append('<div class="ai-text">AI: ' + advice + '</div>');
-    }, 2000);
   });
 
   let objections = document.querySelectorAll("#objectionExamplesModal ul li");
@@ -118,5 +88,4 @@ document.getElementById("rate-submit").addEventListener("click", function () {
       item.classList.remove('active-item');
     });
   });
-
 });
