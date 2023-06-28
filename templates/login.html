@@ -89,13 +89,15 @@
         .btn-secondary {
             background-color: #4A317A;
             border-color: #4A317A;
-            color: #fff; /* Added color for the button text */
+            color: #fff;
         }
 
         .btn-secondary:hover {
             background-color: #4A317A;
             border-color: #4A317A;
+            color: #fff;
         }
+
 
         .links-section {
             text-align: center;
@@ -109,6 +111,18 @@
         .links-section a {
             color: #4A317A;
             margin-right: 10px;
+        }
+
+        .btn-secondary.btn-return-home {
+            background-color: #4A317A;
+            border-color: #4A317A;
+            color: #fff;
+        }
+
+        .btn-secondary.btn-return-home:hover {
+            background-color: #000000;
+            border-color: #000000;
+            color: #fff;
         }
     </style>
 </head>
@@ -134,14 +148,14 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-secondary btn-login">Login</button>
         </form>
     </div>
 
     <div class="links-section">
         <p><a href="/forgot_username">Forgot Username</a> | <a href="/forgot_password">Forgot Password</a></p>
-        <p><a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a></p>
-    </div>
+        <p><a href="{{ url_for('index') }}" class="btn btn-secondary btn-return-home">Return to Home</a></p>
+      </div>
 
 </body>
 
