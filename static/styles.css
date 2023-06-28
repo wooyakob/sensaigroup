@@ -194,12 +194,12 @@ textarea {
 }
 
 .active-item {
-  background-color: blue;
+  background-color: #4A317A;
   color: white;
 }
 
 #objectionExamplesModal ul li:hover {
-  background-color: blue;
+  background-color: #4A317A;
   color: white;
   cursor: pointer;
 }
