@@ -138,42 +138,6 @@ column_formatters = {
 admin.add_view(ModelView(User, db.session))
 admin.add_view(InteractionModelView(Interaction, db.session))
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        company = request.form['company']
-        email = request.form['email'].strip()
-        username = request.form['username'].strip()
-        password = request.form['password'].strip()
-        if not email or not password or not username:
-            flash('Email, username, and password cannot be empty.', 'danger')
-            return render_template('signup.html')
-        if not is_valid_email(email):
-            flash('Invalid email format.', 'danger')
-            return render_template('signup.html')
-        existing_user = User.query.filter((User.email == email) | (User.username == username)).first()
-        if existing_user:
-            flash('Email or username already exists. Please choose a different one.', 'danger')
-            return render_template('signup.html')
-        hashed_password = ph.hash(password)
-        user = User(
-            first_name=first_name,
-            last_name=last_name,
-            company=company,
-            email=email,
-            username=username,
-            password=hashed_password
-        )
-        db.session.add(user)
-        db.session.commit()
-        flash("You have successfully signed up to use Sales Sensei! Please log in to begin handling your objections.", 'success')
-        return redirect(url_for('login'))
-    return render_template('signup.html')
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
