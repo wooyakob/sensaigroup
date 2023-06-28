@@ -26,10 +26,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
       chatOutput.appendChild(feedbackElement);
 
       document.getElementById("follow-up-options").style.display = "block";
+      document.getElementById("rate-response").style.display = "block";
     } else {
       alert("Please enter an objection before submitting");
     }
   });
+
+document.getElementById("rate-submit").addEventListener("click", function () {
+  const rating = document.getElementById("rating-input").value;
+  if (rating && (rating >= 1 && rating <= 5)) {
+    alert("Thank you for your rating!");
+    document.getElementById("rate-response").style.display = "none";
+    document.getElementById("rating-input").value = "";
+  } else {
+    alert("Please enter a rating between 1 and 5");
+  }
+});
 
   async function sendChatMessage(objection) {
     const serverResponse = await fetch('/chatbot', {

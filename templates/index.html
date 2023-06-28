@@ -104,15 +104,15 @@
                     </div>
                 </div>
     
-
-                <div class="rate-response mt-4" style="display: none;">
+                <div class="rate-response mt-4" id="rate-response" style="display: none;">
+                    <h5>Please rate the AI response:</h5>
                     <div class="form-group">
-                        <input type="number" id="rating-input" class="form-control" placeholder="Rate Advice (1: Bad, 5: Exceptional)">
+                      <input type="number" id="rating-input" class="form-control" min="1" max="5" placeholder="Rate Advice (1: Bad, 5: Exceptional)">
                     </div>
                     <div class="text-center">
-                        <button id="rate-submit" class="btn btn-secondary">Rate Response</button>
+                      <button id="rate-submit" class="btn btn-secondary">Rate Response</button>
                     </div>
-                </div>
+                  </div>
             </div>
         </div>
     </div>
