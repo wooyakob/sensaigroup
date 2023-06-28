@@ -79,20 +79,36 @@
 
         .text-center p a {
             color: #4A317A;
+            text-decoration: none;
         }
 
         .text-center p a:hover {
-            text-decoration: none;
+            text-decoration: underline;
         }
 
         .btn-secondary {
             background-color: #4A317A;
             border-color: #4A317A;
+            color: #fff; /* Added color for the button text */
         }
 
         .btn-secondary:hover {
             background-color: #4A317A;
             border-color: #4A317A;
+        }
+
+        .links-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links-section p {
+            margin-bottom: 5px;
+        }
+
+        .links-section a {
+            color: #4A317A;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -120,12 +136,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
+    </div>
 
-        <div class="text-center">
-            <p><a href="/forgot_username">Forgot Username</a></p>
-            <p><a href="/forgot_password">Forgot Password</a></p>
-        </div>
-
+    <div class="links-section">
+        <p><a href="/forgot_username">Forgot Username</a> | <a href="/forgot_password">Forgot Password</a></p>
         <p><a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a></p>
     </div>
 

@@ -48,6 +48,10 @@
         .footer a:not(:last-child) {
             margin-right: 10px;
         }
+
+        .text-purple {
+            color: #4A317A;
+        }
     </style>
 </head>
 
@@ -72,17 +76,11 @@
         <img src="{{ url_for('static', filename='paragon_philo.png') }}" alt="Paragon Philosophy" class="img-fluid">
     </div>
 
-    <footer class="footer text-white py-3">
+    <footer class="footer bg-white py-3">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; Sales Sensei 2023. All rights reserved.</p>
-                </div>
-                <div class="col-md-6">
-                    <p>
-                        <a href="https://www.linkedin.com/company/sales-sensei/" target="_blank" class="text-white">LinkedIn</a>
-                        <a href="https://twitter.com/sale_sensei" target="_blank" class="text-white">Twitter</a>
-                    </p>
+                    <p class="text-purple">&copy; Sales Sensei 2023. All rights reserved.</p>
                 </div>
             </div>
         </div>
