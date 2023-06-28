@@ -1,11 +1,14 @@
+# Internal Imports
+from models import User, Interaction
+from extensions import db, init_app
+from admin import admin, init_admin
+
+
+# External Imports
 import logging
 from datetime import datetime
 import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from models import User, Interaction
-from extensions import db, init_app
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 from itsdangerous import URLSafeTimedSerializer
 import os
 from openai.error import OpenAIError
@@ -26,6 +29,7 @@ def create_app():
 
     migrate = Migrate(app, db)
     init_app(app)
+    admin.init_app(app)
 
     return app
 
@@ -112,31 +116,6 @@ def token_to_email(token):
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
-
-admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
-class InteractionModelView(ModelView):
-    column_list = ('id', 'user', 'objection', 'suggested_response', 'ai_response', 'rating', 'timestamp')
-    column_labels = {
-        'user': 'User',
-        'objection': 'Objection',
-        'suggested_response': 'Suggested Response',
-        'ai_response': 'AI Response',
-        'rating': 'Rating',
-        'timestamp': 'Timestamp'
-    }
-    column_searchable_list = ['user.first_name', 'user.last_name', 'user.email', 'user.username']
-
-def _user_formatter(view, context, model, name):
-    if model.user:
-        return model.user.username
-    return ""
-
-column_formatters = {
-    'user': _user_formatter,
-}
-
-admin.add_view(ModelView(User, db.session))
-admin.add_view(InteractionModelView(Interaction, db.session))
 
 login_manager = LoginManager()
 login_manager.init_app(app)
