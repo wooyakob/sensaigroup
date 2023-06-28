@@ -208,10 +208,6 @@ def login():
         flash('Invalid username or password.', 'danger') 
     return render_template('login.html')
 
-@app.route('/blog')
-def blog():
-    return render_template('blog.html')
-
 @app.route('/logout')
 @login_required
 def logout():
