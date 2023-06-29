@@ -43,18 +43,29 @@ document.getElementById("rate-submit").addEventListener("click", function () {
   }
 });
 
-  async function sendChatMessage(objection) {
-    const serverResponse = await fetch('/chatbot', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ user_objection: objection })
-    });
+async function sendChatMessage(objection) {
+  const TIMEOUT = 20000;
 
-    const data = await serverResponse.json();
+  const fetchPromise = fetch('/chatbot', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ user_objection: objection })
+  });
+
+  const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), TIMEOUT));
+
+  try {
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
+
+    const data = await response.json();
     return data.response_text;
+  } catch (error) {
+    console.error(error); 
+    return 'An error occurred. Please try again later.'; 
   }
+}
 
   document.getElementById("btn-another-objection").addEventListener("click", function () {
     document.getElementById("follow-up-options").style.display = "none";

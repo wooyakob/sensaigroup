@@ -3,7 +3,6 @@ from models import User, Interaction
 from extensions import db, init_app
 from admin import admin, init_admin
 
-
 # External Imports
 import logging
 from datetime import datetime
@@ -217,7 +216,7 @@ def chatbot():
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages,
-            max_tokens=400
+            max_tokens=500,
         )
     except openai.error.ServiceUnavailableError:
         return jsonify({"error": "AI service is currently unavailable. Please try again later."})
