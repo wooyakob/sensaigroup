@@ -19,7 +19,6 @@ class Interaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     objection = db.Column(db.Text, nullable=False)
-    suggested_response = db.Column(db.Text, nullable=False)
     ai_response = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

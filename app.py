@@ -227,7 +227,6 @@ def chatbot():
         interaction = Interaction(
             user_id=current_user.id,
             objection=user_objection,
-            suggested_response="",
             ai_response=response_text
         )
         db.session.add(interaction)

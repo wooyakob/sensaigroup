@@ -6,11 +6,10 @@ from extensions import db
 admin = Admin(name='My App Admin', template_mode='bootstrap3')
 
 class InteractionModelView(ModelView):
-    column_list = ('id', 'user', 'objection', 'suggested_response', 'ai_response', 'rating', 'timestamp')
+    column_list = ('id', 'user', 'objection', 'ai_response', 'rating', 'timestamp')
     column_labels = {
         'user': 'User',
         'objection': 'Objection',
-        'suggested_response': 'Suggested Response',
         'ai_response': 'AI Response',
         'rating': 'Rating',
         'timestamp': 'Timestamp'
