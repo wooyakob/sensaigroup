@@ -1,7 +1,8 @@
 # Internal Imports
 from models import User, Interaction
 from extensions import db, init_app
-from admin import admin, init_admin
+from admin import admin
+from admin import init_admin
 
 # External Imports
 import logging
@@ -28,8 +29,8 @@ def create_app():
 
     migrate = Migrate(app, db)
     init_app(app)
-    admin.init_app(app)
-
+    init_admin(app)
+    
     return app
 
 app = create_app()
