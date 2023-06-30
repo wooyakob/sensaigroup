@@ -125,6 +125,12 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.route('/user_history', methods=['GET'])
+@login_required
+def user_history():
+    user_interactions = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).all()
+    return render_template('user_history.html', user_interactions=user_interactions)
+
 @app.route('/')
 def index():
     return render_template('landing.html')

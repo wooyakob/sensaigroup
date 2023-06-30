@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>History</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_styles.css') }}">
+  <p><a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-return-home">Return</a></p>
+</head>
+<body>
+  <h1>History</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Objection</th>
+        <th>AI Response</th>
+        <th>Rating</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for interaction in user_interactions %}
+      <tr>
+        <td>{{ interaction.objection }}</td>
+        <td>{{ interaction.ai_response }}</td>
+        <td>{{ interaction.rating }}</td>
+        <td>{{ interaction.timestamp }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
