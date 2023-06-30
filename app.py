@@ -30,7 +30,7 @@ def create_app():
     migrate = Migrate(app, db)
     init_app(app)
     init_admin(app)
-    
+
     return app
 
 app = create_app()
@@ -223,6 +223,8 @@ def chatbot():
         return jsonify({"error": "AI service is currently unavailable. Please try again later."})
 
     response_text = response.choices[0].message.content.strip()
+    response_text = response_text.replace('\n', '<br>')
+    response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
     try:
         interaction = Interaction(
