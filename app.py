@@ -1,10 +1,7 @@
-# Internal Imports
 from models import User, Interaction, LoginActivity
 from extensions import db, init_app
 from admin import admin
 from admin import init_admin
-
-# External Imports
 import pandas as pd
 import logging
 from datetime import datetime
@@ -51,6 +48,28 @@ app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
 app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
 
+@app.route('/admin/createuser', methods=['GET', 'POST'])
+def create_user():
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not all([first_name, last_name, email, username, password]):
+            return render_template('createuser.html', error_message='Missing required fields')
+
+        new_user = User(first_name=first_name, last_name=last_name, email=email, username=username, is_admin=False)
+        new_user.set_password(password)
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('createuser.html')
+
 @app.route('/rate_interaction', methods=['POST'])
 @login_required
 def rate_interaction():
@@ -83,7 +102,6 @@ def forgot_username():
 
     return render_template("forgot_username.html")
 
-
 @app.route('/download_history', methods=['GET'])
 @login_required
 def download_history():
@@ -111,8 +129,6 @@ def forgot_password():
             flash("No account found with that email address.")
     return render_template("forgot_password.html")
 
-
-
 @app.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     if request.method == "POST":
@@ -132,8 +148,6 @@ def reset_password(token):
         flash("Your password has been successfully reset. Please log in with your new password.")
         return redirect(url_for("login"))
     return render_template("reset_password.html", token=token)
-
-
 
 def generate_password_reset_token(user):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
