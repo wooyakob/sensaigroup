@@ -24,7 +24,7 @@
       {% for interaction in user_interactions %}
       <tr>
         <td>{{ interaction.objection }}</td>
-        <td>{{ interaction.ai_response }}</td>
+        <td>{{ interaction.ai_response|safe }}</td>
         <td>{{ interaction.rating }}</td>
         <td>{{ interaction.timestamp }}</td>
       </tr>
