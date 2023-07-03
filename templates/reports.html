@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Paragon 28</title>
+    <title>Reports | Paragon 28</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -18,6 +18,8 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         .admin-header {
@@ -51,12 +53,27 @@
 
         .admin-content {
             padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .admin-section {
+            margin-bottom: 30px;
+        }
+
+        .admin-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .admin-section p {
+            margin-bottom: 5px;
         }
 
         .footer {
             background-color: #4A317A;
             color: #fff;
             padding: 20px 0;
+            text-align: center;
         }
 
         .footer p {
@@ -74,60 +91,29 @@
         .text-purple {
             color: #4A317A;
         }
-
-        .admin-section {
-            margin-bottom: 30px;
-        }
-
-        .admin-section h2 {
-            margin-bottom: 10px;
-        }
-
-        .admin-section p {
-            margin-bottom: 5px;
-        }
     </style>
 </head>
 
 <body>
     <header class="admin-header">
-        <h1>Admin Dashboard</h1>
+        <h1>Admin Reports</h1>
     </header>
 
     <nav>
         <ul class="admin-links">
-            <li><a href="{{ url_for('reports') }}">Reports</a></li>
-            <li><a href="">Custom Content</a></li>
+            <li><a href="/admin_dash">Dashboard</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
 
-    <section class="admin-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="admin-section">
-                        <h2>Reports</h2>
-                        <p>Here you can get detailed information about your users</p>
-                    </div>
-                </div>
-            </div>
+    <div class="admin-content">
+        <div class="admin-section">
+            <h2>Login Reports</h2>
+            <a href="{{ url_for('report_logins') }}">View Login Reports</a>
         </div>
-    </section>
 
-    <footer class="footer bg-white py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                </div>
-            </div>
+        <div class="admin-section">
+            <h2>User Activity Reports</h2>
+            <a href="{{ url_for('report_user_activity') }}">View User Activity Reports</a>
         </div>
-    </footer>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="/static/admin_dash.js"></script>
-</body>
-
-</html>
+    </div>

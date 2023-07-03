@@ -1,5 +1,5 @@
 # Internal Imports
-from models import User, Interaction
+from models import User, Interaction, LoginActivity
 from extensions import db, init_app
 from admin import admin
 from admin import init_admin
@@ -169,7 +169,33 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
+
+
+@app.route('/admin/reports', methods=['GET'])
+def reports():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    else:
+        return render_template('reports.html')
+
+@app.route('/admin/reports/logins', methods=['GET'])
+def report_logins():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    
+    logins = LoginActivity.query.all()
+    
+    return render_template('login_report.html', logins=logins)
+
+@app.route('/admin/reports/user_activity', methods=['GET'])
+def report_user_activity():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    
+    interactions = Interaction.query.all()
+    
+    return render_template('user_activity_report.html', interactions=interactions)
 
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
@@ -213,11 +239,15 @@ def login():
             try:
                 if ph.verify(user.password, password):
                     login_user(user)
+                    login_activity = LoginActivity(user_id=user.id, username=user.username)
+                    db.session.add(login_activity)
+                    db.session.commit()
                     return redirect(url_for('dashboard'))
             except VerifyMismatchError:
                 pass
         flash('Invalid username or password.', 'danger') 
     return render_template('login.html')
+
 
 @app.route('/admin_dash')
 @login_required
@@ -302,6 +332,7 @@ def chatbot():
     try:
         interaction = Interaction(
             user_id=current_user.id,
+            username=current_user.username,
             objection=user_objection,
             ai_response=response_text
         )
