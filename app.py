@@ -178,7 +178,7 @@ def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username, is_admin=True).first()
         if user:
             try:
                 if ph.verify(user.password, password):
@@ -186,7 +186,7 @@ def admin_login():
                     return redirect(url_for('admin_dashboard'))
             except VerifyMismatchError:
                 pass
-        flash('Invalid username or password.', 'danger') 
+        flash('Invalid username or password.', 'danger')
     return render_template('admin_login.html')
 
 @app.route('/user_history', methods=['GET'])
