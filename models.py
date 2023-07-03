@@ -23,3 +23,13 @@ class Interaction(db.Model):
     rating = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user = db.relationship('User', backref='interactions')
+
+    def to_dict(self):
+        return {
+            'objection': self.objection,
+            'ai_response': self.ai_response,
+            'rating': self.rating,
+            'timestamp': self.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+            'user_id': self.user_id,
+            'id': self.id
+        }

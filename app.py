@@ -5,10 +5,11 @@ from admin import admin
 from admin import init_admin
 
 # External Imports
+import pandas as pd
 import logging
 from datetime import datetime
 import re
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file
 from itsdangerous import URLSafeTimedSerializer
 import os
 from openai.error import OpenAIError
@@ -62,6 +63,28 @@ def forgot_username():
         return redirect(url_for("login"))
 
     return render_template("forgot_username.html")
+
+
+@app.route('/download_history', methods=['GET'])
+@login_required
+def download_history():
+    # Query the interactions, similar to the 'user_history' route
+    user_interactions = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).all()
+
+    # Convert the interactions to a list of dictionaries
+    interactions_dict = [interaction.to_dict() for interaction in user_interactions]
+
+    # Convert the list of dictionaries to a DataFrame
+    df = pd.DataFrame(interactions_dict)
+
+    # Write the DataFrame to an Excel file
+    filename = f"{current_user.username}_history.xlsx"
+    df.to_excel(filename, index=False)
+
+    return send_file(filename, as_attachment=True)
+
+
+
 @app.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
     if request.method == "POST":
@@ -74,6 +97,9 @@ def forgot_password():
         else:
             flash("No account found with that email address.")
     return render_template("forgot_password.html")
+
+
+
 @app.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     if request.method == "POST":
@@ -93,19 +119,25 @@ def reset_password(token):
         flash("Your password has been successfully reset. Please log in with your new password.")
         return redirect(url_for("login"))
     return render_template("reset_password.html", token=token)
+
+
+
 def generate_password_reset_token(user):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
     return serializer.dumps(user.email, salt="password-reset")
+
 def send_username_email(user):
     msg = Message("Your Sales Sensei Username", recipients=[user.email])
     msg.body = f"Your Sales Sensei username is: {user.username}"
     mail.send(msg)
+
 def send_password_reset_email(user):
     token = generate_password_reset_token(user)
     reset_url = url_for("reset_password", token=token, _external=True)
     msg = Message("Sales Sensei Password Reset", recipients=[user.email])
     msg.body = f"To reset your password, please click the following link: {reset_url}"
     mail.send(msg)
+
 def token_to_email(token):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
     try:
@@ -113,6 +145,7 @@ def token_to_email(token):
         return email
     except:
         return None
+    
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
