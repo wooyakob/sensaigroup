@@ -74,6 +74,18 @@
         .text-purple {
             color: #4A317A;
         }
+
+        .admin-section {
+            margin-bottom: 30px;
+        }
+
+        .admin-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .admin-section p {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 
@@ -95,10 +107,28 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Users & Data</h2>
-                    <p>Here you can view and manage all users and data.</p>
-                    <p><a href="/admin/users">View Users</a></p>
-                    <p><a href="/admin/data">View Data</a></p>
+                    <div class="admin-section">
+                        <h2>Set up Users</h2>
+                        <p>Add / edit / delete users – LWG</p>
+                        <p>Define fields – first, last, email, username, password (set by user), Company</p>
+                        <p>Send account creation notification email</p>
+                        <p>User clicks to set up password</p>
+                    </div>
+                    <div class="admin-section">
+                        <h2>Custom Content</h2>
+                        <p>Input content for Prompt Searches under folders / sub-folders (eg Product/Product 1) (2 levels only) – LWG library</p>
+                        <p>File types limited to PDF, PPT</p>
+                    </div>
+                    <div class="admin-section">
+                        <h2>App Builder</h2>
+                        <p>Create input dropdown categories and add selection options (select from all created sub-folders)</p>
+                    </div>
+                    <div class="admin-section">
+                        <h2>Reports</h2>
+                        <p>User login</p>
+                        <p>User activity</p>
+                        <p>Run reports, export to excel</p>
+                    </div>
                 </div>
             </div>
         </div>
