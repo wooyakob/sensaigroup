@@ -125,6 +125,22 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user:
+            try:
+                if ph.verify(user.password, password):
+                    login_user(user)
+                    return redirect(url_for('admin_dashboard'))
+            except VerifyMismatchError:
+                pass
+        flash('Invalid username or password.', 'danger') 
+    return render_template('admin_login.html')
+
 @app.route('/user_history', methods=['GET'])
 @login_required
 def user_history():
@@ -157,25 +173,7 @@ def login():
         flash('Invalid username or password.', 'danger') 
     return render_template('login.html')
 
-
-@app.route('/admin_login', methods=['GET', 'POST'])
-def admin_login():
-    if request.method == 'POST':
-        username = request.form['username'] 
-        password = request.form['password']
-        
-        user = User.query.filter_by(username=username).first()
-        if user:
-            try:
-                if ph.verify(user.password, password):
-                    login_user(user)
-                    return redirect(url_for('admin_dashboard'))
-            except VerifyMismatchError:
-                pass
-        flash('Invalid username or password.', 'danger') 
-    return render_template('admin_login.html')
-
-@app.route('/admin_dashboard')
+@app.route('/admin_dash')
 @login_required
 def admin_dashboard():
     return render_template('admin_dash.html')
@@ -268,4 +266,6 @@ def chatbot():
     return jsonify({"response_text": response_text, "interaction_id": interaction.id, "regenerate": True})
 
 if __name__ == "__main__":
+    with app.app_context():
+        create_admin() 
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))

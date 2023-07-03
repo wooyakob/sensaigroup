@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else {
       alert("Please enter an objection before submitting");
     }
-  });
+  });~
 
 document.getElementById("rate-submit").addEventListener("click", function () {
   const rating = document.getElementById("rating-input").value;

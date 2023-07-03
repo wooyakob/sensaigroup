@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(300), nullable=False)
+    is_admin = db.Column(db.Boolean, default = False)
 
 class Interaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
