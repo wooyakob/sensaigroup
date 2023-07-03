@@ -68,22 +68,16 @@ def forgot_username():
 @app.route('/download_history', methods=['GET'])
 @login_required
 def download_history():
-    # Query the interactions, similar to the 'user_history' route
     user_interactions = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).all()
 
-    # Convert the interactions to a list of dictionaries
     interactions_dict = [interaction.to_dict() for interaction in user_interactions]
 
-    # Convert the list of dictionaries to a DataFrame
     df = pd.DataFrame(interactions_dict)
 
-    # Write the DataFrame to an Excel file
     filename = f"{current_user.username}_history.xlsx"
     df.to_excel(filename, index=False)
 
     return send_file(filename, as_attachment=True)
-
-
 
 @app.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
