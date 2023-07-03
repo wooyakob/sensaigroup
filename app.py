@@ -50,6 +50,27 @@ app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
 app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
+
+@app.route('/rate_interaction', methods=['POST'])
+@login_required
+def rate_interaction():
+    data = request.get_json()
+    rating = data.get('rating', None)
+    if rating is None:
+        return jsonify({'message': 'Bad Request: No rating provided'}), 400
+    
+    # Assuming that the last interaction the user had is the one being rated
+    last_interaction = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).first()
+    
+    if last_interaction is None:
+        return jsonify({'message': 'No interaction found'}), 404
+
+    # Save rating to the last interaction
+    last_interaction.rating = rating
+    db.session.commit()
+
+    return jsonify({'message': 'Rating saved successfully'}), 200
+
 @app.route("/forgot_username", methods=["GET", "POST"])
 def forgot_username():
     if request.method == "POST":

@@ -32,16 +32,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   });~
 
-document.getElementById("rate-submit").addEventListener("click", function () {
-  const rating = document.getElementById("rating-input").value;
-  if (rating && (rating >= 1 && rating <= 5)) {
-    alert("Thank you for your rating!");
-    document.getElementById("rate-response").style.display = "none";
-    document.getElementById("rating-input").value = "";
-  } else {
-    alert("Please enter a rating between 1 and 5");
-  }
-});
+  document.getElementById("rate-submit").addEventListener("click", async function () {
+    const rating = document.getElementById("rating-input").value;
+    if (rating && (rating >= 1 && rating <= 5)) {
+      alert("Thank you for your rating!");
+  
+      try {
+        const response = await fetch('/rate_interaction', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ rating: rating })
+        });
+  
+        const data = await response.json();
+        console.log(data.message);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  
+      document.getElementById("rate-response").style.display = "none";
+      document.getElementById("rating-input").value = "";
+    } else {
+      alert("Please enter a rating between 1 and 5");
+    }
+  });
 
 async function sendChatMessage(objection) {
   const TIMEOUT = 20000;
