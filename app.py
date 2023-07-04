@@ -116,6 +116,34 @@ def download_history():
 
     return send_file(filename, as_attachment=True)
 
+@app.route('/download_login_report', methods=['GET'])
+@login_required
+def download_login_report():
+    user_logins = LoginActivity.query.order_by(LoginActivity.login_time.desc()).all()
+
+    logins_dict = [{'username': login.username, 'login_time': login.login_time} for login in user_logins]
+
+    df = pd.DataFrame(logins_dict)
+
+    filename = "login_report.xlsx"
+    df.to_excel(filename, index=False)
+
+    return send_file(filename, as_attachment=True)
+
+@app.route('/download_user_activity_report', methods=['GET'])
+@login_required
+def download_user_activity_report():
+    user_interactions = Interaction.query.order_by(Interaction.timestamp.desc()).all()
+
+    interactions_dict = [{'username': interaction.username, 'objection': interaction.objection, 'ai_response': interaction.ai_response, 'rating': interaction.rating, 'timestamp': interaction.timestamp} for interaction in user_interactions]
+
+    df = pd.DataFrame(interactions_dict)
+
+    filename = "user_activity_report.xlsx"
+    df.to_excel(filename, index=False)
+
+    return send_file(filename, as_attachment=True)
+
 @app.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
     if request.method == "POST":
