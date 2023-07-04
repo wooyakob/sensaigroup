@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Sales Sensei: AI Enabled Sales Training</title>
+    <title>Admin Login | Sales Sensei: AI Enabled Sales Training</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -135,18 +135,18 @@
     </div>
 
     <div class="container">
-        <h2>Login</h2>
+        <h2>Admin Login</h2>
         {% for message in get_flashed_messages() %}
         <p>{{ message }}</p>
         {% endfor %}
 
-        <form method="POST" action="/login">
+        <form method="POST" action="/admin_login">
             <div class="form-group">
-                <label for="username">Username:</label>
+                <label for="username">Admin Username:</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password">Admin Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-secondary btn-login">Login</button>

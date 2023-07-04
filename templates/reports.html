@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | Paragon 28</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .admin-header {
+            background-color: #4A317A;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .admin-header h1 {
+            margin-bottom: 0;
+        }
+
+        .admin-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .admin-links li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .admin-links li a {
+            color: #4A317A;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .admin-content {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .admin-section {
+            margin-bottom: 30px;
+        }
+
+        .admin-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .admin-section p {
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background-color: #4A317A;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 0;
+        }
+
+        .footer a {
+            color: #fff;
+        }
+
+        .footer a:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        .text-purple {
+            color: #4A317A;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="admin-header">
+        <h1>Admin Reports</h1>
+    </header>
+
+    <nav>
+        <ul class="admin-links">
+            <li><a href="/admin_dash">Dashboard</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-content">
+        <div class="admin-section">
+            <h2>Login Reports</h2>
+            <a href="{{ url_for('report_logins') }}">View Login Reports</a>
+        </div>
+
+        <div class="admin-section">
+            <h2>User Activity Reports</h2>
+            <a href="{{ url_for('report_user_activity') }}">View User Activity Reports</a>
+        </div>
+    </div>

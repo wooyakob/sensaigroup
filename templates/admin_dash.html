@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paragon 28 | AI-enabled Sales Training</title>
+    <title>Admin Dashboard | Paragon 28</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -20,15 +20,37 @@
             font-family: 'Roboto', sans-serif;
         }
 
-        .hero {
+        .admin-header {
             background-color: #4A317A;
             color: #fff;
-            padding: 20px 0;
+            padding: 20px;
+            text-align: center;
         }
 
-        .philosophy-section img {
-            max-width: 100%;
-            height: auto;
+        .admin-header h1 {
+            margin-bottom: 0;
+        }
+
+        .admin-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .admin-links li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .admin-links li a {
+            color: #4A317A;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .admin-content {
+            padding: 20px;
         }
 
         .footer {
@@ -52,30 +74,47 @@
         .text-purple {
             color: #4A317A;
         }
+
+        .admin-section {
+            margin-bottom: 30px;
+        }
+
+        .admin-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .admin-section p {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <header class="sticky-top bg-light">
-        <div class="container-fluid d-flex justify-content-between align-items-center py-2">
-            <img src="{{ url_for('static', filename='paragon_logo.png') }}" alt="Paragon Logo" class="img-fluid" style="max-height: 50px;">
-            <div>
-                <a href="{{ url_for('login') }}" class="btn btn-primary btn-sm mr-2">User Login</a>
-                <a href="{{ url_for('admin_login') }}" class="btn btn-primary btn-sm mr-2">Admin Login</a>
-            </div>
-        </div>
+    <header class="admin-header">
+        <h1>Admin Dashboard</h1>
     </header>
 
-    <section class="hero text-white text-center py-3">
+    <nav>
+        <ul class="admin-links">
+            <li><a href="{{ url_for('reports') }}">Reports</a></li>
+            <li><a href="{{ url_for('create_user') }}">Create Users</a></li>
+            <li><a href="">Custom Content</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="admin-content">
         <div class="container">
-            <h1 class="display-5">Paragon 28</h1>
-            <p class="lead">Revolutionize Your Sales Performance With AI Powered Objection Handling</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="admin-section">
+                        <h2>Reports</h2>
+                        <p>Here you can get detailed information about your users</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-
-    <div class="philosophy-section text-center">
-        <img src="{{ url_for('static', filename='paragon_philo.png') }}" alt="Paragon Philosophy" class="img-fluid">
-    </div>
 
     <footer class="footer bg-white py-3">
         <div class="container">
@@ -89,6 +128,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/static/admin_dash.js"></script>
 </body>
 
 </html>

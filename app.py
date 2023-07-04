@@ -1,11 +1,12 @@
+from models import User, Interaction, LoginActivity
+from extensions import db, init_app
+from admin import admin
+from admin import init_admin
+import pandas as pd
 import logging
 from datetime import datetime
 import re
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from models import User, Interaction
-from extensions import db, init_app
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file
 from itsdangerous import URLSafeTimedSerializer
 import os
 from openai.error import OpenAIError
@@ -26,6 +27,7 @@ def create_app():
 
     migrate = Migrate(app, db)
     init_app(app)
+    init_admin(app)
 
     return app
 
@@ -45,6 +47,47 @@ app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
 app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
+
+@app.route('/admin/createuser', methods=['GET', 'POST'])
+def create_user():
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not all([first_name, last_name, email, username, password]):
+            return render_template('createuser.html', error_message='Missing required fields')
+
+        new_user = User(first_name=first_name, last_name=last_name, email=email, username=username, is_admin=False)
+        new_user.set_password(password)
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('createuser.html')
+
+@app.route('/rate_interaction', methods=['POST'])
+@login_required
+def rate_interaction():
+    data = request.get_json()
+    rating = data.get('rating', None)
+    if rating is None:
+        return jsonify({'message': 'Bad Request: No rating provided'}), 400
+
+    last_interaction = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).first()
+    
+    if last_interaction is None:
+        return jsonify({'message': 'No interaction found'}), 404
+
+    last_interaction.rating = rating
+    db.session.commit()
+
+    return jsonify({'message': 'Rating saved successfully'}), 200
+
 @app.route("/forgot_username", methods=["GET", "POST"])
 def forgot_username():
     if request.method == "POST":
@@ -58,6 +101,21 @@ def forgot_username():
         return redirect(url_for("login"))
 
     return render_template("forgot_username.html")
+
+@app.route('/download_history', methods=['GET'])
+@login_required
+def download_history():
+    user_interactions = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).all()
+
+    interactions_dict = [interaction.to_dict() for interaction in user_interactions]
+
+    df = pd.DataFrame(interactions_dict)
+
+    filename = f"{current_user.username}_history.xlsx"
+    df.to_excel(filename, index=False)
+
+    return send_file(filename, as_attachment=True)
+
 @app.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
     if request.method == "POST":
@@ -70,6 +128,7 @@ def forgot_password():
         else:
             flash("No account found with that email address.")
     return render_template("forgot_password.html")
+
 @app.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     if request.method == "POST":
@@ -89,19 +148,23 @@ def reset_password(token):
         flash("Your password has been successfully reset. Please log in with your new password.")
         return redirect(url_for("login"))
     return render_template("reset_password.html", token=token)
+
 def generate_password_reset_token(user):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
     return serializer.dumps(user.email, salt="password-reset")
+
 def send_username_email(user):
     msg = Message("Your Sales Sensei Username", recipients=[user.email])
     msg.body = f"Your Sales Sensei username is: {user.username}"
     mail.send(msg)
+
 def send_password_reset_email(user):
     token = generate_password_reset_token(user)
     reset_url = url_for("reset_password", token=token, _external=True)
     msg = Message("Sales Sensei Password Reset", recipients=[user.email])
     msg.body = f"To reset your password, please click the following link: {reset_url}"
     mail.send(msg)
+
 def token_to_email(token):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
     try:
@@ -109,70 +172,10 @@ def token_to_email(token):
         return email
     except:
         return None
+    
 def is_valid_email(email):
     regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     return re.match(regex, email)
-
-admin = Admin(app, name='My App Admin', template_mode='bootstrap3')
-class InteractionModelView(ModelView):
-    column_list = ('id', 'user', 'objection', 'suggested_response', 'ai_response', 'rating', 'timestamp')
-    column_labels = {
-        'user': 'User',
-        'objection': 'Objection',
-        'suggested_response': 'Suggested Response',
-        'ai_response': 'AI Response',
-        'rating': 'Rating',
-        'timestamp': 'Timestamp'
-    }
-    column_searchable_list = ['user.first_name', 'user.last_name', 'user.email', 'user.username']
-
-def _user_formatter(view, context, model, name):
-    if model.user:
-        return model.user.username
-    return ""
-
-column_formatters = {
-    'user': _user_formatter,
-}
-
-admin.add_view(ModelView(User, db.session))
-admin.add_view(InteractionModelView(Interaction, db.session))
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        company = request.form['company']
-        email = request.form['email'].strip()
-        username = request.form['username'].strip()
-        password = request.form['password'].strip()
-        if not email or not password or not username:
-            flash('Email, username, and password cannot be empty.', 'danger')
-            return render_template('signup.html')
-        if not is_valid_email(email):
-            flash('Invalid email format.', 'danger')
-            return render_template('signup.html')
-        existing_user = User.query.filter((User.email == email) | (User.username == username)).first()
-        if existing_user:
-            flash('Email or username already exists. Please choose a different one.', 'danger')
-            return render_template('signup.html')
-        hashed_password = ph.hash(password)
-        user = User(
-            first_name=first_name,
-            last_name=last_name,
-            company=company,
-            email=email,
-            username=username,
-            password=hashed_password
-        )
-        db.session.add(user)
-        db.session.commit()
-        flash("You have successfully signed up to use Sales Sensei! Please log in to begin handling your objections.", 'success')
-        return redirect(url_for('login'))
-    return render_template('signup.html')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -180,7 +183,55 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
+
+
+@app.route('/admin/reports', methods=['GET'])
+def reports():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    else:
+        return render_template('reports.html')
+
+@app.route('/admin/reports/logins', methods=['GET'])
+def report_logins():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    
+    logins = LoginActivity.query.all()
+    
+    return render_template('login_report.html', logins=logins)
+
+@app.route('/admin/reports/user_activity', methods=['GET'])
+def report_user_activity():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    
+    interactions = Interaction.query.all()
+    
+    return render_template('user_activity_report.html', interactions=interactions)
+
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username, is_admin=True).first()
+        if user:
+            try:
+                if ph.verify(user.password, password):
+                    login_user(user)
+                    return redirect(url_for('admin_dashboard'))
+            except VerifyMismatchError:
+                pass
+        flash('Invalid username or password.', 'danger')
+    return render_template('admin_login.html')
+
+@app.route('/user_history', methods=['GET'])
+@login_required
+def user_history():
+    user_interactions = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).all()
+    return render_template('user_history.html', user_interactions=user_interactions)
 
 @app.route('/')
 def index():
@@ -202,15 +253,20 @@ def login():
             try:
                 if ph.verify(user.password, password):
                     login_user(user)
+                    login_activity = LoginActivity(user_id=user.id, username=user.username)
+                    db.session.add(login_activity)
+                    db.session.commit()
                     return redirect(url_for('dashboard'))
             except VerifyMismatchError:
                 pass
         flash('Invalid username or password.', 'danger') 
     return render_template('login.html')
 
-@app.route('/blog')
-def blog():
-    return render_template('blog.html')
+
+@app.route('/admin_dash')
+@login_required
+def admin_dashboard():
+    return render_template('admin_dash.html')
 
 @app.route('/logout')
 @login_required
@@ -261,14 +317,15 @@ def chatbot():
 
     messages = [
         {"role": "system", "content": product_info +
-                                     "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
-                                     "You always address the specific objection raised by a customer and deal with it in a structured and logical way.\n\n"
-                                     "You lead by example. Sales representatives will come to you with objections, challenges, queries and questions that have been raised by prospective customers.\n\n"
-                                     "It is your job to explain to the sales representative how to handle the objection in order to progress the conversation. You are focused on handling objections to generate a sale.\n\n"
-                                     "You are currently working for Paragon 28. Paragon 28 was established in 2010, as an orthopedic foot and ankle company.\n\n"
-                                     "The name “Paragon 28” was chosen to show that we are exclusively a foot and ankle company, with the “28” representing the number of bones in the foot."
-                                     "Paragon 28’s sales representatives are coming to you with objections they are facing from a prospective customer when they try to sell Paragon 28’s foot and ankle based medical devices.\n\n"
-                                     "You provide advice to these sales representatives to handle the specific objection."
+                                    """You will respond in plain english. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
+                                    "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
+                                    "You will overcome sales objections as if you were teaching a child. You will write responses for 4th-grade reading comprehension.\n\n"
+                                    "Your response is designed for a person who has around 8-15 seconds to read it.\n\n"
+                                    "You will not put anything inside of brackets as placeholders. For example, do not do this: [briefly mention specific benefits].\n\n"
+                                    "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
+                                    "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself.\n\n"                                   
+                                    "You are currently working for Paragon 28 as a sales representative. Paragon 28 was established in 2010, as an orthopedic foot and ankle company.\n\n"
+                                    "The name “Paragon 28” was chosen to show that we are exclusively a foot and ankle company, with the “28” representing the number of bones in the foot.\n\n"""
         },
         {"role": "user", "content": user_objection},
     ]
@@ -283,12 +340,14 @@ def chatbot():
         return jsonify({"error": "AI service is currently unavailable. Please try again later."})
 
     response_text = response.choices[0].message.content.strip()
+    response_text = response_text.replace('\n', '<br>')
+    response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
     try:
         interaction = Interaction(
             user_id=current_user.id,
+            username=current_user.username,
             objection=user_objection,
-            suggested_response="",
             ai_response=response_text
         )
         db.session.add(interaction)
@@ -298,29 +357,7 @@ def chatbot():
 
     return jsonify({"response_text": response_text, "interaction_id": interaction.id, "regenerate": True})
 
-@app.route('/chatbot/regenerate', methods=['POST'])
-def regenerate_response():
-    interaction_id = request.json.get('interaction_id')
-    interaction = Interaction.query.get(interaction_id)
-    
-    if not interaction:
-        return jsonify({"error": "No such interaction found."}), 404
-
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=500,
-        )
-    except openai.error.ServiceUnavailableError:
-        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
-
-    response_text = response.choices[0].message.content.strip()
-
-    interaction.ai_response = response_text
-    db.session.commit()
-
-    return jsonify({"response_text": response_text, "interaction_id": interaction.id})
-
 if __name__ == "__main__":
+    with app.app_context():
+        create_admin() 
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
