@@ -1,18 +1,15 @@
-/* Set the global styles for the body */
 body {
   background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
   color: #000000;
 }
 
-/* Set the width of the container */
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
 }
 
-/* Set the header styles */
 .header {
   display: flex;
   flex-direction: column;
@@ -20,19 +17,22 @@ body {
   font-family: 'Roboto', sans-serif;
   text-shadow: 2px 2px 4px #000;
   color: #ffffff;
-  background-color: #4A317A; /* Purple color */
+  background-color: #4A317A;
   position: relative;
   padding: 1rem 0;
+  font-size: 2rem;
 }
 
-/* Set the header title styles */
+.header img {
+  max-width: 200px;
+}
+
 .header h1 {
-  font-size: 4rem;
+  font-size: 3rem;
   letter-spacing: 0.5rem;
   margin-top: 1rem;
 }
 
-/* Set the header button styles */
 .header-button {
   background-color: transparent;
   border: none;
@@ -46,18 +46,15 @@ body {
   transition: background-color 0.3s;
 }
 
-/* Set the header button hover styles */
 .header-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Set the header buttons container styles */
 .header-buttons {
   display: flex;
   gap: 0.5rem;
 }
 
-/* Set the responsive styles for header buttons */
 @media (max-width: 768px) {
   .header-buttons {
     flex-direction: column;
@@ -65,13 +62,12 @@ body {
   }
 }
 
-/* Set the prompt button styles */
 .prompt {
   cursor: pointer;
   display: inline-block;
   margin: 0.5rem;
   padding: 10px 20px;
-  border: 2px solid #000000; /* Black color */
+  border: 2px solid #000000;
   border-radius: 50px;
   background-color: transparent;
   color: #000000;
@@ -80,47 +76,40 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Set the container to use Flexbox and justify content to the center */
 #prompt-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-/* Set the prompt button hover styles */
 .prompt:hover {
-  background-color: #4A317A; /* Purple color */
+  background-color: #4A317A;
   color: #ffffff;
 }
 
-/* Set the primary button styles */
 .btn-primary {
-  background-color: #4A317A; /* Purple color */
-  border-color: #4A317A; /* Purple color */
+  background-color: #4A317A;
+  border-color: #4A317A;
   color: #ffffff;
 }
 
-/* Set the primary button hover styles */
 .btn-primary:hover {
-  background-color: #000000; /* Black color */
-  border-color: #000000; /* Black color */
+  background-color: #000000;
+  border-color: #000000;
   color: #ffffff;
 }
 
-/* Set the chat submit button styles */
 #chat-submit {
-  background-color: #4A317A; /* Purple color */
+  background-color: #4A317A;
   color: #ffffff;
 }
 
-/* Set the chat submit button hover styles */
 #chat-submit:hover,
 #rate-submit:hover {
-  background-color: #4A317A; /* Purple color */
+  background-color: #4A317A;
   color: #ffffff;
 }
 
-/* Set the card styles */
 .card {
   margin-bottom: 2rem;
   background-color: #f8f9fa;
@@ -129,7 +118,6 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Set the chat message styles */
 .chat-message {
   margin-bottom: 10px;
 }
@@ -152,11 +140,10 @@ body {
   margin: 0 auto;
   padding: 2rem;
   max-height: 400px;
-  /* Other styles you want to apply specifically to this container */
 }
 
 .rate-response {
-  margin-top: 80px; /* Adjust the margin-top value as needed */
+  margin-top: 80px;
 }
 
 @media (max-width: 576px) {
@@ -176,7 +163,7 @@ body {
 }
 
 textarea {
-  resize: vertical; /* user can resize vertically, but width is fixed */
+  resize: vertical;
   overflow: auto;
 }
 
@@ -188,12 +175,10 @@ textarea {
   background-color: #0B162B;
 }
 
-/* Make the progress bar blue */
 .progress-bar {
-  background-color: #4A317A; /* Bootstrap primary color */
+  background-color: #4A317A;
 }
 
-/* Add animation */
 @keyframes loading {
   from { width: 0; }
   to { width: 100%; }
@@ -204,17 +189,31 @@ textarea {
 }
 
 .custom-jumbotron {
-  background-color: #4A317A; /* Purple color */
-  color: white; /* White text color */
+  background-color: #4A317A;
+  color: white;
 }
 
 .active-item {
-  background-color: blue;
+  background-color: #4A317A;
   color: white;
 }
 
 #objectionExamplesModal ul li:hover {
-  background-color: blue;
+  background-color: #4A317A;
   color: white;
   cursor: pointer;
+}
+
+.example-objections {
+  display: flex;
+  align-items: center;
+}
+
+.example-objections textarea {
+  flex: 1;
+}
+
+.example-objections a {
+  margin-left: 10px;
+  color: #4A317A;
 }

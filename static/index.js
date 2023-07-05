@@ -26,30 +26,62 @@ document.addEventListener('DOMContentLoaded', (event) => {
       chatOutput.appendChild(feedbackElement);
 
       document.getElementById("follow-up-options").style.display = "block";
+      document.getElementById("rate-response").style.display = "block";
     } else {
       alert("Please enter an objection before submitting");
     }
+  });~
+
+  document.getElementById("rate-submit").addEventListener("click", async function () {
+    const rating = document.getElementById("rating-input").value;
+    if (rating && (rating >= 1 && rating <= 5)) {
+      alert("Thank you for your rating!");
+  
+      try {
+        const response = await fetch('/rate_interaction', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ rating: rating })
+        });
+  
+        const data = await response.json();
+        console.log(data.message);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  
+      document.getElementById("rate-response").style.display = "none";
+      document.getElementById("rating-input").value = "";
+    } else {
+      alert("Please enter a rating between 1 and 5");
+    }
   });
 
-  async function sendChatMessage(objection) {
-    const serverResponse = await fetch('/chatbot', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ user_objection: objection })
-    });
+async function sendChatMessage(objection) {
+  const TIMEOUT = 20000;
 
-    const data = await serverResponse.json();
+  const fetchPromise = fetch('/chatbot', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ user_objection: objection })
+  });
+
+  const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), TIMEOUT));
+
+  try {
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
+
+    const data = await response.json();
     return data.response_text;
+  } catch (error) {
+    console.error(error); 
+    return 'An error occurred. Please try again later.'; 
   }
-
-  document.getElementById("btn-follow-up").addEventListener("click", function () {
-    document.getElementById("follow-up-options").style.display = "none";
-    document.getElementById("chat-output").innerHTML = "";
-    document.getElementById("objection-input").value = lastObjection;
-    document.getElementById("product-select").selectedIndex = lastProductIndex;
-  });
+}
 
   document.getElementById("btn-another-objection").addEventListener("click", function () {
     document.getElementById("follow-up-options").style.display = "none";
@@ -58,29 +90,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("product-select").selectedIndex = 0;
     lastObjection = "";
     lastProductIndex = 0;
-  });
-
-  document.getElementById("btn-save").addEventListener("click", function () {
-    var doc = new jsPDF();
-    var chatOutput = $('#chat-output').html();
-    doc.text(chatOutput, 10, 10);
-    doc.save('conversation.pdf');
-    document.getElementById("objection-input").value = lastObjection;
-    document.getElementById("product-select").selectedIndex = lastProductIndex; 
-  });
-
-  document.getElementById("btn-exit").addEventListener("click", function () {
-    location.reload();
-  });
-
-  $('#btn-follow-up').click(function() {
-    var objectionText = $('#objection-input').val();
-    var chatOutput = $('#chat-output');
-    chatOutput.append('<div class="user-text">User: ' + objectionText + '</div>');
-    setTimeout(function() {
-        var advice = "This is a follow up advice from the AI"; 
-        chatOutput.append('<div class="ai-text">AI: ' + advice + '</div>');
-    }, 2000);
   });
 
   let objections = document.querySelectorAll("#objectionExamplesModal ul li");
@@ -106,5 +115,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
       item.classList.remove('active-item');
     });
   });
-
 });

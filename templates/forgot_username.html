@@ -1,13 +1,21 @@
-{% extends "base.html" %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Username</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='passwords.css') }}">
+</head>
+<body>
     <h1>Forgot Username</h1>
     <form method="POST" action="{{ url_for('forgot_username') }}">
         <div class="form-group">
-            <label for="email">Email:</label> 
-            <input type="email" class="form-control" id="email" name="email" required>
+            <label for="email">Email:</label>
+            <input type="email" class="form-control form-control-sm" id="email" name="email" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br>
     <a href="{{ url_for('login') }}" class="btn btn-primary">Return to Login</a>
-{% endblock %}
+</body>
+</html>
