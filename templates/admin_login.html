@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Sales Sensei: AI Enabled Sales Training</title>
+    <title>Admin Login | Sales SensAI: AI Enabled Sales Training</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -35,7 +35,7 @@
         }
 
         .jumbotron {
-            background-color: #4A317A;
+            background-color: #FF914D;
             color: #fff;
             padding: 40px 0;
         }
@@ -64,13 +64,13 @@
         }
 
         .btn-primary {
-            background-color: #4A317A !important;
-            border-color: #4A317A !important;
+            background-color: #FF914D !important;
+            border-color: #FF914D !important;
         }
 
         .btn-primary:hover {
-            background-color: #4A317A !important;
-            border-color: #4A317A !important;
+            background-color: #FF914D !important;
+            border-color: #FF914D !important;
         }
 
         .text-center p {
@@ -78,7 +78,7 @@
         }
 
         .text-center p a {
-            color: #4A317A;
+            color: #FF914D;
             text-decoration: none;
         }
 
@@ -87,14 +87,14 @@
         }
 
         .btn-secondary {
-            background-color: #4A317A;
-            border-color: #4A317A;
+            background-color: #FF914D;
+            border-color: #FF914D;
             color: #fff;
         }
 
         .btn-secondary:hover {
-            background-color: #4A317A;
-            border-color: #4A317A;
+            background-color: #FF914D;
+            border-color: #FF914D;
             color: #fff;
         }
 
@@ -109,14 +109,14 @@
         }
 
         .links-section a {
-            color: #4A317A;
+            color: #FF914D;
             margin-right: 10px;
             margin-left: 10px;
     }
 
         .btn-secondary.btn-return-home {
-            background-color: #4A317A;
-            border-color: #4A317A;
+            background-color: #FF914D;
+            border-color: #FF914D;
             color: #fff;
         }
 
@@ -129,11 +129,6 @@
 </head>
 
 <body>
-    <div class="jumbotron text-center">
-        <h1>Paragon 28: AI Enabled Sales Training</h1>
-        <p>Overcome sales objections skillfully and close more deals!</p>
-    </div>
-
     <div class="container">
         <h2>Admin Login</h2>
         {% for message in get_flashed_messages() %}
