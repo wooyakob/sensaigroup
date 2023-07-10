@@ -74,3 +74,4 @@ class Product(db.Model):
             'product_info': self.product_info,
             'id': self.id
         }
+    
