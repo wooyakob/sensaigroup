@@ -1,4 +1,4 @@
-from models import User, Interaction, LoginActivity
+from models import User, Interaction, LoginActivity, Product
 from extensions import db, init_app
 from admin import admin
 from admin import init_admin
@@ -313,47 +313,17 @@ def chatbot():
     if len(user_objection) > 140:
         return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters or less."})
 
-    product_info = ""
-
-    selected_product = request.json.get('selected_product')
-
-    if selected_product == "Gorilla Universal Hevans Plate":
-        product_info = (
-            "The Gorilla® Universal HEvans® Plate is a product designed for use with the Evans Calcaneal Osteotomy. Here's a summary of the product features and benefits that a sales representative could use:\n\n"
-            "1. Purpose: The Gorilla® HEvans® plate is specifically designed for use with the Evans Calcaneal Osteotomy.\n"
-            "2. Design: The plate uses a 3 screw fixation construct to support the graft placed into the osteotomy. This design helps to prevent graft subsidence with subsequent loss of calcaneal length seen in the early post-operative period due to graft resorption.\n"
-            "3. Placement: The design allows for a single proximal screw to be placed in the calcaneus with two distal screws placed in the anterior fragment of the calcaneus. Dual point fixation at the distal fragment mitigates the prospect of rotation of the distal fragment with the calcaneocuboid anatomy.\n"
-            "4. Comfort: The posterior aspect of the plate is tapered to prevent peroneal tendon irritation in the location of the plate. The HEvans® plate is low profile (1.1 mm), with a tapering of the thickness to 0.5 mm toward the end to prevent soft tissue irritation.\n"
-            "5. Rationale: Paragon 28® chose to design a 3 hole plate option for the Evans Calcaneal Osteotomy procedure to allow for less potential for soft tissue irritation at the posterior aspect, where interference with the peroneal tendons and/or sural nerve is a risk. The 3 hole HEvans® plate provides rotational stability for this procedure because of the large, flat calcaneocuboid joint. Because rotation about the proximal hole would require an arched path of the distal fragment, this is blocked by the calcaneocuboid joint.\n\n"
-            "As a sales rep, you should emphasize the specific design features of the Gorilla® Universal HEvans® Plate that make it suitable for the Evans Calcaneal Osteotomy procedure, its low-profile design that minimizes soft tissue irritation, and the rationale behind its 3-hole design.\n\n"
-        )
-
-    if selected_product == "Gorilla Calc Fracture Plating System":
-        product_info = (
-            "The Gorilla® Calc Fracture Plating System is a product offered by Paragon 28, designed to address fractures of the calcaneus (heel bone). \n"
-            "The system provides surgeons with 20 total plates in three families, allowing for a variety of surgical approaches. \n"
-            "Key features of the system include: Low Profile Lateral Extensile Approach Plates and Sinus Tarsi Approach Plates: These plates can be contoured intraoperatively according to the surgeon's preference. \n"
-            "Versatile Screw Acceptance: All plates accept 2.7 mm, 3.5 mm, and 4.2 mm locking and non-locking polyaxial screws, enabling the surgeon to target the highest quality bone around the fracture site. \n"
-            "All holes also have a built-in recess to reduce screw head prominence. Perimeter Plates: These plates are made from CP Grade 4 Titanium, making them malleable and capable of being contoured to surgeon preference. \n"
-            "They are designed to be inserted through a lateral extensile approach and can accommodate up to 15 holes for screw placement around comminuted bone. \n"
-            "Sinus Tarsi Plates: These plates are made from Titanium (Ti6AI4V-ELI) for improved strength. \n"
-            "They are available in two configurations to address fractures of the calcaneus through a minimally invasive approach. \n"
-            "The Sinus Tarsi Plate has three holes under the subtalar joint and three anterior holes vertically in line with the calcaneocuboid joint. \n"
-            "The Sinus Tarsi Support Plate has the same hole configuration, with an additional posterior arm extending to the posterior tuberosity of the calcaneus for extra fixation. \n"
-            "In summary, the Gorilla® Calc Fracture Plating System offers a comprehensive and versatile solution for surgeons dealing with calcaneus fractures, providing a range of plates and screws for different surgical approaches and fracture types. \n\n"
-        )
-
     messages = [
-        {"role": "system", "content": product_info +
-                                    """You will respond in plain english. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
-                                    "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
-                                    "You will overcome sales objections as if you were teaching a child. You will write responses for 4th-grade reading comprehension.\n\n"
-                                    "Your response is designed for a person who has around 8-15 seconds to read it.\n\n"
-                                    "You will not put anything inside of brackets as placeholders. For example, do not do this: [briefly mention specific benefits].\n\n"
-                                    "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
-                                    "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself.\n\n"                                   
-                                    "You are currently working for Paragon 28 as a sales representative. Paragon 28 was established in 2010, as an orthopedic foot and ankle company.\n\n"
-                                    "The name “Paragon 28” was chosen to show that we are exclusively a foot and ankle company, with the “28” representing the number of bones in the foot.\n\n"""
+        {"role": "system", "content":
+            """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
+            "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
+            "You will overcome sales objections as if you were teaching a child. You will write responses for 4th-grade reading comprehension.\n\n"
+            "Your response is designed for a person who has around 8-15 seconds to read it.\n\n"
+            "You will not put anything inside of brackets as placeholders. For example, do not do this: [briefly mention specific benefits].\n\n"
+            "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
+            "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself.\n\n"                                   
+            "You are currently working for Paragon 28 as a sales representative. Paragon 28 was established in 2010, as an orthopedic foot and ankle company.\n\n"
+            "The name “Paragon 28” was chosen to show that we are exclusively a foot and ankle company, with the “28” representing the number of bones in the foot.\n\n"""
         },
         {"role": "user", "content": user_objection},
     ]
