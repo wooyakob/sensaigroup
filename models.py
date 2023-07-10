@@ -61,3 +61,16 @@ class LoginActivity(db.Model):
             'login_time': self.login_time.strftime('%Y-%m-%d %H:%M:%S'),
             'id': self.id
         }
+
+class Product(db.Model):
+    __tablename__ = "products"
+    id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(200), unique=True, nullable=False)
+    product_info = db.Column(db.Text, nullable=False)
+
+    def to_dict(self):
+        return {
+            'product_name': self.product_name,
+            'product_info': self.product_info,
+            'id': self.id
+        }
