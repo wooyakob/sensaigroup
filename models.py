@@ -68,7 +68,7 @@ class Product(db.Model):
     product_name = db.Column(db.String(200), unique=True, nullable=False)
     slug = db.Column(db.String(200), unique=True, nullable=False)
     product_info = db.Column(db.Text, nullable=False)
-    design_rationale = db.Column(db.Text, nullable=False)
+    design_rationale = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
