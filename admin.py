@@ -1,7 +1,7 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
-from models import User, Interaction
+from models import User, Interaction, Product
 from extensions import db
 
 admin = Admin(name='My App Admin', template_mode='bootstrap3')
@@ -35,3 +35,20 @@ def init_admin(app):
     admin.init_app(app)
     admin.add_view(ModelView(User, db.session))
     admin.add_view(InteractionModelView(Interaction, db.session))
+
+class ProductModelView(ModelView):
+    column_list = ('id', 'product_name', 'slug', 'product_info', 'design_rationale')
+    column_labels = {
+        'product_name': 'Product Name',
+        'slug': 'Slug',
+        'product_info': 'Product Info',
+        'design_rationale': 'Design Rationale'
+    }
+    column_searchable_list = ['product_name']
+
+    def is_accessible(self):
+        if current_user.is_authenticated and current_user.is_admin:
+            return True
+        return False
+
+admin.add_view(ProductModelView(Product, db.session))
