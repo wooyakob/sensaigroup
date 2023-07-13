@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 
 async function sendChatMessage(objection) {
-  const TIMEOUT = 20000;
+  const TIMEOUT = 60000;
 
   const fetchPromise = fetch('/chatbot', {
     method: 'POST',
