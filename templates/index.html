@@ -52,6 +52,12 @@
         <div id="chat-container" class="card mt-4">
             <div class="card-body">
 
+            <select id="product-select" class="form-control mb-3">
+                {% for product in products %}
+                <option value="{{ product.id }}">{{ product.product_name }}</option>
+                {% endfor %}
+            </select>
+            
                 <div class="form-group">
                     <h5>Ask SensAI</h5>
                     <div class="info-icon-wrapper">

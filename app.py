@@ -48,6 +48,7 @@ app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
 app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
 
+
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
@@ -268,7 +269,8 @@ def index():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('index.html')
+    products = Product.query.all()
+    return render_template('index.html', products=products) 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
