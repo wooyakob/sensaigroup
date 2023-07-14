@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       loadingBar.classList.add("d-none");
 
       const feedbackElement = document.createElement("p");
-      feedbackElement.innerHTML = "<strong>Sales Sensei says:</strong> " + serverResponse;
+      feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
       chatOutput.appendChild(feedbackElement);
 
       document.getElementById("follow-up-options").style.display = "block";
