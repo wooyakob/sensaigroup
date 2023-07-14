@@ -75,7 +75,7 @@ async function sendChatMessage(objection) {
     return data.response_text;
   } catch (error) {
     console.error(error); 
-    return 'An error occurred. Please try again later.'; 
+    return 'An error occurred. Please refresh and enter another objection'; 
   }
 }
 
