@@ -1,17 +1,13 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   let lastObjection = "";
-  let lastProductIndex = 0;
 
   document.getElementById("chat-submit").addEventListener("click", async () => {
     const objectionInput = document.getElementById("objection-input");
     const objection = objectionInput.value;
-    const productSelect = document.getElementById("product-select");
-    const productIndex = productSelect.selectedIndex;
 
     if (objection && objection.trim() !== "") {
       lastObjection = objection; 
-      lastProductIndex = productIndex;
-
+    
       const chatOutput = document.getElementById("chat-output");
       const loadingBar = document.getElementById("loading-bar");
 
@@ -87,7 +83,6 @@ async function sendChatMessage(objection) {
     document.getElementById("follow-up-options").style.display = "none";
     document.getElementById("chat-output").innerHTML = "";
     document.getElementById("objection-input").value = "";
-    document.getElementById("product-select").selectedIndex = 0;
     lastObjection = "";
     lastProductIndex = 0;
   });
