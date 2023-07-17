@@ -61,3 +61,20 @@ class LoginActivity(db.Model):
             'login_time': self.login_time.strftime('%Y-%m-%d %H:%M:%S'),
             'id': self.id
         }
+
+class Product(db.Model):
+    __tablename__ = "products"
+    id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(200), unique=True, nullable=False)
+    slug = db.Column(db.String(200), unique=True, nullable=True)
+    product_info = db.Column(db.Text, nullable=False)
+    design_rationale = db.Column(db.Text, nullable=True)
+    
+    def to_dict(self):
+        return {
+            'product_name': self.product_name,
+            'slug': self.slug,
+            'product_info': self.product_info,
+            'design_rationale': self.design_rationale,
+            'id': self.id
+        }
