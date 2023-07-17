@@ -305,6 +305,8 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
+#INTERACTION ENDPOINTS. GENERIC OBJECTIONS
+
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     if not current_user.is_authenticated:
@@ -353,6 +355,32 @@ def chatbot():
         return jsonify({"error": f"Database error occurred: {str(e)}"}), 500
 
     return jsonify({"response_text": response_text, "interaction_id": interaction.id, "regenerate": True})
+
+#INTERACTION ENDPOINTS. PRODUCT OBJECTIONS
+
+@app.route('/product_objection_advice', methods=['POST'])
+def product_objection_advice():
+    # Extract message and product id from request data
+    message = request.json.get('message')
+    product_id = request.json.get('product_id')
+
+    # Handle product objection, this will be your custom logic
+    advice = handle_product_objection(message, product_id)
+
+    return jsonify({'advice': advice})
+
+#INTERACTION ENDPOINTS. PRODUCT ADVICE
+
+@app.route('/product_advice', methods=['POST'])
+def product_advice():
+    # Extract message and product id from request data
+    message = request.json.get('message')
+    product_id = request.json.get('product_id')
+
+    # Provide product advice, this will be your custom logic
+    advice = provide_product_advice(message, product_id)
+
+    return jsonify({'advice': advice})
 
 if __name__ == "__main__":
     with app.app_context():
