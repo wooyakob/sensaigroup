@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if (response.ok) {
         const data = await response.json();
-        return data.advice;
+        return data.response_text;
     } else {
         console.error('Error:', response.statusText);
     }
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if (response.ok) {
         const data = await response.json();
-        return data.advice;
+        return data.response_text;
     } else {
         console.error('Error:', response.statusText);
     }

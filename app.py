@@ -389,8 +389,13 @@ def product_objection_advice():
     if product_context is None:
         return jsonify({'error': 'Invalid product ID'})
 
+    instructions = """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
+        "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
+        "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
+        "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself."""
+
     messages = [
-        {"role": "system", "content": product_context},
+        {"role": "system", "content": instructions + "\n\n" + product_context},
         {"role": "user", "content": message},
     ]
 
@@ -408,6 +413,7 @@ def product_objection_advice():
     response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
     return jsonify({"response_text": response_text, "regenerate": True})
+
 
 #INTERACTION ENDPOINTS. PRODUCT ADVICE
 
@@ -425,8 +431,10 @@ def product_advice():
     if product_context is None:
         return jsonify({'error': 'Invalid product ID'})
 
+    instructions = """You are a knowledgeable sales representative for the products in question. Answer the user's question about the product accurately and succinctly, using the provided product context when relevant."""
+
     messages = [
-        {"role": "system", "content": product_context},
+        {"role": "system", "content": instructions + "\n\n" + product_context},
         {"role": "user", "content": message},
     ]
 
@@ -444,6 +452,7 @@ def product_advice():
     response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
     return jsonify({"response_text": response_text, "regenerate": True})
+
 
 if __name__ == "__main__":
     with app.app_context():
