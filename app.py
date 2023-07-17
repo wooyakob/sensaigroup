@@ -49,6 +49,23 @@ app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
 
 
+def get_product_context(product_id):
+    # Get the product from the database
+    product = Product.query.get(product_id)
+    if product is None:
+        return None
+
+    # Construct a string that describes the product. 
+    # Adjust this according to the attributes your Product model has.
+    product_info = f"""
+    You are currently discussing the product named {product.product_name}. 
+    Product Info: {product.product_info}. 
+    Design Rationale: {product.design_rationale}.
+    """
+    
+    return product_info
+
+
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
@@ -360,27 +377,73 @@ def chatbot():
 
 @app.route('/product_objection_advice', methods=['POST'])
 def product_objection_advice():
+    if not current_user.is_authenticated:
+        return jsonify({"error": "User not authenticated"})
+
     # Extract message and product id from request data
     message = request.json.get('message')
     product_id = request.json.get('product_id')
 
-    # Handle product objection, this will be your custom logic
-    advice = handle_product_objection(message, product_id)
+    # Get the product context
+    product_context = get_product_context(product_id)
+    if product_context is None:
+        return jsonify({'error': 'Invalid product ID'})
 
-    return jsonify({'advice': advice})
+    messages = [
+        {"role": "system", "content": product_context},
+        {"role": "user", "content": message},
+    ]
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=500,
+        )
+    except openai.error.ServiceUnavailableError:
+        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+
+    response_text = response.choices[0].message.content.strip()
+    response_text = response_text.replace('\n', '<br>')
+    response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
+
+    return jsonify({"response_text": response_text, "regenerate": True})
 
 #INTERACTION ENDPOINTS. PRODUCT ADVICE
 
 @app.route('/product_advice', methods=['POST'])
 def product_advice():
+    if not current_user.is_authenticated:
+        return jsonify({"error": "User not authenticated"})
+
     # Extract message and product id from request data
     message = request.json.get('message')
     product_id = request.json.get('product_id')
 
-    # Provide product advice, this will be your custom logic
-    advice = provide_product_advice(message, product_id)
+    # Get the product context
+    product_context = get_product_context(product_id)
+    if product_context is None:
+        return jsonify({'error': 'Invalid product ID'})
 
-    return jsonify({'advice': advice})
+    messages = [
+        {"role": "system", "content": product_context},
+        {"role": "user", "content": message},
+    ]
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=500,
+        )
+    except openai.error.ServiceUnavailableError:
+        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+
+    response_text = response.choices[0].message.content.strip()
+    response_text = response_text.replace('\n', '<br>')
+    response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
+
+    return jsonify({"response_text": response_text, "regenerate": True})
 
 if __name__ == "__main__":
     with app.app_context():
