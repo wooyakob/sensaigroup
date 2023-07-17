@@ -1,17 +1,13 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   let lastObjection = "";
-  let lastProductIndex = 0;
 
   document.getElementById("chat-submit").addEventListener("click", async () => {
     const objectionInput = document.getElementById("objection-input");
     const objection = objectionInput.value;
-    const productSelect = document.getElementById("product-select");
-    const productIndex = productSelect.selectedIndex;
 
     if (objection && objection.trim() !== "") {
       lastObjection = objection; 
-      lastProductIndex = productIndex;
-
+    
       const chatOutput = document.getElementById("chat-output");
       const loadingBar = document.getElementById("loading-bar");
 
@@ -22,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       loadingBar.classList.add("d-none");
 
       const feedbackElement = document.createElement("p");
-      feedbackElement.innerHTML = "<strong>Sales Sensei says:</strong> " + serverResponse;
+      feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
       chatOutput.appendChild(feedbackElement);
 
       document.getElementById("follow-up-options").style.display = "block";
@@ -60,7 +56,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 
 async function sendChatMessage(objection) {
-  const TIMEOUT = 20000;
+  const TIMEOUT = 60000;
 
   const fetchPromise = fetch('/chatbot', {
     method: 'POST',
@@ -79,7 +75,7 @@ async function sendChatMessage(objection) {
     return data.response_text;
   } catch (error) {
     console.error(error); 
-    return 'An error occurred. Please try again later.'; 
+    return 'An error occurred. Please refresh and enter another objection'; 
   }
 }
 
@@ -87,7 +83,6 @@ async function sendChatMessage(objection) {
     document.getElementById("follow-up-options").style.display = "none";
     document.getElementById("chat-output").innerHTML = "";
     document.getElementById("objection-input").value = "";
-    document.getElementById("product-select").selectedIndex = 0;
     lastObjection = "";
     lastProductIndex = 0;
   });
