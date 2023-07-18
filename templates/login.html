@@ -2,157 +2,37 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Sales SensAI: AI Enabled Sales Training</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
-
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .header {
-            background-color: #0B162B;
-            color: #fff;
-        }
-
-        .header img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .jumbotron {
-            background-color: #FF914D;
-            color: #fff;
-            padding: 40px 0;
-        }
-
-        .jumbotron h1 {
-            font-size: 36px;
-            font-weight: 700;
-        }
-
-        .jumbotron p {
-            font-size: 18px;
-            margin-bottom: 0;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .form-group label {
-            font-weight: 700;
-        }
-
-        .form-control {
-            border-radius: 0;
-        }
-
-        .btn-primary {
-            background-color: #FF914D!important;
-            border-color: #FF914D !important;
-        }
-
-        .btn-primary:hover {
-            background-color: #FF914D !important;
-            border-color: #FF914D !important;
-        }
-
-        .text-center p {
-            margin-bottom: 0;
-        }
-
-        .text-center p a {
-            color: #FF914D;
-            text-decoration: none;
-        }
-
-        .text-center p a:hover {
-            text-decoration: underline;
-        }
-
-        .btn-secondary {
-            background-color: #FF914D;
-            border-color: #FF914D;
-            color: #fff;
-        }
-
-        .btn-secondary:hover {
-            background-color: #FF914D;
-            border-color: #FF914D;
-            color: #fff;
-        }
-
-
-        .links-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .links-section p {
-            margin-bottom: 5px;
-        }
-
-        .links-section a {
-            color: #FF914D;
-            margin-right: 10px;
-            margin-left: 10px;
-    }
-
-        .btn-secondary.btn-return-home {
-            background-color: #FF914D;
-            border-color: #FF914D;
-            color: #fff;
-        }
-
-        .btn-secondary.btn-return-home:hover {
-            background-color: #000000;
-            border-color: #000000;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/login.css">
 </head>
 
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        {% for message in get_flashed_messages() %}
-        <p>{{ message }}</p>
-        {% endfor %}
-
-        <form method="POST" action="/login">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-secondary btn-login">Login</button>
-        </form>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
     </div>
 
-    <div class="links-section">
-        <p><a href="/forgot_username">Forgot Username</a> | <a href="/forgot_password">Forgot Password</a></p>
-        <p><a href="{{ url_for('index') }}" class="btn btn-secondary btn-return-home">Return to Home</a></p>
-      </div>
+    <form method="POST" action="/login">
+        <h3>Login Here</h3>
 
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Email or Phone" required>
+
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+
+        <button type="submit" class="btn btn-secondary btn-login">Login</button>
+
+        <div class="links-section">
+            <p><a href="/forgot_username">Forgot Username</a> | <a href="/forgot_password">Forgot Password</a></p>
+            <p><a href="{{ url_for('index') }}" class="btn btn-secondary btn-return-home">Return to Home</a></p>
+        </div>
+    </form>
 </body>
 
 </html>
