@@ -52,12 +52,6 @@
         <div id="chat-container" class="card mt-4">
             <div class="card-body">
 
-            <select id="product-select" class="form-control mb-3">
-                {% for product in products %}
-                <option value="{{ product.id }}">{{ product.product_name }}</option>
-                {% endfor %}
-            </select>
-
             <!-- THREE USER INTERACTION TYPES-->
             <div class="form-group">
                 <h5>Ask SensAI</h5>
@@ -74,6 +68,14 @@
                     <button id="objection-advice-btn" class="btn btn-primary active mt-3">Objection Advice</button>
                     <a href="#" data-toggle="modal" data-target="#objectionExamplesModal">Generic Objections</a>
                 </div>
+
+                <h5>Select Product</h5>
+                <select id="product-select" class="form-control mb-3">
+                    {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.product_name }}</option>
+                    {% endfor %}
+                </select>
+
                 <!--PRODUCT OBJECTIONS-->
                 <div class="product-objections d-flex flex-column mt-3">
                     <textarea id="product-objection-input" class="form-control" placeholder="Enter Product Objection"></textarea>
