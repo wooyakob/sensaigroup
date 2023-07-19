@@ -120,3 +120,17 @@ button{
 .social i{
   margin-right: 4px;
 }
+
+.links-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.return-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}

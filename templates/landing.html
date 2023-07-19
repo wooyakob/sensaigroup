@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SensAI | AI-enabled Sales Training</title>
+    <title>SensAI Enabled Sales Training</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
@@ -14,57 +14,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
-
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .hero {
-            background-color: #FF914D;
-            color: #fff;
-            padding: 20px 0;
-        }
-
-        .philosophy-section img {
-            max-width: 100%;
-            height: auto;
-        }
-
-
-        .text-purple {
-            color: #231F20;
-        }
-
-        .btn-orange {
-            background-color: #FF914D;
-            color: #fff;
-            border: none;
-        }
-
-        .btn-white {
-            background-color: #fff;
-            color: #FF914D;
-            border: 1px solid #FF914D;
-        }
-    </style>
 </head>
 
 <body>
     <header class="sticky-top bg-light">
         <div class="container-fluid d-flex justify-content-between align-items-center py-2">
-            <img src="{{ url_for('static', filename='Sale (1).png') }}" alt="SensAI Logo" class="img-fluid" style="max-height: 50px;">
+            <div class="d-flex align-items-center">
+                <img src="{{ url_for('static', filename='sensai_rounded.png') }}" alt="SensAI Logo" class="img-fluid logo">
+                <h1 class="ml-2 mb-0">SensAI</h1>
+            </div>
             <div>
                 <a href="{{ url_for('login') }}" class="btn btn-orange">User Login</a>
                 <a href="{{ url_for('admin_login') }}" class="btn btn-orange">Admin Login</a>
             </div>
         </div>
+        <div class="text-center py-2">
+        </div>
     </header>
 
     <section class="hero text-white text-center py-5">
         <div class="container">
-            <h1 class="display-4">SensAI</h1>
-            <p class="lead">Revolutionize Your Sales Team's Performance With AI Powered Objection Handling</p>
             <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Demo" class="btn btn-white">Request a Demo</a>
         </div>
     </section>
@@ -73,7 +42,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Welcome to SensAI</h2>
-                <p>Experience our innovative approach to leveraging AI technology to handle and overcome sales objections</p>
+                <h2>Revolutionize Your Sales Team's Performance With AI Powered Objection Handling</h2>
             </div>
         </div>
 
