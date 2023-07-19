@@ -172,6 +172,6 @@ h5 {
 @media (max-width: 768px) { /* This will apply the styles to screens smaller than 768px wide */
   .btn-orange {
     padding: 10px; /* Adjust as needed */
-    font-size: 0.4rem; /* Adjust as needed */
+    font-size: 0.6rem; /* Adjust as needed */
   }
 }
