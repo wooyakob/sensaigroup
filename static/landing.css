@@ -38,6 +38,7 @@ h1 {
     );
     color: #fff;
     border: none;
+    border-radius: 20px;
 }
 
 .card {
