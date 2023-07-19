@@ -49,6 +49,23 @@ app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
 
 
+def get_product_context(product_id):
+    # Get the product from the database
+    product = Product.query.get(product_id)
+    if product is None:
+        return None
+
+    # Construct a string that describes the product. 
+    # Adjust this according to the attributes your Product model has.
+    product_info = f"""
+    You are currently discussing the product named {product.product_name}. 
+    Product Info: {product.product_info}. 
+    Design Rationale: {product.design_rationale}.
+    """
+    
+    return product_info
+
+
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
@@ -166,6 +183,9 @@ def reset_password(token):
         if new_password != confirm_password:
             flash("New password and confirm password do not match.")
             return redirect(url_for("reset_password", token=token))
+        if not is_strong_password(new_password):
+            flash("Password should include upper and lowercase letters, digits, symbols, and at least 15 characters.")
+            return redirect(url_for("reset_password", token=token))
         email = token_to_email(token)
         user = User.query.filter_by(email=email).first()
         if user is None:
@@ -178,19 +198,24 @@ def reset_password(token):
         return redirect(url_for("login"))
     return render_template("reset_password.html", token=token)
 
+def is_strong_password(password):
+    """Check that a password is strong."""
+    # at least one uppercase, one lowercase, one digit, one symbol, and 15 characters in length
+    return re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\d\s:])([^\s]){15,}$', password) is not None
+
 def generate_password_reset_token(user):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
     return serializer.dumps(user.email, salt="password-reset")
 
 def send_username_email(user):
-    msg = Message("Your Sales Sensei Username", recipients=[user.email])
-    msg.body = f"Your Sales Sensei username is: {user.username}"
+    msg = Message("Your Sales SensAI Username", recipients=[user.email])
+    msg.body = f"Your Sales SensAI username is: {user.username}"
     mail.send(msg)
 
 def send_password_reset_email(user):
     token = generate_password_reset_token(user)
     reset_url = url_for("reset_password", token=token, _external=True)
-    msg = Message("Sales Sensei Password Reset", recipients=[user.email])
+    msg = Message("Sales SensAI Password Reset", recipients=[user.email])
     msg.body = f"To reset your password, please click the following link: {reset_url}"
     mail.send(msg)
 
@@ -305,6 +330,8 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('index'))
 
+#INTERACTION ENDPOINTS. GENERIC OBJECTIONS
+
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
     if not current_user.is_authenticated:
@@ -353,6 +380,87 @@ def chatbot():
         return jsonify({"error": f"Database error occurred: {str(e)}"}), 500
 
     return jsonify({"response_text": response_text, "interaction_id": interaction.id, "regenerate": True})
+
+#INTERACTION ENDPOINTS. PRODUCT OBJECTIONS
+
+@app.route('/product_objection_advice', methods=['POST'])
+def product_objection_advice():
+    if not current_user.is_authenticated:
+        return jsonify({"error": "User not authenticated"})
+
+    # Extract message and product id from request data
+    message = request.json.get('message')
+    product_id = request.json.get('product_id')
+
+    # Get the product context
+    product_context = get_product_context(product_id)
+    if product_context is None:
+        return jsonify({'error': 'Invalid product ID'})
+
+    instructions = """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
+        "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
+        "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
+        "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself."""
+
+    messages = [
+        {"role": "system", "content": instructions + "\n\n" + product_context},
+        {"role": "user", "content": message},
+    ]
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=500,
+        )
+    except openai.error.ServiceUnavailableError:
+        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+
+    response_text = response.choices[0].message.content.strip()
+    response_text = response_text.replace('\n', '<br>')
+    response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
+
+    return jsonify({"response_text": response_text, "regenerate": True})
+
+
+#INTERACTION ENDPOINTS. PRODUCT ADVICE
+
+@app.route('/product_advice', methods=['POST'])
+def product_advice():
+    if not current_user.is_authenticated:
+        return jsonify({"error": "User not authenticated"})
+
+    # Extract message and product id from request data
+    message = request.json.get('message')
+    product_id = request.json.get('product_id')
+
+    # Get the product context
+    product_context = get_product_context(product_id)
+    if product_context is None:
+        return jsonify({'error': 'Invalid product ID'})
+
+    instructions = """You are a knowledgeable sales representative for the products in question. Answer the user's question about the product accurately and succinctly, using the provided product context when relevant."""
+
+    messages = [
+        {"role": "system", "content": instructions + "\n\n" + product_context},
+        {"role": "user", "content": message},
+    ]
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=500,
+        )
+    except openai.error.ServiceUnavailableError:
+        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+
+    response_text = response.choices[0].message.content.strip()
+    response_text = response_text.replace('\n', '<br>')
+    response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
+
+    return jsonify({"response_text": response_text, "regenerate": True})
+
 
 if __name__ == "__main__":
     with app.app_context():

@@ -1,0 +1,154 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  max-height: 50px;
+}
+
+h1, h3 {
+  font-size: 2.5rem;
+  color: #f09819;
+  text-align: center;
+}
+
+
+h2 {
+  font-size: 2rem;
+  color: black;
+  text-align: center;
+}
+
+h4 {
+  font-size: 1.5rem;
+  color: black;
+  text-align: center;
+}
+
+h5 {
+  font-size: 1rem;
+  color: black;
+  text-align: center;
+}
+
+.container .row .card {
+  margin: 0 auto;
+}
+
+.footer {
+  width: 100%;
+  position: relative;
+  left: 0;
+  background: linear-gradient(to right, #ff512f, #f09819);
+  background-color: #f09819;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  display: block;
+  margin-top: auto;
+}
+
+.btn-orange {
+  background: linear-gradient(to right, #ff512f, #f09819);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+}
+
+.card {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  perspective: 1000px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: none;
+  background: #f1f1f1;
+  box-shadow:  10px 10px 20px #d1d1d1,
+              -10px -10px 20px #ffffff;
+}
+
+
+.card .card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+@keyframes example {
+  0% {transform: rotateY(0deg);}
+  50% {transform: rotateY(20deg);}
+  100% {transform: rotateY(0deg);}
+}
+
+.card .card-inner {
+  animation-name: example;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+
+.card .card-front,
+.card .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.card .card-front {
+  background-color: #fff;
+  color: black;
+}
+
+.card .card-back {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    color: white;
+    transform: rotateY(180deg);
+  }  
+
+  .card-text {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card:hover {
+  box-shadow: inset 5px 5px 10px #d1d1d1,
+              inset -5px -5px 10px #ffffff;
+  transform: scale(0.97);
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.text-black {
+  color: black;
+}
+
+.text-orange {
+  color: orange;
+}

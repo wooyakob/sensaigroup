@@ -4,165 +4,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SensAI | AI-enabled Sales Training</title>
+    <title>SensAI Enabled Sales Training</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
-
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .hero {
-            background-color: #FF914D;
-            color: #fff;
-            padding: 20px 0;
-        }
-
-        .philosophy-section img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .footer {
-            background-color: #FF914D;
-            color: #fff;
-            padding: 20px 0;
-        }
-
-        .text-purple {
-            color: #231F20;
-        }
-
-        .btn-orange {
-            background-color: #FF914D;
-            color: #fff;
-            border: none;
-        }
-
-        .btn-white {
-            background-color: #fff;
-            color: #FF914D;
-            border: 1px solid #FF914D;
-        }
-    </style>
 </head>
-
 <body>
     <header class="sticky-top bg-light">
         <div class="container-fluid d-flex justify-content-between align-items-center py-2">
-            <img src="{{ url_for('static', filename='Sale (1).png') }}" alt="SensAI Logo" class="img-fluid" style="max-height: 50px;">
+            <div class="d-flex align-items-center">
+                <img src="{{ url_for('static', filename='sensai_rounded.png') }}" alt="SensAI Logo" class="img-fluid logo">
+                <h1 class="ml-2 mb-0"><span class="text-black">Sens</span><span class="text-orange">AI</span></h1>
+            </div>
             <div>
                 <a href="{{ url_for('login') }}" class="btn btn-orange">User Login</a>
                 <a href="{{ url_for('admin_login') }}" class="btn btn-orange">Admin Login</a>
             </div>
         </div>
-    </header>
-
-    <section class="hero text-white text-center py-5">
-        <div class="container">
-            <h1 class="display-4">SensAI</h1>
-            <p class="lead">Revolutionize Your Sales Team's Performance With AI Powered Objection Handling</p>
-            <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Demo" class="btn btn-white">Request a Demo</a>
+        <div class="text-center py-2">
         </div>
-    </section>
+    </header>
 
     <div class="container py-5">
         <div class="row">
             <div class="col-md-12">
-                <h2>Welcome to SensAI</h2>
-                <p>Experience our innovative approach to leveraging AI technology to handle and overcome sales objections</p>
+                <h2>Close more deals with AI powered objection handling</h2>
             </div>
         </div>
 
         <div class="row mt-5">
             <div class="col-md-12">
-                <h3 class="text-center">SensAI Features</h3>
+                <h3 class="text-center">
+                    <span class="text-black">Sens</span><span class="text-orange">AI</span>
+                    <span class="text-black">Features</span>
+                </h3>
+                <br>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Engine</h4>
-                        <p class="card-text">Provides AI powered sales insight and strategies to handle an infinite number of sales objections</p>
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Engine</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Handle an infinite number of sales objections</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Product Specific</h4>
-                        <p class="card-text">Understands the unique aspects of your product e.g. the diameter of a screw</p>
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Product Specific</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Overcome product specific sales objections, or ask product questions</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Rating System</h4>
-                        <p class="card-text">Allows you to understand how our AI Sales Engine is influencing your sales reps</p>
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Rating System</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Rate advice and make the engine smarter</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="row mt-5">
             <div class="col-md-12">
-                <h3 class="text-center">SensAI Benefits</h3>
+                <h3 class="text-center">
+                    <span class="text-black">Sens</span><span class="text-orange">AI</span>
+                    <span class="text-black">Benefits</span>
+                </h3>
+                <br>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Reps</h4>
-                        <p class="card-text">Preparation and follow-up tool for more effective and accessible training</p>
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Reps</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Preparation and follow-up tool for effective training</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Leaders</h4>
-                        <p class="card-text">Get more visibility on your sales team, with unique sales data and insights</p>
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Leaders</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Visibility over sales team and unique insights</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Sales Orgs</h4>
-                        <p class="card-text">Identify areas of weakness requiring focused training and increase the average performance of all sales reps</p>
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Orgs</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Increase average sales performance with consistent training</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+        
     <section class="join-revolution text-center py-5">
         <div class="container">
-            <h2>Join the Revolution: The SensAI Awaits</h2>
-            <p>Experience the transformative power of AI on your sales results. <br> 
-            Embrace the future, embrace higher profits, embrace Sales SensAI.</p>
-            <a href="mailto:jake_wood@mac.com?subject=Sales%20Sensei%20-%20Request%20Trial" class="btn btn-orange">Try SensAI</a>
+            <br>
+            <h2>Join The Sales Revolution</h2>
+            <br>
+            <h4>Experience the transformative power of SensAI on your sales results today</h4>
+            <br>
+            <a href="mailto:jake_wood@mac.com?subject=Sales%20SensAI%20-%20Request%20Demo" class="btn btn-orange">Request Demo</a>
         </div>
     </section>
 
-    <footer class="footer hero text-white text-center py-5">
+    <footer class="footer hero text-white text-center" style="width:70vw; position: relative; left: calc(-35vw + 50%); background: linear-gradient(to right, #ff512f, #f09819); border-radius: 50%; padding: 20px 0; font-size: 0.8em;">
+        <br>
         <p>&copy; SensAI 2023. All rights reserved.</p>
         <p>
             <a href="https://www.linkedin.com/company/salesensai/" target="_blank" class="text-white mr-2">LinkedIn</a>
             <a href="https://twitter.com/salesensai" target="_blank" class="text-white">Twitter</a>
         </p>
     </footer>
-
+    
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="landing.js"></script>
 </body>
 
 </html>
