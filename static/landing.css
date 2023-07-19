@@ -1,88 +1,88 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .logo {
-    max-height: 50px;
+  max-height: 50px;
 }
 
 h1 {
-    font-size: 2.5rem;
-    color: #f09819;
+  font-size: 2.5rem;
+  color: #f09819;
 }
 
 .container .row .card {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .footer {
-    width: 100%;
-    position: relative;
-    left: 0;
-    background: linear-gradient(
-        to right,
-        #ff512f,
-        #f09819
-    );
-    color: #fff;
-    padding: 20px 0;
+  width: 100%;
+  position: relative;
+  left: 0;
+  background: linear-gradient(to right, #ff512f, #f09819);
+  color: #fff;
+  padding: 20px 0;
 }
 
 .btn-orange {
-    background: linear-gradient(
-        to right,
-        #ff512f,
-        #f09819
-    );
-    color: #fff;
-    border: none;
-    border-radius: 20px;
+  background: linear-gradient(to right, #ff512f, #f09819);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
 }
 
 .card {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    perspective: 1000px;
-    border-radius: 50%;
-    overflow: hidden; 
+  width: 200px;
+  height: 200px;
+  position: relative;
+  perspective: 1000px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: #f09819;
+}
 
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-    border-radius: 50%;
+.card .card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  border-radius: 50%;
+  margin: 0 auto;
 }
 
 .card:hover .card-inner {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
-.card-front,
-.card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    text-align: center;
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+.card .card-front,
+.card .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
-.card-front {
-    background-color: #fff;
-    color: black;
+.card .card-front {
+  background-color: #fff;
+  color: black;
 }
 
-.card-back {
-    background-color: black;
+.card .card-back {
+    background: linear-gradient(to right, #ff512f, #f09819);
     color: white;
     transform: rotateY(180deg);
+  }  
+
+  .card-text {
+    min-height: 150px;
 }

@@ -134,3 +134,23 @@ button{
     justify-content: center;
     margin-top: 20px;
 }
+
+
+.btn-primary {
+    background-color: #f09819;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #ff512f;
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    outline: none;
+  }

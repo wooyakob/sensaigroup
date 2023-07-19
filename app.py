@@ -183,6 +183,9 @@ def reset_password(token):
         if new_password != confirm_password:
             flash("New password and confirm password do not match.")
             return redirect(url_for("reset_password", token=token))
+        if not is_strong_password(new_password):
+            flash("Password should include upper and lowercase letters, digits, symbols, and at least 15 characters.")
+            return redirect(url_for("reset_password", token=token))
         email = token_to_email(token)
         user = User.query.filter_by(email=email).first()
         if user is None:
@@ -195,19 +198,24 @@ def reset_password(token):
         return redirect(url_for("login"))
     return render_template("reset_password.html", token=token)
 
+def is_strong_password(password):
+    """Check that a password is strong."""
+    # at least one uppercase, one lowercase, one digit, one symbol, and 15 characters in length
+    return re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\d\s:])([^\s]){15,}$', password) is not None
+
 def generate_password_reset_token(user):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
     return serializer.dumps(user.email, salt="password-reset")
 
 def send_username_email(user):
-    msg = Message("Your Sales Sensei Username", recipients=[user.email])
-    msg.body = f"Your Sales Sensei username is: {user.username}"
+    msg = Message("Your Sales SensAI Username", recipients=[user.email])
+    msg.body = f"Your Sales SensAI username is: {user.username}"
     mail.send(msg)
 
 def send_password_reset_email(user):
     token = generate_password_reset_token(user)
     reset_url = url_for("reset_password", token=token, _external=True)
-    msg = Message("Sales Sensei Password Reset", recipients=[user.email])
+    msg = Message("Sales SensAI Password Reset", recipients=[user.email])
     msg.body = f"To reset your password, please click the following link: {reset_url}"
     mail.send(msg)
 
