@@ -1,15 +1,12 @@
-html {
+body, html {
+  height: 100%;
   margin: 0;
   padding: 0;
-  width: 100%;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 
 .logo {
@@ -55,6 +52,7 @@ h5 {
   padding: 0;
   margin: 0;
   display: block;
+  margin-top: auto;
 }
 
 .btn-orange {
@@ -145,4 +143,12 @@ h5 {
 
 .card:hover .card-inner {
   transform: rotateY(180deg);
+}
+
+.text-black {
+  color: black;
+}
+
+.text-orange {
+  color: orange;
 }
