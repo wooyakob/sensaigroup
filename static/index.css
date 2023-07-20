@@ -4,55 +4,43 @@ body {
   color: #000000;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+h1, h3 {
+  font-size: 2.5rem;
+  color: #f09819;
+  text-align: center;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: 'Roboto', sans-serif;
-  text-shadow: 2px 2px 4px #000;
-  color: #ffffff;
-  background-color: #4A317A;
-  position: relative;
-  padding: 1rem 0;
+
+h2 {
   font-size: 2rem;
+  color: black;
+  text-align: center;
 }
 
-.header img {
-  max-width: 200px;
-}
-
-.header h1 {
-  font-size: 3rem;
-  letter-spacing: 0.5rem;
-  margin-top: 1rem;
-}
-
-.header-button {
-  background-color: transparent;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
+h4 {
   font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  transition: background-color 0.3s;
+  color: black;
+  text-align: center;
 }
 
-.header-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+h5 {
+  font-size: 1rem;
+  color: black;
+  text-align: center;
 }
 
-.header-buttons {
-  display: flex;
-  gap: 0.5rem;
+.text-black {
+  color: black;
+}
+
+.text-orange {
+  color: orange;
+}
+
+.container {
+  max-width: 6400px;
+  margin: 0 auto;
+  padding: 2rem; 
 }
 
 @media (max-width: 768px) {
@@ -85,15 +73,6 @@ body {
 .prompt:hover {
   background-color: #4A317A;
   color: #ffffff;
-}
-
-.btn-primary {
-  background-color: #4A317A;
-  border-color: #4A317A;
-  color: #ffffff;
-  background-image: linear-gradient(to right, #0033cc 0%, #0066ff 100%);
-  border: none;
-  transition: background 0.3s ease-in-out;
 }
 
 .btn-primary:hover {
@@ -178,10 +157,6 @@ textarea {
   background-color: #0B162B;
 }
 
-.progress-bar {
-  background-color: #4A317A;
-}
-
 @keyframes loading {
   from { width: 0; }
   to { width: 100%; }
@@ -202,7 +177,7 @@ textarea {
 }
 
 #objectionExamplesModal ul li:hover {
-  background-color: #4A317A;
+  background-color: #ff512f;
   color: white;
   cursor: pointer;
 }
@@ -218,7 +193,7 @@ textarea {
 
 .example-objections a {
   margin-left: 10px;
-  color: #4A317A;
+  color: #f09819;
 }
 
 .navbar {
@@ -233,7 +208,7 @@ textarea {
 }
 
 .form-control {
-  border-radius: 30px;
+  border-radius: 15px;
 }
 
 .form-control:focus {
@@ -242,15 +217,15 @@ textarea {
 }
 
 .progress-bar {
-  background-image: linear-gradient(to right, #4A325A 0%, #4A317A 100%);
-  border-radius: 50px;
+  background-image: linear-gradient(to right, #ff512f, #f09819);
+  border-radius: 5px;
 }
 
 .btn.btn-primary.active.mt-3 {
-  background: linear-gradient(90deg,  rgba(74,49,122,1) 0%, rgba(54,209,220,1) 100%);
+  background: linear-gradient(to right, #ff512f, #f09819);
   border: none;
   color: white;
-  font-weight: 600;
+  font-weight: 50;
   padding: 10px 20px;
   transition: all 0.5s ease-out;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
@@ -270,4 +245,37 @@ textarea {
 .btn.btn-primary.active.mt-3:active {
   box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.1);
   transform: translateY(1px);
+}
+
+#product-objection-advice-btn, #objection-advice-btn, #product-advice-btn  {
+  padding: 10px 20px;
+  font-size: 10px; 
+  height: 50px;
+  width: 100px;
+}
+
+.container.chat-container {
+  position: relative;
+  border-radius: 15px;
+  overflow: auto;
+  border: none;
+  background: rgba(240, 152, 25, 0.5); 
+  box-shadow:  10px 10px 20px #d1d1f1,
+              -10px -10px 20px #ffffff;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 4rem;
+  max-height: 800px;
+  }
+
+.container.chat-container:hover {
+  box-shadow: inset 5px 5px 10px #d1d1d1,
+              inset -5px -5px 10px #ffffff;
+  transform: scale(0.97);
+}
+
+.logo {
+  max-height: 50px;
 }
