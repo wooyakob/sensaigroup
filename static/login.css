@@ -5,6 +5,7 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 body{
     background-color: #080710;
 }
@@ -154,3 +155,41 @@ button{
     text-decoration: none;
     outline: none;
   }
+
+  @media only screen and (max-width: 600px) {
+    .background{
+        width: 80%;
+        height: 80%;
+    }
+    form{
+        height: 55%;
+        width: 80%;
+        padding: 5%;
+    }
+    form h3{
+        font-size: 28px;
+    }
+    label{
+        font-size: 16px;
+    }
+    input{
+        height: 50px;
+        font-size: 16px;
+    }
+    button{
+        margin-top: 30px;
+        padding: 12px 0;
+        font-size: 18px;
+    }
+    .social div{
+        width: 120px;
+        padding: 8px;
+    }
+    .btn-primary {
+        padding: 0.5em 1em;
+        font-size: 1rem;
+    }
+    .links-section a {
+        font-size: 12px;
+    }
+}
