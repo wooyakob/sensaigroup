@@ -22,8 +22,17 @@
             <div class="d-flex align-items-center">
                 <img src="{{ url_for('static', filename='sensai_rounded.png') }}" alt="SensAI Logo" class="img-fluid logo">
                 <h1 class="ml-2 mb-0"><span class="text-black">Sens</span><span class="text-orange">AI</span></h1>
+                <div class="ml-5">
+                    {% if current_user.is_authenticated %}
+                        <a class="mr-3" href="{{ url_for('user_history') }}" style="color: orange;">History</a>
+                        <a href="{{ url_for('logout') }}" style="color: orange;">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" style="color: orange;">Login</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-</header>
+    </header>
 
     <div id="prompt-container" class="mt-4">
         <div id="prompts"></div>
