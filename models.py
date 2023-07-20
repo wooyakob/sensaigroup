@@ -33,6 +33,8 @@ class Interaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     username = db.Column(db.String(100))
     objection = db.Column(db.Text, nullable=False)
+    product_objection = db.Column(db.Text, nullable=True)
+    product_advice = db.Column(db.Text, nullable=True)
     ai_response = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -41,6 +43,8 @@ class Interaction(db.Model):
     def to_dict(self):
         return {
             'objection': self.objection,
+            'product_objection': self.product_objection,
+            'product_advice': self.product_advice,
             'ai_response': self.ai_response,
             'rating': self.rating,
             'timestamp': self.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
