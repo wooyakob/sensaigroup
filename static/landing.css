@@ -160,18 +160,18 @@ h5 {
 
 .btn-container .btn {
   flex: 1 1 auto;
-  margin: 0 5px; /* Add some margin between the buttons */
-  padding: 10px; /* Adjust padding as needed */
-  text-align: center; /* Center the text */
-  white-space: nowrap; /* Prevent the text inside from breaking into new lines */
-  overflow: hidden; /* Hide any overflow */
-  text-overflow: ellipsis; /* Add an ellipsis (...) when the text overflows */
+  margin: 0 5px;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
-/* Styles for smaller screens */
-@media (max-width: 768px) { /* This will apply the styles to screens smaller than 768px wide */
+
+@media (max-width: 768px) { 
   .btn-orange {
-    padding: 10px; /* Adjust as needed */
-    font-size: 0.6rem; /* Adjust as needed */
+    padding: 10px;
+    font-size: 0.6rem;
   }
 }
