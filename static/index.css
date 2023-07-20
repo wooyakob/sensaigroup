@@ -232,6 +232,10 @@ textarea {
   transition: color 0.3s ease-in-out;
 }
 
+.form-control {
+  border-radius: 30px;
+}
+
 .form-control:focus {
   border-color: #0033cc;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
