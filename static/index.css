@@ -75,12 +75,6 @@ h5 {
   color: #ffffff;
 }
 
-.btn-primary:hover {
-  background-color: #000000;
-  border-color: #000000;
-  color: #ffffff;
-}
-
 #chat-submit {
   background-color: #4A317A;
   color: #ffffff;
