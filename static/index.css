@@ -370,3 +370,25 @@ textarea {
   background-position: right bottom;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
+
+@media (max-width: 768px) {
+  .modal-example-btn {
+    padding: 6px 10px;
+    font-size: 10px; 
+    width: 80%;
+    height: 30px; 
+    margin-bottom: 10px;
+    text-align: center; 
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-example-btn {
+    padding: 4px 8px;
+    font-size: 8px;
+    width: 85%;
+    height: 25px;
+    margin-bottom: 10px;
+    text-align: center; 
+  }
+}
