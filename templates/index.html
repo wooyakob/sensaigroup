@@ -46,7 +46,7 @@
                         <div class="card mt-3" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Generic Objections</span>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button>
+                                <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button>
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
@@ -59,7 +59,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="objectionExamplesModalLabel">Sales Objections</h5>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -72,9 +72,6 @@
                                                 <li onclick="populateObjection(this)">I don't see what your product could do for me</li>
                                             </ul>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +82,7 @@
                     <div class="card mt-3" style="background-color: #D3D3D3;"> 
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Product Objections</span>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
+                            <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
                         </div>
                         <div class="card-body">
                             <div class="product-objections d-flex flex-column">
@@ -103,7 +100,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="productObjectionsExamplesModalLabel">Example Product Objections</h5>
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -116,9 +113,6 @@
                                             <li onclick="populateProductObjection(this)">I'm not sure how your product can improve our business</li>
                                         </ul>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +123,7 @@
                         <div class="card mt-3" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Product Question</span>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#productAdviceExamplesModal">Examples</button>
+                                <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productAdviceExamplesModal">Examples</button>
                             </div>
                             <div class="card-body">
                                 <div class="product-advice d-flex flex-column">
@@ -147,7 +141,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="productAdviceExamplesModalLabel">Example Product Advice Questions</h5>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -159,9 +153,6 @@
                                                 <li onclick="populateProductAdvice(this)">What resources do you have for training new users?</li>
                                                 <li onclick="populateProductAdvice(this)">What upcoming features can we look forward to?</li>
                                             </ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
