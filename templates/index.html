@@ -22,20 +22,18 @@
             <div class="d-flex align-items-center">
                 <img src="{{ url_for('static', filename='sensai_rounded.png') }}" alt="SensAI Logo" class="img-fluid logo">
                 <h1 class="ml-2 mb-0"><span class="text-black">Sens</span><span class="text-orange">AI</span></h1>
-                <div class="ml-5">
-                    {% if current_user.is_authenticated %}
-                        <a class="mr-3 btn btn-primary active" href="{{ url_for('user_history') }}">History</a>
-                        <a class="btn btn-primary active" href="{{ url_for('logout') }}">Logout</a>
-                    {% else %}
-                        <a class="btn btn-primary active" href="{{ url_for('login') }}">Login</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
     </header>
 
-    <div id="prompt-container" class="mt-4">
+    <div id="prompt-container" class="mt-4 d-flex flex-row flex-wrap justify-content-start align-items-center">
         <div id="prompts"></div>
+        <div class="btn-group ml-5" role="group" aria-label="Button group">
+            {% if current_user.is_authenticated %}
+                <a id="history-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('user_history') }}">History</a>
+                <a id="logout-btn" class="btn btn-primary active my-2" href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a id="login-btn" class="btn btn-primary active my-2" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </div>
     </div>
 
     <div class="container chat-container">
@@ -100,14 +98,17 @@
                         <input type="number" id="rating-input" class="form-control" min="1" max="5" placeholder="1: Bad, 5: Exceptional">
                     </div>
                     <div class="text-center">
-                        <button id="rate-submit" class="btn btn-primary active">Rate Advice</button>
+                        <button id="rate-submit-btn" class="btn btn-primary active">Rate Advice</button>
                     </div>
                 </div>
 
                 <div id="follow-up-options" class="mt-4" style="display: none;">
                     <h5>What would you like to do next?</h5>
                     <div class="mt-4 text-center">
-                        <button id="btn-another-objection" class="btn btn-primary active">Enter Objection</button>
+                        <button id="enter-objection-btn" class="btn btn-primary active">Enter Objection</button>
+                        <button id="enter-product-objection-btn" class="btn btn-primary active">Enter Product Objection</button>
+                        <button id="enter-product-question-btn" class="btn btn-primary active">Ask Product Question</button>
+                        <a id="logout-btn" class="btn btn-primary active" role="button" href="{{ url_for('logout') }}">Logout</a>
                     </div>
                 </div>
             </div>

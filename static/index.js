@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       });
 
 
-    document.getElementById("rate-submit").addEventListener("click", async function () {
+      document.getElementById("rate-submit-btn").addEventListener("click", async function () {
       const rating = document.getElementById("rating-input").value;
       if (rating && (rating >= 1 && rating <= 5)) {
         alert("Thank you for your rating!");
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   }
 
-    document.getElementById("btn-another-objection").addEventListener("click", function () {
+    document.getElementById("enter-objection-btn").addEventListener("click", function () {
       document.getElementById("follow-up-options").style.display = "none";
       document.getElementById("chat-output").innerHTML = "";
       document.getElementById("objection-input").value = "";
