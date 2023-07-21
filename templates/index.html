@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -43,37 +44,93 @@
                     <!--GENERIC OBJECTIONS-->
                     <div class="col-lg-4">
                         <div class="card mt-3" style="background-color: #D3D3D3;">
-                        <div class="card-header">Generic Objections</div>
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Generic Objections</span>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button>
+                            </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <textarea id="objection-input" class="form-control" placeholder="Enter sales objection"></textarea>
-                                    <a href="#" data-toggle="modal" data-target="#objectionExamplesModal">Examples</a>
-                                    <button id="objection-advice-btn" class="btn btn-primary active">Send</button>
+                                    <button id="objection-advice-btn" class="btn btn-primary active mt-3">Send</button>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="objectionExamplesModal" tabindex="-1" role="dialog" aria-labelledby="objectionExamplesModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="objectionExamplesModalLabel">Sales Objections</h5>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul>
+                                                <li onclick="populateObjection(this)">I can get a cheaper version of your product somewhere else</li>
+                                                <li onclick="populateObjection(this)">This looks too complicated for my team to learn</li>
+                                                <li onclick="populateObjection(this)">I'm not authorized to sign off on this purchase</li>
+                                                <li onclick="populateObjection(this)">We don't have any budget left this year</li>
+                                                <li onclick="populateObjection(this)">I don't see what your product could do for me</li>
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--PRODUCT OBJECTIONS-->
-                    <div class="col-lg-4">
+ <!--PRODUCT OBJECTIONS-->
+                <div class="col-lg-4">
                     <div class="card mt-3" style="background-color: #D3D3D3;"> 
-                    <div class="card-header">Product Objections</div>
-                            <div class="card-body">
-                                <div class="product-objections d-flex flex-column">
-                                    <textarea id="product-objection-input" class="form-control" placeholder="Enter product objection"></textarea>
-                                    <select id="product-select" class="form-control mb-3">
-                                        {% for product in products %}
-                                        <option value="{{ product.id }}">{{ product.product_name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <button id="product-objection-advice-btn" class="btn btn-primary active">Send</button>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Product Objections</span>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="product-objections d-flex flex-column">
+                                <textarea id="product-objection-input" class="form-control" placeholder="Enter product objection"></textarea>
+                                <select id="product-select" class="form-control mb-3">
+                                    {% for product in products %}
+                                    <option value="{{ product.id }}">{{ product.product_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button id="product-objection-advice-btn" class="btn btn-primary active">Send</button>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="productObjectionsExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productObjectionsExamplesModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="productObjectionsExamplesModalLabel">Example Product Objections</h5>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul>
+                                            <li onclick="populateProductObjection(this)">Your product lacks feature X which is vital to us</li>
+                                            <li onclick="populateProductObjection(this)">I've heard your product has reliability issues</li>
+                                            <li onclick="populateProductObjection(this)">The product is too expensive for the value it provides</li>
+                                            <li onclick="populateProductObjection(this)">We're already using a different product that we're happy with</li>
+                                            <li onclick="populateProductObjection(this)">I'm not sure how your product can improve our business</li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                     <!--PRODUCT ADVICE-->
                     <div class="col-lg-4">
                         <div class="card mt-3" style="background-color: #D3D3D3;">
-                        <div class="card-header">Product Advice</div>
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Product Question</span>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#productAdviceExamplesModal">Examples</button>
+                            </div>
                             <div class="card-body">
                                 <div class="product-advice d-flex flex-column">
                                     <textarea id="product-advice-input" class="form-control" placeholder="Ask product question"></textarea>
@@ -85,9 +142,37 @@
                                     <button id="product-advice-btn" class="btn btn-primary active">Send</button>
                                 </div>
                             </div>
+                            <div class="modal fade" id="productAdviceExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productAdviceExamplesModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="productAdviceExamplesModalLabel">Example Product Advice Questions</h5>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul>
+                                                <li onclick="populateProductAdvice(this)">How can I maximize the usage of feature X in your product?</li>
+                                                <li onclick="populateProductAdvice(this)">What are some best practices for integrating your product into our workflow?</li>
+                                                <li onclick="populateProductAdvice(this)">Can you provide some tips for troubleshooting common issues?</li>
+                                                <li onclick="populateProductAdvice(this)">What resources do you have for training new users?</li>
+                                                <li onclick="populateProductAdvice(this)">What upcoming features can we look forward to?</li>
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
 
                 <div id="chat-output" class="mt-4"></div>
 
@@ -113,31 +198,6 @@
                         <button id="enter-product-question-btn" class="btn btn-primary active">Ask Product Question</button>
                         <a id="logout-btn" class="btn btn-primary active" role="button" href="{{ url_for('logout') }}">Logout</a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="objectionExamplesModal" tabindex="-1" role="dialog" aria-labelledby="objectionExamplesModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="objectionExamplesModalLabel">Example Sales Objections</h5>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <li onclick="populateObjection(this)">I can get a cheaper version of your product somewhere else</li>
-                        <li onclick="populateObjection(this)">This looks too complicated for my team to learn</li>
-                        <li onclick="populateObjection(this)">I'm not authorized to sign off on this purchase</li>
-                        <li onclick="populateObjection(this)">We don't have any budget left this year</li>
-                        <li onclick="populateObjection(this)">I don't see what your product could do for me</li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

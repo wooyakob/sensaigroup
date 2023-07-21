@@ -209,3 +209,52 @@ document.addEventListener('DOMContentLoaded', (event) => {
       });
     });
   });
+
+    let productObjections = document.querySelectorAll("#productObjectionsExamplesModal ul li");
+  productObjections.forEach((objection) => {
+    objection.addEventListener("click", function () {
+      productObjections.forEach((item) => {
+        item.classList.remove('active-item');
+      });
+
+      populateProductObjection(this);
+    });
+  });
+
+  function populateProductObjection(element) {
+    const productObjection = element.textContent;
+    const productObjectionInput = document.getElementById('product-objection-input');
+    productObjectionInput.value = productObjection;
+    $('#productObjectionsExamplesModal').modal('hide');
+  }
+
+  $('#productObjectionsExamplesModal').on('hidden.bs.modal', function () {
+    productObjections.forEach((item) => {
+      item.classList.remove('active-item');
+    });
+  });
+
+
+  let productAdviceItems = document.querySelectorAll("#productAdviceExamplesModal ul li");
+  productAdviceItems.forEach((advice) => {
+    advice.addEventListener("click", function () {
+      productAdviceItems.forEach((item) => {
+        item.classList.remove('active-item');
+      });
+
+      populateProductAdvice(this);
+    });
+  });
+
+  function populateProductAdvice(element) {
+    const productAdvice = element.textContent;
+    const productAdviceInput = document.getElementById('product-advice-input');
+    productAdviceInput.value = productAdvice;
+    $('#productAdviceExamplesModal').modal('hide');
+  }
+
+  $('#productAdviceExamplesModal').on('hidden.bs.modal', function () {
+    productAdviceItems.forEach((item) => {
+      item.classList.remove('active-item');
+    });
+  });

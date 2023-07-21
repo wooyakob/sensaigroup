@@ -255,11 +255,9 @@ textarea {
   border-radius: 15px;
   overflow: auto;
   border: none;
-  background: rgba(192,192,192, 0.5); 
   box-shadow:  10px 10px 20px #d1d1f1,
               -10px -10px 20px #ffffff;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
+
   max-width: 1600px;
   margin: 0 auto;
   padding: 4rem;
@@ -269,8 +267,7 @@ textarea {
 .container.chat-container:hover {
   box-shadow: inset 5px 5px 10px #d1d1d1,
               inset -5px -5px 10px #ffffff;
-  transform: scale(0.97);
-}
+} 
 
 .logo {
   max-height: 50px;
@@ -355,4 +352,8 @@ textarea {
 
 .card-header {
   font-size: 1.5rem
+}
+
+.modal-backdrop.show {
+    opacity: 0;
 }
