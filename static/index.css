@@ -392,3 +392,10 @@ textarea {
     text-align: center; 
   }
 }
+
+.example-objections {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
