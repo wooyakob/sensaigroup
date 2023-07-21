@@ -255,7 +255,7 @@ textarea {
   border-radius: 15px;
   overflow: auto;
   border: none;
-  background: rgba(192,192,192, 0.5); // Light metallic silver color
+  background: rgba(192,192,192, 0.5); 
   box-shadow:  10px 10px 20px #d1d1f1,
               -10px -10px 20px #ffffff;
   transition: transform 0.8s;
@@ -351,4 +351,8 @@ textarea {
     margin-bottom: 10px;
     text-align: center; 
   }
+}
+
+.card-header {
+  font-size: 2rem
 }
