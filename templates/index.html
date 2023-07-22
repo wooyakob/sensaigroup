@@ -47,13 +47,13 @@
                     <div class="col-lg-4">
                         <div class="card mt-3" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Generic Objections</span>
+                                <span>Sales Objections</span>
                                 <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button>
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <textarea id="objection-input" class="form-control" placeholder="Enter sales objection"></textarea>
-                                    <button id="objection-advice-btn" class="btn btn-primary active mt-3">Send</button>
+                                    <button id="objection-advice-btn" class="btn btn-primary active mt-3" onclick="scrollToChat()">Send</button>
                                 </div>
                             </div>
                             <div class="modal fade" id="objectionExamplesModal" tabindex="-1" role="dialog" aria-labelledby="objectionExamplesModalLabel" aria-hidden="true">
@@ -164,6 +164,7 @@
                 </div>
             </div>
 
+            <div class="container chat-output-container">
             <div id="chat-output" class="mt-4"></div>
 
             <div id="loading-bar" class="progress d-none">
@@ -171,7 +172,6 @@
             </div>
             
             <div class="rate-response mt-4" id="rate-response" style="display: none;">
-                <h5>Rating:</h5>
                 <div class="input-group mb-3">
                     <input type="number" id="rating-input" class="form-control" min="1" max="5" placeholder="1: Bad, 5: Exceptional">
                     <div class="input-group-append">
@@ -179,6 +179,9 @@
                     </div>
                 </div>
             </div>
+
+            <div class="container follow-up-container">
+            <div id="follow-up" class="mt-4"></div>
             
             <div id="follow-up-options" class="mt-4" style="display: none;">
                 <h5>What would you like to do next?</h5>
@@ -186,13 +189,10 @@
                     <button id="enter-objection-btn" class="btn follow-up-btn">Enter Objection</button>
                     <button id="enter-product-objection-btn" class="btn follow-up-btn">Enter Product Objection</button>
                     <button id="enter-product-question-btn" class="btn follow-up-btn">Ask Product Question</button>
-                    <a id="logout-btn" class="btn follow-up-btn" role="button" href="{{ url_for('logout') }}">Logout</a>
-                </div>
             </div>
-            </div>
-            </div>
-            </div>
-            </div>
+        </div>
+    </div>
+      
             
     <!-- JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

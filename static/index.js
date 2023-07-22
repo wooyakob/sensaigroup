@@ -258,3 +258,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
       item.classList.remove('active-item');
     });
   });
+
+  function scrollToChat() {
+    const chatContainer = document.querySelector('.container.chat-container');
+    chatContainer.scrollIntoView({behavior: "smooth"});
+}

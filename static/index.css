@@ -131,7 +131,9 @@ textarea {
 
 .rate-response {
   display: none;
+  max-width: fit-content;
 }
+
 
 .hero {
   background-color: #0B162B;
@@ -417,4 +419,45 @@ textarea {
 
 .logo:hover {
   box-shadow: 0 0 10px #ffae42, 0 0 20px #ffae42, 0 0 30px #ffae42;
+}
+
+
+.container.chat-output-container {
+  position: relative;
+  border-radius: 15px;
+  overflow: auto;
+  border: none;
+  box-shadow: 10px 10px 20px #d1d1f1, -10px -10px 20px #ffffff;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 4rem;
+  max-height: 800px; /* Ensure that the height is what you want, might want to adjust this based on your specific needs */
+}
+
+.container.chat-output-container:hover {
+  box-shadow: inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff;
+}
+
+.container.follow-up-container {
+  position: relative;
+  border-radius: 15px;
+  overflow: auto;
+  border: none;
+  box-shadow: 10px 10px 20px #d1d1f1, -10px -10px 20px #ffffff;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 4rem;
+  max-height: 800px; /* Again, adjust as needed */
+}
+
+.container.follow-up-container:hover {
+  box-shadow: inset 5px 5px 10px #d1d1f1, inset -5px -5px 10px #ffffff;
+}
+
+#loading-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%; /* adjust to your liking */
 }
