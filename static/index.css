@@ -152,7 +152,9 @@ textarea {
   animation: loading 2s linear infinite;
 }
 
-#objectionExamplesModal ul li:hover {
+#objectionExamplesModal ul li:hover,
+#productObjectionsExamplesModal ul li:hover,
+#productAdviceExamplesModal ul li:hover {
   background-color: #ff512f;
   color: white;
   cursor: pointer;

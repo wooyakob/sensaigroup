@@ -261,19 +261,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 // Hooking up the follow-up options to scroll to respective chat container
 
-    // Scroll to chat-output when Send button is clicked
     document.querySelectorAll('.btn.btn-primary.active').forEach(function(sendButton) {
         sendButton.addEventListener('click', function() {
             document.getElementById('chat-output').scrollIntoView({ behavior: 'smooth' });
         });
     });
 
-    // Scroll to follow-up-options when Rate button is clicked
     document.getElementById('rate-submit-btn').addEventListener('click', function() {
         document.getElementById('follow-up-options').scrollIntoView({ behavior: 'smooth' });
     });
 
-    // Scroll to relevant text area when follow-up option is clicked
     document.getElementById('enter-objection-btn').addEventListener('click', function() {
         document.getElementById('objection-input').scrollIntoView({ behavior: 'smooth' });
     });
