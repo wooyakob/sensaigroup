@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #ffffff;
   font-family: 'Roboto', sans-serif;
@@ -362,7 +366,7 @@ textarea {
     padding: 6px 10px;
     font-size: 10px;
     height: 30px;
-    width: 70%;
+    width: 25%;
     margin-bottom: 10px;
     box-shadow: 0 4px #666666;
   }

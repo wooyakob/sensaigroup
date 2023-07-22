@@ -259,7 +259,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   });
 
-  function scrollToChat() {
-    const chatContainer = document.querySelector('.container.chat-container');
-    chatContainer.scrollIntoView({behavior: "smooth"});
-}
+// Hooking up the follow-up options to scroll to respective chat container
+
+    // Scroll to chat-output when Send button is clicked
+    document.querySelectorAll('.btn.btn-primary.active').forEach(function(sendButton) {
+        sendButton.addEventListener('click', function() {
+            document.getElementById('chat-output').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // Scroll to follow-up-options when Rate button is clicked
+    document.getElementById('rate-submit-btn').addEventListener('click', function() {
+        document.getElementById('follow-up-options').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Scroll to relevant text area when follow-up option is clicked
+    document.getElementById('enter-objection-btn').addEventListener('click', function() {
+        document.getElementById('objection-input').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('enter-product-objection-btn').addEventListener('click', function() {
+        document.getElementById('product-objection-input').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('enter-product-question-btn').addEventListener('click', function() {
+        document.getElementById('product-advice-input').scrollIntoView({ behavior: 'smooth' });
+    });
