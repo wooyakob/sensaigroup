@@ -70,21 +70,6 @@ h5 {
   flex-wrap: wrap;
 }
 
-.prompt:hover {
-  background-color: #4A317A;
-  color: #ffffff;
-}
-
-#chat-submit {
-  background-color: #4A317A;
-  color: #ffffff;
-}
-
-#chat-submit:hover,
-#rate-submit:hover {
-  background-color: #4A317A;
-  color: #ffffff;
-}
 
 .card {
   margin-bottom: 2rem;
@@ -161,16 +146,6 @@ textarea {
   animation: loading 2s linear infinite;
 }
 
-.custom-jumbotron {
-  background-color: #4A317A;
-  color: white;
-}
-
-.active-item {
-  background-color: #4A317A;
-  color: white;
-}
-
 #objectionExamplesModal ul li:hover {
   background-color: #ff512f;
   color: white;
@@ -193,11 +168,6 @@ textarea {
 
 .form-control {
   border-radius: 15px;
-}
-
-.form-control:focus {
-  border-color: #0033cc;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .progress-bar {
@@ -345,7 +315,7 @@ textarea {
 }
 
 .card-header {
-  font-size: 1.5rem
+  font-size: 1.5rem;
 }
 
 .modal-backdrop.show {
@@ -366,16 +336,23 @@ textarea {
   border-radius: 5px;
 }
 
-.modal-example-btn:hover {
-  background-color: #000000; 
-  box-shadow: 0 4px #666666; 
+.modal-example-btn:hover, .modal-example-btn:active {
+  background-color: #000000;
+  box-shadow: 0 4px #666666;
+  text-shadow: 0 0 10px white, 0 0 15px white; 
 }
 
-.modal-example-btn:active, .modal-example-btn:focus {
-  background-color: #000000; 
+.modal-example-btn:focus {
+  background-color: #000000;
   box-shadow: 0 2px #666666;
   outline: none; 
   transform: translateY(2px);
+  text-decoration: underline; 
+}
+
+.modal-example-btn:active, .modal-example-btn:focus {
+  outline: none !important; 
+  box-shadow: none !important;
 }
 
 @media (max-width: 768px) {
@@ -399,8 +376,6 @@ textarea {
     box-shadow: 0 3px #666666;
   }
 }
-
-
 
 .example-objections {
   display: flex;
