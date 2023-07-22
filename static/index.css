@@ -354,31 +354,38 @@ textarea {
 
 .modal-example-btn {
   padding: 10px 20px;
-  font-size: 12px; 
-  height: 50px;
-  width: 100px;
-  background: linear-gradient(270deg, #f09819, #ff512f);
+  font-size: 14px;
+  height: 40px;
+  width: 120px;
+  background-color: #000000;
   border: none;
   color: white;
-  transition: background 0.5s ease, box-shadow 0.2s ease;
-  background-size: 200% 200%;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 50px;
+  box-shadow: 0 6px #666666;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .modal-example-btn:hover {
-  background-position: right bottom;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+  background-color: #000000; 
+  box-shadow: 0 4px #666666; 
+}
+
+.modal-example-btn:active, .modal-example-btn:focus {
+  background-color: #000000; 
+  box-shadow: 0 2px #666666;
+  outline: none; 
+  transform: translateY(2px);
 }
 
 @media (max-width: 768px) {
   .modal-example-btn {
     padding: 6px 10px;
-    font-size: 10px; 
-    width: 80%;
-    height: 30px; 
+    font-size: 10px;
+    height: 30px;
+    width: 70%;
     margin-bottom: 10px;
-    text-align: center; 
+    box-shadow: 0 4px #666666;
   }
 }
 
@@ -386,12 +393,14 @@ textarea {
   .modal-example-btn {
     padding: 4px 8px;
     font-size: 8px;
-    width: 85%;
     height: 25px;
+    width: 65%;
     margin-bottom: 10px;
-    text-align: center; 
+    box-shadow: 0 3px #666666;
   }
 }
+
+
 
 .example-objections {
   display: flex;

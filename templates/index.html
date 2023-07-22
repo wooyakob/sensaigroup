@@ -41,7 +41,7 @@
         <div id="chat-container" class="card">
             <div class="card-body">
                 <div class="row">
-                    <!--GENERIC OBJECTIONS-->
+                    <!-- GENERIC OBJECTIONS -->
                     <div class="col-lg-4">
                         <div class="card mt-3" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
@@ -77,48 +77,48 @@
                             </div>
                         </div>
                     </div>
- <!--PRODUCT OBJECTIONS-->
-                <div class="col-lg-4">
-                    <div class="card mt-3" style="background-color: #D3D3D3;"> 
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <span>Product Objections</span>
-                            <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="example-objections d-flex flex-column">
-                                <textarea id="product-objection-input" class="form-control" placeholder="Enter product objection"></textarea>
-                                <select id="product-select" class="form-control mb-3">
-                                    {% for product in products %}
-                                    <option value="{{ product.id }}">{{ product.product_name }}</option>
-                                    {% endfor %}
-                                </select>
-                                <button id="product-objection-advice-btn" class="btn btn-primary active">Send</button>
+                    <!-- PRODUCT OBJECTIONS -->
+                    <div class="col-lg-4">
+                        <div class="card mt-3" style="background-color: #D3D3D3;">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Product Objections</span>
+                                <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
                             </div>
-                        </div>
-                        <div class="modal fade" id="productObjectionsExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productObjectionsExamplesModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="productObjectionsExamplesModalLabel">Example Product Objections</h5>
-                                        <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <ul>
-                                            <li onclick="populateProductObjection(this)">I do not understand how your product works</li>
-                                            <li onclick="populateProductObjection(this)">I've heard your product has reliability issues</li>
-                                            <li onclick="populateProductObjection(this)">I am unclear on the product's clinical purpose</li>
-                                            <li onclick="populateProductObjection(this)">The product is too complicated for our team to learn</li>
-                                            <li onclick="populateProductObjection(this)">Why should I buy your product</li>
-                                        </ul>
+                            <div class="card-body">
+                                <div class="example-objections d-flex flex-column">
+                                    <textarea id="product-objection-input" class="form-control" placeholder="Enter product objection"></textarea>
+                                    <select id="product-select" class="form-control mb-3">
+                                        {% for product in products %}
+                                        <option value="{{ product.id }}">{{ product.product_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button id="product-objection-advice-btn" class="btn btn-primary active">Send</button>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="productObjectionsExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productObjectionsExamplesModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="productObjectionsExamplesModalLabel">Example Product Objections</h5>
+                                            <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul>
+                                                <li onclick="populateProductObjection(this)">I do not understand how your product works</li>
+                                                <li onclick="populateProductObjection(this)">I've heard your product has reliability issues</li>
+                                                <li onclick="populateProductObjection(this)">I am unclear on the product's clinical purpose</li>
+                                                <li onclick="populateProductObjection(this)">The product is too complicated for our team to learn</li>
+                                                <li onclick="populateProductObjection(this)">Why should I buy your product</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                    <!--PRODUCT ADVICE-->
+                    <!-- PRODUCT ADVICE -->
                     <div class="col-lg-4">
                         <div class="card mt-3" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
@@ -161,12 +161,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
     
 
                 <div id="chat-output" class="mt-4"></div>
-
                 <div id="loading-bar" class="progress d-none">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
