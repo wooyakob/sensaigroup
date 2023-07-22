@@ -91,34 +91,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
           }
       });
 
-
       document.getElementById("rate-submit-btn").addEventListener("click", async function () {
-      const rating = document.getElementById("rating-input").value;
-      if (rating && (rating >= 1 && rating <= 5)) {
-        alert("Thank you for your rating!");
-    
-        try {
-          const response = await fetch('/rate_interaction', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ rating: rating })
-          });
-    
-          const data = await response.json();
-          console.log(data.message);
-        } catch (error) {
-          console.error('Error:', error);
+        const rating = document.getElementById("rating-input").value;
+        const outputContainer = document.getElementById("chat-output"); 
+      
+        if (rating && (rating >= 1 && rating <= 5)) {
+          outputContainer.innerHTML += "<p>Thank you for your rating!</p>";
+      
+          try {
+            const response = await fetch('/rate_interaction', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ rating: rating })
+            });
+      
+            const data = await response.json();
+            console.log(data.message);
+            outputContainer.innerHTML += `<p>You rated the advice ${rating}: ${data.message}</p>`;
+          } catch (error) {
+            console.error('Error:', error);
+            outputContainer.innerHTML += "<p>Error while submitting your rating. Please try again.</p>";
+          }
+      
+          document.getElementById("rate-response").style.display = "none";
+          document.getElementById("rating-input").value = "";
+        } else {
+          outputContainer.innerHTML += "<p>Please enter a rating between 1 and 5</p>";
         }
-    
-        document.getElementById("rate-response").style.display = "none";
-        document.getElementById("rating-input").value = "";
-      } else {
-        alert("Please enter a rating between 1 and 5");
-      }
-    });
-
+      });
 
   // GENERIC OBJECTION SEND TO ENDPOINT /CHATBOT
   async function sendGenericObjection(objection) {
