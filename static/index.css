@@ -447,7 +447,7 @@ textarea {
   max-width: 1600px;
   margin: 0 auto;
   padding: 4rem;
-  max-height: 800px; /* Again, adjust as needed */
+  max-height: 800px;
 }
 
 .container.follow-up-container:hover {
@@ -459,5 +459,15 @@ textarea {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%; /* adjust to your liking */
+  width: 60%;
+}
+
+#rating-input.form-control {
+  width: 200px;
+  height: 50px;
+  border-radius: 15px;
+}
+
+.input-group-append {
+  margin-left: 20px;
 }
