@@ -91,34 +91,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
           }
       });
 
-
-    document.getElementById("rate-submit").addEventListener("click", async function () {
-      const rating = document.getElementById("rating-input").value;
-      if (rating && (rating >= 1 && rating <= 5)) {
-        alert("Thank you for your rating!");
-    
-        try {
-          const response = await fetch('/rate_interaction', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ rating: rating })
-          });
-    
-          const data = await response.json();
-          console.log(data.message);
-        } catch (error) {
-          console.error('Error:', error);
+      document.getElementById("rate-submit-btn").addEventListener("click", async function () {
+        const rating = document.getElementById("rating-input").value;
+        const outputContainer = document.getElementById("chat-output"); 
+      
+        if (rating && (rating >= 1 && rating <= 5)) {
+          outputContainer.innerHTML += "<p>Thank you for your rating!</p>";
+      
+          try {
+            const response = await fetch('/rate_interaction', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ rating: rating })
+            });
+      
+            const data = await response.json();
+            console.log(data.message);
+            outputContainer.innerHTML += `<p>You rated the advice <span style="font-weight: bold; color: #f09819;">${rating}</span> <br> <br> ${data.message}</p>`;
+          } catch (error) {
+            console.error('Error:', error);
+            outputContainer.innerHTML += "<p>Error while submitting your rating. Please try again.</p>";
+          }
+      
+          document.getElementById("rate-response").style.display = "none";
+          document.getElementById("rating-input").value = "";
+        } else {
+          outputContainer.innerHTML += "<p>Please enter a rating between 1 and 5</p>";
         }
-    
-        document.getElementById("rate-response").style.display = "none";
-        document.getElementById("rating-input").value = "";
-      } else {
-        alert("Please enter a rating between 1 and 5");
-      }
-    });
-
+      });
 
   // GENERIC OBJECTION SEND TO ENDPOINT /CHATBOT
   async function sendGenericObjection(objection) {
@@ -177,7 +179,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   }
 
-    document.getElementById("btn-another-objection").addEventListener("click", function () {
+    document.getElementById("enter-objection-btn").addEventListener("click", function () {
       document.getElementById("follow-up-options").style.display = "none";
       document.getElementById("chat-output").innerHTML = "";
       document.getElementById("objection-input").value = "";
@@ -209,3 +211,76 @@ document.addEventListener('DOMContentLoaded', (event) => {
       });
     });
   });
+
+    let productObjections = document.querySelectorAll("#productObjectionsExamplesModal ul li");
+  productObjections.forEach((objection) => {
+    objection.addEventListener("click", function () {
+      productObjections.forEach((item) => {
+        item.classList.remove('active-item');
+      });
+
+      populateProductObjection(this);
+    });
+  });
+
+  function populateProductObjection(element) {
+    const productObjection = element.textContent;
+    const productObjectionInput = document.getElementById('product-objection-input');
+    productObjectionInput.value = productObjection;
+    $('#productObjectionsExamplesModal').modal('hide');
+  }
+
+  $('#productObjectionsExamplesModal').on('hidden.bs.modal', function () {
+    productObjections.forEach((item) => {
+      item.classList.remove('active-item');
+    });
+  });
+
+
+  let productAdviceItems = document.querySelectorAll("#productAdviceExamplesModal ul li");
+  productAdviceItems.forEach((advice) => {
+    advice.addEventListener("click", function () {
+      productAdviceItems.forEach((item) => {
+        item.classList.remove('active-item');
+      });
+
+      populateProductAdvice(this);
+    });
+  });
+
+  function populateProductAdvice(element) {
+    const productAdvice = element.textContent;
+    const productAdviceInput = document.getElementById('product-advice-input');
+    productAdviceInput.value = productAdvice;
+    $('#productAdviceExamplesModal').modal('hide');
+  }
+
+  $('#productAdviceExamplesModal').on('hidden.bs.modal', function () {
+    productAdviceItems.forEach((item) => {
+      item.classList.remove('active-item');
+    });
+  });
+
+// Hooking up the follow-up options to scroll to respective chat container
+
+    document.querySelectorAll('.btn.btn-primary.active').forEach(function(sendButton) {
+        sendButton.addEventListener('click', function() {
+            document.getElementById('chat-output').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    document.getElementById('rate-submit-btn').addEventListener('click', function() {
+        document.getElementById('follow-up-options').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('enter-objection-btn').addEventListener('click', function() {
+        document.getElementById('objection-input').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('enter-product-objection-btn').addEventListener('click', function() {
+        document.getElementById('product-objection-input').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('enter-product-question-btn').addEventListener('click', function() {
+        document.getElementById('product-advice-input').scrollIntoView({ behavior: 'smooth' });
+    });
