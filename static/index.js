@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       document.getElementById("product-objection-advice-btn").addEventListener("click", async () => {
         const productObjectionInput = document.getElementById("product-objection-input");
         const productObjection = productObjectionInput.value;
-        const productSelect = document.getElementById("product-select");
+        const productSelect = document.getElementById("product-objection-select");
         const productId = productSelect.value;
     
         if (productObjection && productObjection.trim() !== "" && productId) {
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById("product-advice-btn").addEventListener("click", async () => {
           const productObjectionInput = document.getElementById("product-advice-input");
           const productObjection = productObjectionInput.value;
-          const productSelect = document.getElementById("product-select");
+          const productSelect = document.getElementById("product-question-select");
           const productId = productSelect.value;
       
           if (productObjection && productObjection.trim() !== "" && productId) {

@@ -89,7 +89,7 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <textarea id="product-objection-input" class="form-control" placeholder="Enter product objection"></textarea>
-                                    <select id="product-select" class="form-control mb-3">
+                                    <select id="product-objection-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
                                         {% endfor %}
@@ -120,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- PRODUCT ADVICE -->
+                    <!-- PRODUCT Question -->
                     <div class="col-lg-4">
                         <div class="card mt-3" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
@@ -130,7 +130,7 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <textarea id="product-advice-input" class="form-control" placeholder="Ask product question"></textarea>
-                                    <select id="product-select" class="form-control mb-3">
+                                    <select id="product-question-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
                                         {% endfor %}
