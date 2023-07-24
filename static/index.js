@@ -298,3 +298,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('enter-product-question-btn').addEventListener('click', function() {
         document.getElementById('product-advice-input').scrollIntoView({ behavior: 'smooth' });
     });
+
+    let hideRatingElements = document.querySelectorAll('.hide-rating');
+
+    hideRatingElements.forEach((element) => {
+      element.addEventListener('click', function() {
+        let rateResponse = document.getElementById('rate-response');
+        let ratingInput = document.getElementById('rating-input');
+
+        if (ratingInput.value.trim() === '') {
+          rateResponse.style.display = 'none';
+        }
+      });
+    });
