@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       
             const data = await response.json();
             console.log(data.message);
-            outputContainer.innerHTML += `<p>You rated the advice ${rating}: ${data.message}</p>`;
+            outputContainer.innerHTML += `<p>You rated the advice <span style="font-weight: bold; color: #f09819;">${rating}</span> <br> <br> ${data.message}</p>`;
           } catch (error) {
             console.error('Error:', error);
             outputContainer.innerHTML += "<p>Error while submitting your rating. Please try again.</p>";

@@ -397,8 +397,10 @@ textarea {
   border: none; 
   color: white; 
   text-align: center; 
-  display: inline-block; 
-  font-size: 14px;
+  display: inline-flex; 
+  justify-content: center;
+  align-items: center;
+  font-size: 8px;
   width: 200px;
   height: 50px;
   transition: all 0.5s;
@@ -407,6 +409,7 @@ textarea {
   border-radius: 5px;
   box-shadow: 0 9px #999;
 }
+
 
 .follow-up-btn:hover {
   background-color: #34495e;
@@ -418,6 +421,27 @@ textarea {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+@media (max-width: 768px) {
+  .follow-up-btn {
+    padding: 10px 15px;
+    font-size: 14px; 
+    width: 90%;
+    height: 40px; 
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .follow-up-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    width: 95%;
+    height: 35px;
+    margin-bottom: 10px;
+  }
+}
+
 
 .logo {
   transition: box-shadow 0.3s ease-in-out;
