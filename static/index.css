@@ -461,7 +461,8 @@ textarea {
   max-width: 1600px;
   margin: 0 auto;
   padding: 4rem;
-  max-height: 800px; /* Ensure that the height is what you want, might want to adjust this based on your specific needs */
+  max-height: 800px;
+  margin-bottom: 2rem;
 }
 
 .container.chat-output-container:hover {
