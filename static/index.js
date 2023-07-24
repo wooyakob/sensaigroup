@@ -149,33 +149,47 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // PRODUCT OBJECTION SEND TO ENDPOINT /product_objection_advice
   async function sendProductObjection(message, productId) {
-    const response = await fetch('/product_objection_advice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'message': message, 'product_id': productId })
+    const TIMEOUT = 60000;
+
+    const fetchPromise = fetch('/product_objection_advice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 'message': message, 'product_id': productId })
     });
 
-    if (response.ok) {
-        const data = await response.json();
-        return data.response_text;
-    } else {
-        console.error('Error:', response.statusText);
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), TIMEOUT));
+
+    try {
+      const response = await Promise.race([fetchPromise, timeoutPromise]);
+
+      const data = await response.json();
+      return data.response_text;
+    } catch (error) {
+      console.error(error); 
+      return 'An error occurred. Please refresh and enter another product objection'; 
     }
   }
 
   // PRODUCT ADVICE SEND TO ENDPOINT /product_advice
   async function sendProductAdvice(message, productId) {
-    const response = await fetch('/product_advice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'message': message, 'product_id': productId })
+    const TIMEOUT = 60000;
+
+    const fetchPromise = fetch('/product_advice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 'message': message, 'product_id': productId })
     });
 
-    if (response.ok) {
-        const data = await response.json();
-        return data.response_text;
-    } else {
-        console.error('Error:', response.statusText);
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), TIMEOUT));
+
+    try {
+      const response = await Promise.race([fetchPromise, timeoutPromise]);
+
+      const data = await response.json();
+      return data.response_text;
+    } catch (error) {
+      console.error(error); 
+      return 'An error occurred. Please refresh and ask another product question'; 
     }
   }
 
