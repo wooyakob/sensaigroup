@@ -12,9 +12,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       
         const chatOutput = document.getElementById("chat-output");
         const loadingBar = document.getElementById("loading-bar");
+        const rateResponse = document.getElementById("rate-response"); 
 
         chatOutput.innerHTML = "";
         loadingBar.classList.remove("d-none");
+        rateResponse.style.display = "none";
 
         const serverResponse = await sendGenericObjection(objection);
         loadingBar.classList.add("d-none");
@@ -24,7 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         chatOutput.appendChild(feedbackElement);
 
         document.getElementById("follow-up-options").style.display = "block";
-        document.getElementById("rate-response").style.display = "block";
+        rateResponse.style.display = "block"; 
       } else {
         alert("Please enter an objection before submitting");
       }
@@ -42,9 +44,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
             const chatOutput = document.getElementById("chat-output");
             const loadingBar = document.getElementById("loading-bar");
+            const rateResponse = document.getElementById("rate-response");
     
             chatOutput.innerHTML = "";
             loadingBar.classList.remove("d-none");
+            rateResponse.style.display = "none";
     
             const serverResponse = await sendProductObjection(productObjection, productId);
             loadingBar.classList.add("d-none");
@@ -54,7 +58,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             chatOutput.appendChild(feedbackElement);
     
             document.getElementById("follow-up-options").style.display = "block";
-            document.getElementById("rate-response").style.display = "block";
+            rateResponse.style.display = "block"; 
         } else {
             alert("Please enter a product objection and select a product before submitting");
         }
@@ -73,9 +77,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       
               const chatOutput = document.getElementById("chat-output");
               const loadingBar = document.getElementById("loading-bar");
+              const rateResponse = document.getElementById("rate-response");
       
               chatOutput.innerHTML = "";
               loadingBar.classList.remove("d-none");
+              rateResponse.style.display = "none";
       
               const serverResponse = await sendProductAdvice(productObjection, productId);
               loadingBar.classList.add("d-none");
@@ -85,7 +91,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
               chatOutput.appendChild(feedbackElement);
       
               document.getElementById("follow-up-options").style.display = "block";
-              document.getElementById("rate-response").style.display = "block";
+              rateResponse.style.display = "block";
           } else {
               alert("Please enter a product question and select a product before submitting");
           }
