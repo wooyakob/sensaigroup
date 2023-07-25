@@ -294,16 +294,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     document.getElementById('enter-objection-btn').addEventListener('click', function() {
-        document.getElementById('objection-input').scrollIntoView({ behavior: 'smooth' });
-    });
+        document.getElementById('prompt-container').scrollIntoView({ behavior: 'smooth' });
+  });
 
-    document.getElementById('enter-product-objection-btn').addEventListener('click', function() {
-        document.getElementById('product-objection-input').scrollIntoView({ behavior: 'smooth' });
-    });
+    // document.getElementById('enter-product-objection-btn').addEventListener('click', function() {
+     //   document.getElementById('product-objection-input').scrollIntoView({ behavior: 'smooth' });
+    // });
 
-    document.getElementById('enter-product-question-btn').addEventListener('click', function() {
-        document.getElementById('product-advice-input').scrollIntoView({ behavior: 'smooth' });
-    });
+    // document.getElementById('enter-product-question-btn').addEventListener('click', function() {
+    //   document.getElementById('product-advice-input').scrollIntoView({ behavior: 'smooth' });
+    // });
 
     let hideRatingElements = document.querySelectorAll('.hide-rating');
 
