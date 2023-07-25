@@ -339,9 +339,6 @@ def chatbot():
 
     user_objection = request.json.get('user_objection')
 
-    if len(user_objection) > 140:
-        return jsonify({"error": "Objection is too long. Please limit your objection to 140 characters or less."})
-
     messages = [
         {"role": "system", "content":
             """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
@@ -356,7 +353,7 @@ def chatbot():
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=messages,
             max_tokens=500,
         )
@@ -409,7 +406,7 @@ def product_objection_advice():
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=messages,
             max_tokens=500,
         )
@@ -448,7 +445,7 @@ def product_advice():
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=messages,
             max_tokens=500,
         )

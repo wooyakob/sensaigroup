@@ -76,7 +76,7 @@ notebook==6.4.11
 notebook-shim==0.1.0
 notion-client==2.0.0
 numpy==1.25.0
-openai==0.27.6
+openai==0.27.8
 openpyxl==3.1.2
 optional-django==0.3.0
 packaging==21.3
