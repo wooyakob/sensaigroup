@@ -369,7 +369,8 @@ def chatbot():
             user_id=current_user.id,
             username=current_user.username,
             objection=user_objection,
-            ai_response=response_text
+            ai_response=response_text,
+            product_selected=None 
         )
         db.session.add(interaction)
         db.session.commit()
@@ -422,7 +423,8 @@ def product_objection_advice():
             user_id=current_user.id,
             username=current_user.username,
             product_objection=message,
-            ai_response=response_text
+            ai_response=response_text,
+            product_selected=product_id
     )
         db.session.add(interaction)
         db.session.commit()
@@ -471,7 +473,8 @@ def product_advice():
             user_id=current_user.id,
             username=current_user.username,
             product_advice=message, 
-            ai_response=response_text
+            ai_response=response_text,
+            product_selected=product_id 
         )
         db.session.add(interaction)
         db.session.commit()

@@ -33,6 +33,7 @@ class Interaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     username = db.Column(db.String(100))
     objection = db.Column(db.Text, nullable=True)
+    product_selected = db.Column(db.String(200), nullable=True) 
     product_objection = db.Column(db.Text, nullable=True)
     product_advice = db.Column(db.Text, nullable=True)
     ai_response = db.Column(db.Text, nullable=False)
