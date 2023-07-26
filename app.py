@@ -426,12 +426,10 @@ def product_objection_advice():
 def product_advice():
     if not current_user.is_authenticated:
         return jsonify({"error": "User not authenticated"})
-
-    # Extract message and product id from request data
+    
     message = request.json.get('message')
     product_id = request.json.get('product_id')
 
-    # Get the product context
     product_context = get_product_context(product_id)
     if product_context is None:
         return jsonify({'error': 'Invalid product ID'})
