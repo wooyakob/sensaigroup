@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>History</title>
-  <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico"> 
+  <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
 </head>
 <body>
   <div class="header">
@@ -13,34 +13,91 @@
       <a href="{{ url_for('download_history') }}" class="header-button btn-download-history">Download History</a>
     </div>
   </div>
+
+<button id="show-objections">Show Objections</button>
+<button id="show-product-objections">Show Product Objections</button>
+<button id="show-product-questions">Show Product Questions</button>
+
+
   <div class="container">
-    <h1>My History</h1>
+    <h1>History</h1>
+
+<div id="objections-section">
+    <h2>Objections</h2>
     <table>
       <thead>
         <tr>
           <th>Objection</th>
-          <th>Product Objection</th>
-          <th>Product Question</th>
-          <th>Product Selected</th>
           <th>AI Response</th>
-          <th>Rating</th>
           <th>Timestamp</th>
         </tr>
       </thead>
       <tbody>
-        {% for interaction in user_interactions %}
+        {% for interaction in objections %}
         <tr>
           <td>{{ interaction.objection }}</td>
+          <td>{{ interaction.ai_response|safe }}</td>
+          <td>{{ interaction.timestamp }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<div id="product-objections-section" style="display: none;">
+    <h2>Product Objections</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Product Objection</th>
+          <th>Product Selected</th>
+          <th>AI Response</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for interaction in product_objections %}
+        <tr>
           <td>{{ interaction.product_objection }}</td>
+          <td>{{ interaction.product_selected }}</td>
+          <td>{{ interaction.ai_response|safe }}</td>
+          <td>{{ interaction.timestamp }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<div id="product-questions-section" style="display: none;">
+    <h2>Product Questions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Product Question</th>
+          <th>Product Selected</th>
+          <th>AI Response</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for interaction in product_questions %}
+        <tr>
           <td>{{ interaction.product_advice }}</td>
           <td>{{ interaction.product_selected }}</td>
           <td>{{ interaction.ai_response|safe }}</td>
-          <td>{{ interaction.rating }}</td>
           <td>{{ interaction.timestamp }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/static/uhistory.js"></script>
+
 </body>
+
+
+
 </html>

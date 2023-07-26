@@ -284,14 +284,18 @@ def admin_login():
 @app.route('/user_history', methods=['GET'])
 @login_required
 def user_history():
-    user_interactions = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).all()
+    objections = Interaction.query.filter_by(user_id=current_user.id, product_objection=None, product_advice=None).order_by(Interaction.timestamp.desc()).all()
+    product_objections = Interaction.query.filter_by(user_id=current_user.id, objection=None, product_advice=None).order_by(Interaction.timestamp.desc()).all()
+    product_questions = Interaction.query.filter_by(user_id=current_user.id, objection=None, product_objection=None).order_by(Interaction.timestamp.desc()).all()
 
-    for interaction in user_interactions:
+    # Fetch the corresponding product for each interaction
+    for interaction in objections + product_objections + product_questions:
         product = Product.query.filter_by(id=interaction.product_selected).first()
         if product:
             interaction.product_selected = product.product_name
 
-    return render_template('user_history.html', user_interactions=user_interactions)
+    return render_template('user_history.html', objections=objections, product_objections=product_objections, product_questions=product_questions)
+
 
 @app.route('/')
 def index():
