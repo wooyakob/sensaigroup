@@ -285,6 +285,12 @@ def admin_login():
 @login_required
 def user_history():
     user_interactions = Interaction.query.filter_by(user_id=current_user.id).order_by(Interaction.timestamp.desc()).all()
+
+    for interaction in user_interactions:
+        product = Product.query.filter_by(id=interaction.product_selected).first()
+        if product:
+            interaction.product_selected = product.product_name
+
     return render_template('user_history.html', user_interactions=user_interactions)
 
 @app.route('/')
