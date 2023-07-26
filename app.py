@@ -417,6 +417,18 @@ def product_objection_advice():
     response_text = response_text.replace('\n', '<br>')
     response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
+    try:
+        interaction = Interaction(
+            user_id=current_user.id,
+            username=current_user.username,
+            product_objection=message,
+            ai_response=response_text
+    )
+        db.session.add(interaction)
+        db.session.commit()
+    except SQLAlchemyError as e:
+        return jsonify({"error": f"Database error occurred: {str(e)}"}), 500
+
     return jsonify({"response_text": response_text, "regenerate": True})
 
 
@@ -454,8 +466,19 @@ def product_advice():
     response_text = response_text.replace('\n', '<br>')
     response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
-    return jsonify({"response_text": response_text, "regenerate": True})
+    try:
+        interaction = Interaction(
+            user_id=current_user.id,
+            username=current_user.username,
+            product_advice=message, 
+            ai_response=response_text
+        )
+        db.session.add(interaction)
+        db.session.commit()
+    except SQLAlchemyError as e:
+       return jsonify({"error": f"Database error occurred: {str(e)}"}), 500
 
+    return jsonify({"response_text": response_text, "regenerate": True})
 
 if __name__ == "__main__":
     with app.app_context():
