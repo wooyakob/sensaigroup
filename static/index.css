@@ -608,3 +608,10 @@ textarea {
   margin: 10px;
   display: inline-block;
 }
+
+#loading-bar {
+  position: static !important;
+  transform: none !important;
+  margin: auto;
+  width: 60%;
+}
