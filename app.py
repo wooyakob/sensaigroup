@@ -50,13 +50,10 @@ mail = Mail(app)
 
 
 def get_product_context(product_id):
-    # Get the product from the database
     product = Product.query.get(product_id)
     if product is None:
         return None
 
-    # Construct a string that describes the product. 
-    # Adjust this according to the attributes your Product model has.
     product_info = f"""
     You are currently discussing the product named {product.product_name}. 
     Product Info: {product.product_info}. 
@@ -198,11 +195,6 @@ def reset_password(token):
         return redirect(url_for("login"))
     return render_template("reset_password.html", token=token)
 
-def is_strong_password(password):
-    """Check that a password is strong."""
-    # at least one uppercase, one lowercase, one digit, one symbol, and 15 characters in length
-    return re.match(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\d\s:])([^\s]){15,}$', password) is not None
-
 def generate_password_reset_token(user):
     serializer = URLSafeTimedSerializer(app.config["EMAIL_SECRET_KEY"])
     return serializer.dumps(user.email, salt="password-reset")
@@ -238,7 +230,6 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
-
 
 @app.route('/admin/reports', methods=['GET'])
 def reports():
@@ -288,14 +279,12 @@ def user_history():
     product_objections = Interaction.query.filter_by(user_id=current_user.id, objection=None, product_advice=None).order_by(Interaction.timestamp.desc()).all()
     product_questions = Interaction.query.filter_by(user_id=current_user.id, objection=None, product_objection=None).order_by(Interaction.timestamp.desc()).all()
 
-    # Fetch the corresponding product for each interaction
     for interaction in objections + product_objections + product_questions:
         product = Product.query.filter_by(id=interaction.product_selected).first()
         if product:
             interaction.product_selected = product.product_name
 
     return render_template('user_history.html', objections=objections, product_objections=product_objections, product_questions=product_questions)
-
 
 @app.route('/')
 def index():
@@ -326,7 +315,6 @@ def login():
                 pass
         flash('Invalid username or password.', 'danger') 
     return render_template('login.html')
-
 
 @app.route('/admin_dash')
 @login_required
@@ -396,11 +384,9 @@ def product_objection_advice():
     if not current_user.is_authenticated:
         return jsonify({"error": "User not authenticated"})
 
-    # Extract message and product id from request data
     message = request.json.get('message')
     product_id = request.json.get('product_id')
 
-    # Get the product context
     product_context = get_product_context(product_id)
     if product_context is None:
         return jsonify({'error': 'Invalid product ID'})
