@@ -42,12 +42,16 @@
 
     <div class="container chat-container">
         <h1>You can use SensAI in three ways. Please select one of the following options:</h1>
+        <button id="sales-objections-option" class="option-btn">Sales Objections</button>
+        <button id="product-objections-option" class="option-btn">Product Objections</button>
+        <button id="product-question-option" class="option-btn">Product Questions</button>
         <div id="chat-container" class="card">
             <div class="card-body">
                 <div class="row">
                     <!-- GENERIC OBJECTIONS -->
-                    <div class="col-lg-4">
-                        <div class="card mt-3" style="background-color: #D3D3D3;">
+                    
+                    <div class="col-lg-4 mx-auto">
+                        <div class="card mt-3 hide-card" id="sales-objections-card" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Sales Objections</span>
                                 <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button>
@@ -55,10 +59,13 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <p class="text-muted">Enter a sales objection to get advice on how to handle it</p>
-                                    <textarea id="objection-input" class="form-control" placeholder="Enter a sales objection" title="Type the sales objection here"></textarea>
+                                    <textarea id="objection-input" class="form-control" placeholder="Enter your own sales objection or choose from the examples" title="Type the sales objection here"></textarea>
                                     <button id="objection-advice-btn" class="btn btn-primary active mt-3">Submit Sales Objection</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                
                             <div class="modal fade" id="objectionExamplesModal" tabindex="-1" role="dialog" aria-labelledby="objectionExamplesModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -80,9 +87,10 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- PRODUCT OBJECTIONS -->
-                    <div class="col-lg-4">
-                        <div class="card mt-3" style="background-color: #D3D3D3;">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="card mt-3 hide-card" id="product-objections-card" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Product Objections</span>
                                 <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
@@ -90,7 +98,7 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <p class="text-muted">Enter a sales objection raised when selling a specific product</p>
-                                    <textarea id="product-objection-input" class="form-control" placeholder="Enter product objection"></textarea>
+                                    <textarea id="product-objection-input" class="form-control" placeholder="Enter your own product objection or choose from the examples"></textarea>
                                     <select id="product-objection-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
@@ -99,6 +107,9 @@
                                     <button id="product-objection-advice-btn" class="btn btn-primary active">Submit Product Objection</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
                             <div class="modal fade" id="productObjectionsExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productObjectionsExamplesModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -120,9 +131,10 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- PRODUCT Question -->
-                    <div class="col-lg-4">
-                        <div class="card mt-3" style="background-color: #D3D3D3;">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="card mt-3 hide-card" id="product-question-card" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Product Question</span>
                                 <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productAdviceExamplesModal">Examples</button>
@@ -130,7 +142,7 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <p class="text-muted">Enter a question about a specific product and get an answer</p>
-                                    <textarea id="product-advice-input" class="form-control" placeholder="Ask product question"></textarea>
+                                    <textarea id="product-advice-input" class="form-control" placeholder="Ask your own product question or choose from the examples"></textarea>
                                     <select id="product-question-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
@@ -139,6 +151,7 @@
                                     <button id="product-advice-btn" class="btn btn-primary active">Ask Product Question</button>
                                 </div>
                             </div>
+
                             <div class="modal fade" id="productAdviceExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productAdviceExamplesModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -191,13 +204,10 @@
 <div id="follow-up-options" class="mt-4" style="display: none;">
     <h2>What would you like to do next?</h2>
     <div class="mt-4 text-center">
-        <button id="enter-objection-btn" class="btn follow-up-btn hide-rating">Use SensAI Again</button>
-           <!-- <button id="enter-product-objection-btn" class="btn follow-up-btn hide-rating">Product Objection</button>
-        <button id="enter-product-question-btn" class="btn follow-up-btn hide-rating">Product Question</button> -->
+        <button id="enter-objection-btn" class="btn follow-up-btn hide-rating" style="width: 200px">Use SensAI Again</button>
+        <a id="history-btn" class="btn btn-primary active my-2" style="width: 200px" href="{{ url_for('user_history') }}">View Your History</a>
+        <a id="logout-btn" class="btn btn-primary active my-2" style="width: 200px" href="{{ url_for('logout') }}">Logout</a>
     </div>
-</div>
-</div>
-</div>
 </div>
             
     <!-- JavaScript -->

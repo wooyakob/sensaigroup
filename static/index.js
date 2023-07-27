@@ -297,16 +297,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     document.getElementById('enter-objection-btn').addEventListener('click', function() {
-        document.getElementById('prompt-container').scrollIntoView({ behavior: 'smooth' });
+      var element = document.getElementById('prompt-container');
+      element.scrollIntoView({ behavior: 'smooth' });
+      window.scrollBy(0, -1500); 
+      
+      setTimeout(function() {
+          document.getElementById('objection-input').focus();
+      }, 500);
   });
-
-    // document.getElementById('enter-product-objection-btn').addEventListener('click', function() {
-     //   document.getElementById('product-objection-input').scrollIntoView({ behavior: 'smooth' });
-    // });
-
-    // document.getElementById('enter-product-question-btn').addEventListener('click', function() {
-    //   document.getElementById('product-advice-input').scrollIntoView({ behavior: 'smooth' });
-    // });
 
     let hideRatingElements = document.querySelectorAll('.hide-rating');
 
@@ -353,6 +351,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("stars-container").addEventListener("mouseout", function() {
         highlightStars(currentRating);
     });
-    
-  
-  
+
+// CARD TOGGLE FUNCTIONALITY
+  $('#sales-objections-option').click(function() {
+    if($('#sales-objections-card').hasClass('hide-card')) {
+        $('#product-objections-card').addClass('hide-card');
+        $('#product-question-card').addClass('hide-card');
+        $('#sales-objections-card').removeClass('hide-card');
+    } else {
+        $('#sales-objections-card').addClass('hide-card');
+    }
+  });
+  $('#product-objections-option').click(function() {
+      if($('#product-objections-card').hasClass('hide-card')) {
+          $('#sales-objections-card').addClass('hide-card');
+          $('#product-question-card').addClass('hide-card');
+          $('#product-objections-card').removeClass('hide-card');
+      } else {
+          $('#product-objections-card').addClass('hide-card');
+      }
+  });
+  $('#product-question-option').click(function() {
+      if($('#product-question-card').hasClass('hide-card')) {
+          $('#sales-objections-card').addClass('hide-card');
+          $('#product-objections-card').addClass('hide-card');
+          $('#product-question-card').removeClass('hide-card');
+      } else {
+          $('#product-question-card').addClass('hide-card');
+      }
+  });
+
+
