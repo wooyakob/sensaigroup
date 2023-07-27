@@ -614,4 +614,7 @@ textarea {
   transform: none !important;
   margin: auto;
   width: 60%;
+  animation: loading 2s linear infinite;
+  background-image: linear-gradient(to right, #ff512f, #f09819);
+  border-radius: 5px;
 }
