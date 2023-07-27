@@ -5,19 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>History</title>
   <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='user_styles.css') }}">
 </head>
 <body>
-  <div class="header">
-    <div class="header-buttons">
-      <a href="{{ url_for('dashboard') }}" class="header-button btn-return-home">Return</a>
-      <a href="{{ url_for('download_history') }}" class="header-button btn-download-history">Download History</a>
-    </div>
+  
+  <div class="header-buttons">
+    <a href="{{ url_for('dashboard') }}" class="header-button btn-return-home">Return</a>
+    <a href="{{ url_for('download_history') }}" class="header-button btn-download-history">Download History</a>
   </div>
 
-<button id="show-objections">Show Objections</button>
-<button id="show-product-objections">Show Product Objections</button>
-<button id="show-product-questions">Show Product Questions</button>
-
+  <div class="history-buttons">
+    <button id="show-objections" class="history-button">Show Objections</button>
+    <button id="show-product-objections" class="history-button">Show Product Objections</button>
+    <button id="show-product-questions" class="history-button">Show Product Questions</button>
+  </div>
+  
 
   <div class="container">
     <h1>History</h1>
