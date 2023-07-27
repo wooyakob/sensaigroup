@@ -133,10 +133,6 @@ textarea {
 }
 
 
-.hero {
-  background-color: #0B162B;
-}
-
 @keyframes loading {
   from { width: 0; }
   to { width: 100%; }
@@ -217,7 +213,6 @@ textarea {
 }
 
 .container.chat-container {
-  position: relative;
   border-radius: 15px;
   overflow: auto;
   border: none;
@@ -455,7 +450,6 @@ textarea {
 
 
 .container.chat-output-container {
-  position: relative;
   border-radius: 15px;
   overflow: auto;
   border: none;
@@ -473,7 +467,6 @@ textarea {
 }
 
 .container.follow-up-container {
-  position: relative;
   border-radius: 15px;
   overflow: auto;
   border: none;
@@ -594,4 +587,24 @@ textarea {
   .card-container .card {
       max-width: 100%;
   }
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.option-btn {
+  padding: 10px 20px;
+  height: 50px;
+  width: 200px;
+  background: linear-gradient(270deg, #f09819, #ff512f);
+  color: white;
+  transition: background 0.5s ease, box-shadow 0.2s ease;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  margin: 10px;
+  display: inline-block;
 }

@@ -2,67 +2,73 @@ document.addEventListener('DOMContentLoaded', (event) => {
   let lastObjection = "";
 
 
-    // EVENT LISTENER FOR GENERIC OBJECTION
-    document.getElementById("objection-advice-btn").addEventListener("click", async () => {
-      const objectionInput = document.getElementById("objection-input");
-      const objection = objectionInput.value;
+// EVENT LISTENER FOR GENERIC OBJECTION
+        document.getElementById("objection-advice-btn").addEventListener("click", async () => {
+          const objectionInput = document.getElementById("objection-input");
+          const objection = objectionInput.value;
 
-      if (objection && objection.trim() !== "") {
-        lastObjection = objection; 
-      
-        const chatOutput = document.getElementById("chat-output");
-        const loadingBar = document.getElementById("loading-bar");
-        const rateResponse = document.getElementById("rate-response"); 
+          if (objection && objection.trim() !== "") {
+            lastObjection = objection; 
 
-        chatOutput.innerHTML = "";
-        loadingBar.classList.remove("d-none");
-        rateResponse.style.display = "none";
-
-        const serverResponse = await sendGenericObjection(objection);
-        loadingBar.classList.add("d-none");
-
-        const feedbackElement = document.createElement("p");
-        feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
-        chatOutput.appendChild(feedbackElement);
-
-        document.getElementById("follow-up-options").style.display = "block";
-        rateResponse.style.display = "block"; 
-      } else {
-        alert("Please enter an objection before submitting");
-      }
-    });
-
-      // EVENT LISTENER FOR PRODUCT OBJECTION
-      document.getElementById("product-objection-advice-btn").addEventListener("click", async () => {
-        const productObjectionInput = document.getElementById("product-objection-input");
-        const productObjection = productObjectionInput.value;
-        const productSelect = document.getElementById("product-objection-select");
-        const productId = productSelect.value;
-    
-        if (productObjection && productObjection.trim() !== "" && productId) {
-            lastProductObjection = productObjection; 
-    
             const chatOutput = document.getElementById("chat-output");
             const loadingBar = document.getElementById("loading-bar");
-            const rateResponse = document.getElementById("rate-response");
-    
+            const rateResponse = document.getElementById("rate-response"); 
+
             chatOutput.innerHTML = "";
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
-    
-            const serverResponse = await sendProductObjection(productObjection, productId);
+
+            const serverResponse = await sendGenericObjection(objection);
             loadingBar.classList.add("d-none");
-    
+
             const feedbackElement = document.createElement("p");
             feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
             chatOutput.appendChild(feedbackElement);
-    
+
             document.getElementById("follow-up-options").style.display = "block";
             rateResponse.style.display = "block"; 
-        } else {
+
+            // Display the "below-chat-container" div
+            document.getElementById("below-chat-container").style.display = "block";
+          } else {
+            alert("Please enter an objection before submitting");
+          }
+        });
+
+        // EVENT LISTENER FOR PRODUCT OBJECTION
+        document.getElementById("product-objection-advice-btn").addEventListener("click", async () => {
+          const productObjectionInput = document.getElementById("product-objection-input");
+          const productObjection = productObjectionInput.value;
+          const productSelect = document.getElementById("product-objection-select");
+          const productId = productSelect.value;
+
+          if (productObjection && productObjection.trim() !== "" && productId) {
+            lastProductObjection = productObjection; 
+
+            const chatOutput = document.getElementById("chat-output");
+            const loadingBar = document.getElementById("loading-bar");
+            const rateResponse = document.getElementById("rate-response");
+
+            chatOutput.innerHTML = "";
+            loadingBar.classList.remove("d-none");
+            rateResponse.style.display = "none";
+
+            const serverResponse = await sendProductObjection(productObjection, productId);
+            loadingBar.classList.add("d-none");
+
+            const feedbackElement = document.createElement("p");
+            feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
+            chatOutput.appendChild(feedbackElement);
+
+            document.getElementById("follow-up-options").style.display = "block";
+            rateResponse.style.display = "block"; 
+
+            // Display the "below-chat-container" div
+            document.getElementById("below-chat-container").style.display = "block";
+          } else {
             alert("Please enter a product objection and select a product before submitting");
-        }
-    });
+          }
+        });
     
         // EVENT LISTENER FOR PRODUCT ADVICE
 
@@ -92,10 +98,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
       
               document.getElementById("follow-up-options").style.display = "block";
               rateResponse.style.display = "block";
+      
+              document.getElementById("below-chat-container").style.display = "block";
           } else {
               alert("Please enter a product question and select a product before submitting");
           }
       });
+      
 
       document.getElementById("rate-submit-btn").addEventListener("click", async function () {
         const rating = document.getElementById("rating-input").value;
@@ -352,33 +361,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
         highlightStars(currentRating);
     });
 
-// CARD TOGGLE FUNCTIONALITY
+    $('.option-btn').click(function() {
+      $('#chat-container').css('display', 'block');
+      $('#below-chat-container').css('display', 'block');
+    });
+    
+// BUTTON CLICK EVENT
+$('#objection-advice-btn, #product-objection-advice-btn, #product-advice-btn').click(function() {
+  $('#below-chat-container').css('display', 'block');
+});
+
+  // CARD TOGGLE FUNCTIONALITY
   $('#sales-objections-option').click(function() {
     if($('#sales-objections-card').hasClass('hide-card')) {
-        $('#product-objections-card').addClass('hide-card');
-        $('#product-question-card').addClass('hide-card');
-        $('#sales-objections-card').removeClass('hide-card');
+      $('#sales-objections-card').removeClass('hide-card');
+      $('#product-objections-card').addClass('hide-card');
+      $('#product-question-card').addClass('hide-card');
     } else {
-        $('#sales-objections-card').addClass('hide-card');
+      $('#sales-objections-card').addClass('hide-card');
     }
   });
+
   $('#product-objections-option').click(function() {
-      if($('#product-objections-card').hasClass('hide-card')) {
-          $('#sales-objections-card').addClass('hide-card');
-          $('#product-question-card').addClass('hide-card');
-          $('#product-objections-card').removeClass('hide-card');
-      } else {
-          $('#product-objections-card').addClass('hide-card');
-      }
+    if($('#product-objections-card').hasClass('hide-card')) {
+      $('#product-objections-card').removeClass('hide-card');
+      $('#sales-objections-card').addClass('hide-card');
+      $('#product-question-card').addClass('hide-card');
+    } else {
+      $('#product-objections-card').addClass('hide-card');
+    }
   });
+
   $('#product-question-option').click(function() {
-      if($('#product-question-card').hasClass('hide-card')) {
-          $('#sales-objections-card').addClass('hide-card');
-          $('#product-objections-card').addClass('hide-card');
-          $('#product-question-card').removeClass('hide-card');
-      } else {
-          $('#product-question-card').addClass('hide-card');
-      }
+    if($('#product-question-card').hasClass('hide-card')) {
+      $('#product-question-card').removeClass('hide-card');
+      $('#sales-objections-card').addClass('hide-card');
+      $('#product-objections-card').addClass('hide-card');
+    } else {
+      $('#product-question-card').addClass('hide-card');
+    }
   });
 
 

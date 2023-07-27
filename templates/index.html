@@ -41,11 +41,14 @@
     </div>
 
     <div class="container chat-container">
-        <h1>You can use the SensAI in one of three ways. Please select one of the following options:</h1>
-        <button id="sales-objections-option" class="option-btn">Sales Objections</button>
-        <button id="product-objections-option" class="option-btn">Product Objections</button>
-        <button id="product-question-option" class="option-btn">Product Questions</button>
+        <h2>You can use <span class="text-black">Sens</span><span class="text-orange">AI</span> in one of three ways. <br> <br> Please select <span class="text-orange">one</span> of the following options: <br><br> </h2>
+        <div class="button-container">
+            <button id="sales-objections-option" class="option-btn">Sales Objections</button>
+            <button id="product-objections-option" class="option-btn">Product Objections</button>
+            <button id="product-question-option" class="option-btn">Product Questions</button>
+        </div>
         <div id="chat-container" class="card">
+    
             <div class="card-body">
                 <div class="row">
                     <!-- GENERIC OBJECTIONS -->
@@ -176,37 +179,40 @@
                 </div>
             </div>
 
-<div class="container chat-output-container">
-<div id="chat-output" class="mt-4"></div>
 
-<div id="loading-bar" class="progress d-none">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
+<div id="below-chat-container" style="display: none;">
+    <div class="container chat-output-container">
+    <div id="chat-output" class="mt-4"></div>
 
-<div class="rate-response mt-4" id="rate-response" style="display: none;">
-    <p class="text-muted">Please rate how helpful you found the SensAI's advice. 5 stars is extremely helpful.</p>
-    <div id="stars-container" class="input-group mb-3">
-        <span class="fa fa-star" onmouseover="highlightStars(1)" onclick="setRating(1)"></span>
-        <span class="fa fa-star" onmouseover="highlightStars(2)" onclick="setRating(2)"></span>
-        <span class="fa fa-star" onmouseover="highlightStars(3)" onclick="setRating(3)"></span>
-        <span class="fa fa-star" onmouseover="highlightStars(4)" onclick="setRating(4)"></span>
-        <span class="fa fa-star" onmouseover="highlightStars(5)" onclick="setRating(5)"></span>
-        <input type="hidden" id="rating-input" class="form-control" min="1" max="5" placeholder="1: Bad, 5: Great">
-        <div class="input-group-append">
-            <button id="rate-submit-btn" class="btn btn-primary active rating-btn">Submit Rating</button>
+    <div id="loading-bar" class="progress d-none">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    <div class="rate-response mt-4" id="rate-response" style="display: none;">
+        <p class="text-muted">Please rate how helpful you found the SensAI's advice. 5 stars is extremely helpful.</p>
+        <div id="stars-container" class="input-group mb-3">
+            <span class="fa fa-star" onmouseover="highlightStars(1)" onclick="setRating(1)"></span>
+            <span class="fa fa-star" onmouseover="highlightStars(2)" onclick="setRating(2)"></span>
+            <span class="fa fa-star" onmouseover="highlightStars(3)" onclick="setRating(3)"></span>
+            <span class="fa fa-star" onmouseover="highlightStars(4)" onclick="setRating(4)"></span>
+            <span class="fa fa-star" onmouseover="highlightStars(5)" onclick="setRating(5)"></span>
+            <input type="hidden" id="rating-input" class="form-control" min="1" max="5" placeholder="1: Bad, 5: Great">
+            <div class="input-group-append">
+                <button id="rate-submit-btn" class="btn btn-primary active rating-btn">Submit Rating</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="container follow-up-container">
-<div id="follow-up" class="mt-4"></div>
+    <div class="container follow-up-container">
+    <div id="follow-up" class="mt-4"></div>
 
-<div id="follow-up-options" class="mt-4" style="display: none;">
-    <h2>What would you like to do next?</h2>
-    <div class="mt-4 text-center">
-        <button id="enter-objection-btn" class="btn follow-up-btn hide-rating" style="width: 200px">Use SensAI Again</button>
-        <a id="history-btn" class="btn btn-primary active my-2" style="width: 200px" href="{{ url_for('user_history') }}">View Your History</a>
-        <a id="logout-btn" class="btn btn-primary active my-2" style="width: 200px" href="{{ url_for('logout') }}">Logout</a>
+    <div id="follow-up-options" class="mt-4" style="display: none;">
+        <h2>What would you like to do next?</h2>
+        <div class="mt-4 text-center">
+            <button id="enter-objection-btn" class="btn follow-up-btn hide-rating" style="width: 200px">Use SensAI Again</button>
+            <a id="history-btn" class="btn btn-primary active my-2" style="width: 200px" href="{{ url_for('user_history') }}">View Your History</a>
+            <a id="logout-btn" class="btn btn-primary active my-2" style="width: 200px" href="{{ url_for('logout') }}">Logout</a>
+        </div>
     </div>
 </div>
             
