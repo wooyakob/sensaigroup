@@ -100,33 +100,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
       document.getElementById("rate-submit-btn").addEventListener("click", async function () {
         const rating = document.getElementById("rating-input").value;
         const outputContainer = document.getElementById("chat-output"); 
-      
+    
         if (rating && (rating >= 1 && rating <= 5)) {
-          outputContainer.innerHTML += "<p>Thank you for your rating!</p>";
-      
-          try {
-            const response = await fetch('/rate_interaction', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ rating: rating })
-            });
-      
-            const data = await response.json();
-            console.log(data.message);
-            outputContainer.innerHTML += `<p>You rated the advice <span style="font-weight: bold; color: #f09819;">${rating}</span> <br> <br> ${data.message}</p>`;
-          } catch (error) {
-            console.error('Error:', error);
-            outputContainer.innerHTML += "<p>Error while submitting your rating. Please try again.</p>";
-          }
-      
-          document.getElementById("rate-response").style.display = "none";
-          document.getElementById("rating-input").value = "";
+            outputContainer.innerHTML += "<p>Thank you for your rating!</p>";
+    
+            try {
+                const response = await fetch('/rate_interaction', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ rating: rating })
+                });
+    
+                const data = await response.json();
+                console.log(data.message);
+                outputContainer.innerHTML += `<p>You rated the advice <span style="font-weight: bold; color: #f09819;">${rating}</span> <br> <br> ${data.message}</p>`;
+            } catch (error) {
+                console.error('Error:', error);
+                outputContainer.innerHTML += "<p>Error while submitting your rating. Please try again.</p>";
+            }
+    
+            document.getElementById("rate-response").style.display = "none";
+            document.getElementById("rating-input").value = "";
+    
+            currentRating = 0;
+            setRating(0);
         } else {
-          outputContainer.innerHTML += "<p>Please enter a rating between 1 and 5</p>";
+            outputContainer.innerHTML += "<p>Please enter a rating between 1 and 5</p>";
         }
-      });
+    });
 
   // GENERIC OBJECTION SEND TO ENDPOINT /CHATBOT
   async function sendGenericObjection(objection) {
@@ -317,3 +320,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
       });
     });
+
+    let currentRating = 0;
+
+    function setRating(value) {
+      const stars = document.getElementsByClassName("fa-star");
+      currentRating = value;
+      
+      for (let i = 0; i < stars.length; i++) {
+          if (i < value) {
+              stars[i].classList.add("checked");
+          } else {
+              stars[i].classList.remove("checked");
+          }
+      }
+      
+      document.getElementById("rating-input").value = value;
+    }
+    
+    function highlightStars(value) {
+      const stars = document.getElementsByClassName("fa-star");
+    
+      for (let i = 0; i < stars.length; i++) {
+          if (i < value) {
+              stars[i].classList.add("highlight");
+          } else {
+              stars[i].classList.remove("highlight");
+          }
+      }
+    }
+    
+    document.getElementById("stars-container").addEventListener("mouseout", function() {
+        highlightStars(currentRating);
+    });
+    
+  
+  

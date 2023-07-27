@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
 </head>
@@ -40,6 +41,7 @@
     </div>
 
     <div class="container chat-container">
+        <h1>You can use SensAI in three ways. Please select one of the following options:</h1>
         <div id="chat-container" class="card">
             <div class="card-body">
                 <div class="row">
@@ -52,8 +54,9 @@
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
-                                    <textarea id="objection-input" class="form-control" placeholder="Enter sales objection"></textarea>
-                                    <button id="objection-advice-btn" class="btn btn-primary active mt-3">Send</button>
+                                    <p class="text-muted">Enter a sales objection to get advice on how to handle it</p>
+                                    <textarea id="objection-input" class="form-control" placeholder="Enter a sales objection" title="Type the sales objection here"></textarea>
+                                    <button id="objection-advice-btn" class="btn btn-primary active mt-3">Submit Sales Objection</button>
                                 </div>
                             </div>
                             <div class="modal fade" id="objectionExamplesModal" tabindex="-1" role="dialog" aria-labelledby="objectionExamplesModalLabel" aria-hidden="true">
@@ -86,13 +89,14 @@
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
+                                    <p class="text-muted">Enter a sales objection raised when selling a specific product</p>
                                     <textarea id="product-objection-input" class="form-control" placeholder="Enter product objection"></textarea>
                                     <select id="product-objection-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
                                         {% endfor %}
                                     </select>
-                                    <button id="product-objection-advice-btn" class="btn btn-primary active">Send</button>
+                                    <button id="product-objection-advice-btn" class="btn btn-primary active">Submit Product Objection</button>
                                 </div>
                             </div>
                             <div class="modal fade" id="productObjectionsExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productObjectionsExamplesModalLabel" aria-hidden="true">
@@ -125,13 +129,14 @@
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
+                                    <p class="text-muted">Enter a question about a specific product and get an answer</p>
                                     <textarea id="product-advice-input" class="form-control" placeholder="Ask product question"></textarea>
                                     <select id="product-question-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
                                         {% endfor %}
                                     </select>
-                                    <button id="product-advice-btn" class="btn btn-primary active">Send</button>
+                                    <button id="product-advice-btn" class="btn btn-primary active">Ask Product Question</button>
                                 </div>
                             </div>
                             <div class="modal fade" id="productAdviceExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productAdviceExamplesModalLabel" aria-hidden="true">
@@ -166,13 +171,18 @@
 </div>
 
 <div class="rate-response mt-4" id="rate-response" style="display: none;">
-    <div class="input-group mb-3">
-        <input type="number" id="rating-input" class="form-control" min="1" max="5" placeholder="1: Bad, 5: Exceptional">
+    <p class="text-muted">Please rate how helpful you found the SensAI's advice. 5 stars is extremely helpful.</p>
+    <div id="stars-container" class="input-group mb-3">
+        <span class="fa fa-star" onmouseover="highlightStars(1)" onclick="setRating(1)"></span>
+        <span class="fa fa-star" onmouseover="highlightStars(2)" onclick="setRating(2)"></span>
+        <span class="fa fa-star" onmouseover="highlightStars(3)" onclick="setRating(3)"></span>
+        <span class="fa fa-star" onmouseover="highlightStars(4)" onclick="setRating(4)"></span>
+        <span class="fa fa-star" onmouseover="highlightStars(5)" onclick="setRating(5)"></span>
+        <input type="hidden" id="rating-input" class="form-control" min="1" max="5" placeholder="1: Bad, 5: Great">
         <div class="input-group-append">
-            <button id="rate-submit-btn" class="btn btn-primary active rating-btn">Rate</button>
+            <button id="rate-submit-btn" class="btn btn-primary active rating-btn">Submit Rating</button>
         </div>
     </div>
-</div>
 </div>
 
 <div class="container follow-up-container">
@@ -181,7 +191,7 @@
 <div id="follow-up-options" class="mt-4" style="display: none;">
     <h2>What would you like to do next?</h2>
     <div class="mt-4 text-center">
-        <button id="enter-objection-btn" class="btn follow-up-btn hide-rating">Ask SensAI</button>
+        <button id="enter-objection-btn" class="btn follow-up-btn hide-rating">Use SensAI Again</button>
            <!-- <button id="enter-product-objection-btn" class="btn follow-up-btn hide-rating">Product Objection</button>
         <button id="enter-product-question-btn" class="btn follow-up-btn hide-rating">Product Question</button> -->
     </div>
