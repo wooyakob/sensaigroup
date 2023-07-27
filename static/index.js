@@ -41,29 +41,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
           const productObjection = productObjectionInput.value;
           const productSelect = document.getElementById("product-objection-select");
           const productId = productSelect.value;
-
+        
           if (productObjection && productObjection.trim() !== "" && productId) {
             lastProductObjection = productObjection; 
-
+        
             const chatOutput = document.getElementById("chat-output");
             const loadingBar = document.getElementById("loading-bar");
             const rateResponse = document.getElementById("rate-response");
-
+        
             chatOutput.innerHTML = "";
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
-
+        
             const serverResponse = await sendProductObjection(productObjection, productId);
             loadingBar.classList.add("d-none");
-
+        
+            productObjectionInput.value = "";
+            document.getElementById("product-objection-select").selectedIndex = 0;
+        
             const feedbackElement = document.createElement("p");
             feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
             chatOutput.appendChild(feedbackElement);
-
+        
             document.getElementById("follow-up-options").style.display = "block";
             rateResponse.style.display = "block"; 
-
-            // Display the "below-chat-container" div
+        
             document.getElementById("below-chat-container").style.display = "block";
           } else {
             alert("Please enter a product objection and select a product before submitting");
@@ -91,6 +93,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       
               const serverResponse = await sendProductAdvice(productObjection, productId);
               loadingBar.classList.add("d-none");
+
+              document.getElementById("product-advice-input").value = "";
+              document.getElementById("product-question-select").selectedIndex = 0;
       
               const feedbackElement = document.createElement("p");
               feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
@@ -313,6 +318,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
       setTimeout(function() {
           document.getElementById('objection-input').focus();
       }, 500);
+
+      setRating(0);
   });
 
     let hideRatingElements = document.querySelectorAll('.hide-rating');
