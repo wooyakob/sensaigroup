@@ -1,50 +1,68 @@
-table {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ccc;
+body {
+  font-family: Arial, sans-serif;
 }
 
-th, td {
-  border: 1px solid #ccc;
-  padding: 12px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-h1 {
-  color: #333;
-  font-size: 24px;
+.header-buttons {
+  display: flex;
+  justify-content: flex-start;
   margin-bottom: 20px;
+  margin: 5px, 5px;
+}
+
+.header-button {
+  margin: 0 5px;
 }
 
 .btn-return-home,
 .btn-download-history {
-  background-color: #f09819;
-  border: none;
-  color: #ffffff;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+  padding: 10px 20px;
   font-size: 16px;
-  margin-right: 10px;
-  transition-duration: 0.4s;
+  background: linear-gradient(270deg, #f09819, #ff512f);
+  border: none;
+  color: white;
+  transition: background 0.5s ease, box-shadow 0.2s ease;
+  background-size: 200% 200%;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
   cursor: pointer;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+  border: 1px solid black;
+  margin: 10px 5px;
+  margin-top: 10px;
+  text-decoration: none;
 }
 
 .btn-return-home:hover,
 .btn-download-history:hover {
-  background-color: #ff512f;
+  background-position: right bottom;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: white;
 }
 
+.history-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.history-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  text-align: center;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: linear-gradient(-45deg, #c5c5c5, #fff, #c5c5c5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease-in-out;
+  margin: 0 5px;
+}
+
+.history-button:hover {
+  background: linear-gradient(-45deg, #c5c5c5, #ddd, #c5c5c5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+}
 
 .container {
   margin: auto;
@@ -55,7 +73,6 @@ h1 {
 table {
   border-collapse: collapse;
   width: 100%;
-  font-family: Arial, sans-serif;
 }
 
 th, td {
@@ -71,69 +88,4 @@ th {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
-}
-
-.header-button {
-  margin: 10px;
-}
-
-.btn-return-home,
-.btn-download-history {
-  display: inline-block;
-  margin-left: 20px;
-  padding: 10px 20px;
-  font-size: 12px; 
-  height: 50px;
-  width: 100px;
-  background: linear-gradient(270deg, #f09819, #ff512f);
-  color: white;
-  transition: background 0.5s ease, box-shadow 0.2s ease;
-  border: 2px solid #333;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 50px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 20px;
-  margin-right: 10px;
-}
-
-.history-button {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  display: inline-block;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-shadow: 1px 1px 2px black;
-  color: #fff;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-  background: linear-gradient(-45deg, #c5c5c5, #fff, #c5c5c5);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .5);
-  transition: all .3s ease-in-out;
-}
-
-.history-button:hover {
-  background: linear-gradient(-45deg, #c5c5c5, #ddd, #c5c5c5);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .2), inset 0 -1px 0 rgba(255, 255, 255, .5);
-}
-
-.header-buttons {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 20px; 
-}
-
-.header-button {
-  margin: 0 5px 0 0;
-}
-
-.history-buttons {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.history-button {
-  margin: 0 3px; 
 }
