@@ -60,6 +60,7 @@ h5 {
   color: #fff;
   border: none;
   border-radius: 20px;
+  border: 1px solid black;
 }
 
 .card {
