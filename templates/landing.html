@@ -142,11 +142,20 @@
 
     <footer class="footer hero text-white text-center" style="width:70vw; position: relative; left: calc(-35vw + 50%); background: linear-gradient(to right, #ff512f, #f09819); border-radius: 50%; padding: 20px 0; font-size: 0.8em;">
         <br>
-        <p>&copy; SensAI 2023. All rights reserved.</p>
         <p>
-            <a href="https://www.linkedin.com/company/salesensai/" target="_blank" class="text-white mr-2">LinkedIn</a>
-            <a href="https://twitter.com/salesensai" target="_blank" class="text-white">Twitter</a>
+            <a href="https://www.linkedin.com/company/salesensai/" target="_blank" class="text-white mr-2">
+                <img src="{{ url_for('static', filename='linkedin.png') }}" alt="LinkedIn Logo" class="social-icon">
+            </a>
+            <a href="https://twitter.com/salesensai" target="_blank" class="text-white">
+                <img src="{{ url_for('static', filename='twitter.png') }}" alt="Twitter Logo" class="social-icon">
+            </a>
         </p>
+        <p>&copy; SensAI 2023. All rights reserved.</p>
+        <div class="policy-links">
+            <a href="https://app.termly.io/document/privacy-policy/072a8aef-e879-45cc-91d4-4e5b8d8c3804" target="_blank" class="text-white mr-2">Privacy Policy</a>
+            <a href="https://app.termly.io/document/terms-of-service/45ab0415-1be1-4f4d-bcc2-ac4d89a23847" target="_blank" class="text-white mr-2">Terms and Conditions</a>
+            <a href="https://app.termly.io/document/cookie-policy/38c64049-2c02-4796-a4b1-aa6356f29ee0" target="_blank" class="text-white">Cookie Policy</a>
+        </div>
     </footer>
     
     

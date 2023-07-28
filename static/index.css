@@ -72,6 +72,7 @@ h5 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 
@@ -98,13 +99,6 @@ h5 {
 .input-large {
   height: 50px;
   width: 100%;
-}
-
-.container.chat-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  max-height: 400px;
 }
 
 .rate-response {
@@ -138,10 +132,6 @@ textarea {
   max-width: fit-content;
 }
 
-
-.hero {
-  background-color: #0B162B;
-}
 
 @keyframes loading {
   from { width: 0; }
@@ -205,7 +195,7 @@ textarea {
   padding: 10px 20px;
   font-size: 12px; 
   height: 50px;
-  width: 100px;
+  width: 180px;
   background: linear-gradient(270deg, #f09819, #ff512f);
   border: none;
   color: white;
@@ -213,6 +203,7 @@ textarea {
   background-size: 200% 200%;
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
   border-radius: 50px;
+  border: 1px solid black;
 }
 
 #product-objection-advice-btn:hover, 
@@ -223,7 +214,6 @@ textarea {
 }
 
 .container.chat-container {
-  position: relative;
   border-radius: 15px;
   overflow: auto;
   border: none;
@@ -234,6 +224,7 @@ textarea {
   margin: 0 auto;
   padding: 4rem;
   max-height: 800px;
+  margin-top: 30px;
 }
 
 .container.chat-container:hover {
@@ -271,6 +262,7 @@ textarea {
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
   border-radius: 50px;
   text-align: center;
+  border: 1px solid black;
 }
 
 #history-btn:hover, 
@@ -363,6 +355,13 @@ textarea {
   box-shadow: none !important;
 }
 
+.modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 20px);
+}
+
 @media (max-width: 768px) {
   .modal-example-btn {
     padding: 6px 10px;
@@ -453,7 +452,6 @@ textarea {
 
 
 .container.chat-output-container {
-  position: relative;
   border-radius: 15px;
   overflow: auto;
   border: none;
@@ -463,6 +461,7 @@ textarea {
   padding: 4rem;
   max-height: 800px;
   margin-bottom: 2rem;
+  margin-top: 30px;
 }
 
 .container.chat-output-container:hover {
@@ -470,7 +469,6 @@ textarea {
 }
 
 .container.follow-up-container {
-  position: relative;
   border-radius: 15px;
   overflow: auto;
   border: none;
@@ -479,6 +477,7 @@ textarea {
   margin: 0 auto;
   padding: 4rem;
   max-height: 800px;
+  margin-top: 30px;
 }
 
 .container.follow-up-container:hover {
@@ -550,4 +549,74 @@ textarea {
     height: 35px;
     margin-bottom: 10px;
   }
+}
+
+.fa-star {
+  color: gray;
+  cursor: pointer;
+}
+
+.fa-star:hover,
+.fa-star:hover ~ .fa-star {
+  color: gray;
+}
+
+.fa-star.highlight,
+.fa-star.checked {
+  color: gold;
+}
+
+.hide-card {
+  display: none;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.card-container .row {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 90%;
+  margin: auto;
+}
+
+@media (max-width: 576px) {
+  .card-container .card {
+      max-width: 100%;
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.option-btn {
+  padding: 10px 20px;
+  height: 50px;
+  width: 200px;
+  background: linear-gradient(270deg, #f09819, #ff512f);
+  color: white;
+  transition: background 0.5s ease, box-shadow 0.2s ease;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  margin: 10px;
+  display: inline-block;
+}
+
+#loading-bar {
+  position: static !important;
+  transform: none !important;
+  margin: auto;
+  width: 60%;
+  animation: loading 2s linear infinite;
+  background-image: linear-gradient(to right, #ff512f, #f09819);
+  border-radius: 5px;
 }

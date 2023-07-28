@@ -2,67 +2,75 @@ document.addEventListener('DOMContentLoaded', (event) => {
   let lastObjection = "";
 
 
-    // EVENT LISTENER FOR GENERIC OBJECTION
-    document.getElementById("objection-advice-btn").addEventListener("click", async () => {
-      const objectionInput = document.getElementById("objection-input");
-      const objection = objectionInput.value;
+// EVENT LISTENER FOR GENERIC OBJECTION
+        document.getElementById("objection-advice-btn").addEventListener("click", async () => {
+          const objectionInput = document.getElementById("objection-input");
+          const objection = objectionInput.value;
 
-      if (objection && objection.trim() !== "") {
-        lastObjection = objection; 
-      
-        const chatOutput = document.getElementById("chat-output");
-        const loadingBar = document.getElementById("loading-bar");
-        const rateResponse = document.getElementById("rate-response"); 
+          if (objection && objection.trim() !== "") {
+            lastObjection = objection; 
 
-        chatOutput.innerHTML = "";
-        loadingBar.classList.remove("d-none");
-        rateResponse.style.display = "none";
-
-        const serverResponse = await sendGenericObjection(objection);
-        loadingBar.classList.add("d-none");
-
-        const feedbackElement = document.createElement("p");
-        feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
-        chatOutput.appendChild(feedbackElement);
-
-        document.getElementById("follow-up-options").style.display = "block";
-        rateResponse.style.display = "block"; 
-      } else {
-        alert("Please enter an objection before submitting");
-      }
-    });
-
-      // EVENT LISTENER FOR PRODUCT OBJECTION
-      document.getElementById("product-objection-advice-btn").addEventListener("click", async () => {
-        const productObjectionInput = document.getElementById("product-objection-input");
-        const productObjection = productObjectionInput.value;
-        const productSelect = document.getElementById("product-objection-select");
-        const productId = productSelect.value;
-    
-        if (productObjection && productObjection.trim() !== "" && productId) {
-            lastProductObjection = productObjection; 
-    
             const chatOutput = document.getElementById("chat-output");
             const loadingBar = document.getElementById("loading-bar");
-            const rateResponse = document.getElementById("rate-response");
-    
+            const rateResponse = document.getElementById("rate-response"); 
+
             chatOutput.innerHTML = "";
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
-    
-            const serverResponse = await sendProductObjection(productObjection, productId);
+
+            const serverResponse = await sendGenericObjection(objection);
             loadingBar.classList.add("d-none");
-    
+
             const feedbackElement = document.createElement("p");
             feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
             chatOutput.appendChild(feedbackElement);
-    
+
             document.getElementById("follow-up-options").style.display = "block";
             rateResponse.style.display = "block"; 
-        } else {
+
+            // Display the "below-chat-container" div
+            document.getElementById("below-chat-container").style.display = "block";
+          } else {
+            alert("Please enter an objection before submitting");
+          }
+        });
+
+        // EVENT LISTENER FOR PRODUCT OBJECTION
+        document.getElementById("product-objection-advice-btn").addEventListener("click", async () => {
+          const productObjectionInput = document.getElementById("product-objection-input");
+          const productObjection = productObjectionInput.value;
+          const productSelect = document.getElementById("product-objection-select");
+          const productId = productSelect.value;
+        
+          if (productObjection && productObjection.trim() !== "" && productId) {
+            lastProductObjection = productObjection; 
+        
+            const chatOutput = document.getElementById("chat-output");
+            const loadingBar = document.getElementById("loading-bar");
+            const rateResponse = document.getElementById("rate-response");
+        
+            chatOutput.innerHTML = "";
+            loadingBar.classList.remove("d-none");
+            rateResponse.style.display = "none";
+        
+            const serverResponse = await sendProductObjection(productObjection, productId);
+            loadingBar.classList.add("d-none");
+        
+            productObjectionInput.value = "";
+            document.getElementById("product-objection-select").selectedIndex = 0;
+        
+            const feedbackElement = document.createElement("p");
+            feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
+            chatOutput.appendChild(feedbackElement);
+        
+            document.getElementById("follow-up-options").style.display = "block";
+            rateResponse.style.display = "block"; 
+        
+            document.getElementById("below-chat-container").style.display = "block";
+          } else {
             alert("Please enter a product objection and select a product before submitting");
-        }
-    });
+          }
+        });
     
         // EVENT LISTENER FOR PRODUCT ADVICE
 
@@ -85,6 +93,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       
               const serverResponse = await sendProductAdvice(productObjection, productId);
               loadingBar.classList.add("d-none");
+
+              document.getElementById("product-advice-input").value = "";
+              document.getElementById("product-question-select").selectedIndex = 0;
       
               const feedbackElement = document.createElement("p");
               feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
@@ -92,41 +103,47 @@ document.addEventListener('DOMContentLoaded', (event) => {
       
               document.getElementById("follow-up-options").style.display = "block";
               rateResponse.style.display = "block";
+      
+              document.getElementById("below-chat-container").style.display = "block";
           } else {
               alert("Please enter a product question and select a product before submitting");
           }
       });
+      
 
       document.getElementById("rate-submit-btn").addEventListener("click", async function () {
         const rating = document.getElementById("rating-input").value;
         const outputContainer = document.getElementById("chat-output"); 
-      
+    
         if (rating && (rating >= 1 && rating <= 5)) {
-          outputContainer.innerHTML += "<p>Thank you for your rating!</p>";
-      
-          try {
-            const response = await fetch('/rate_interaction', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ rating: rating })
-            });
-      
-            const data = await response.json();
-            console.log(data.message);
-            outputContainer.innerHTML += `<p>You rated the advice <span style="font-weight: bold; color: #f09819;">${rating}</span> <br> <br> ${data.message}</p>`;
-          } catch (error) {
-            console.error('Error:', error);
-            outputContainer.innerHTML += "<p>Error while submitting your rating. Please try again.</p>";
-          }
-      
-          document.getElementById("rate-response").style.display = "none";
-          document.getElementById("rating-input").value = "";
+            outputContainer.innerHTML += "<p>Thank you for your rating!</p>";
+    
+            try {
+                const response = await fetch('/rate_interaction', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ rating: rating })
+                });
+    
+                const data = await response.json();
+                console.log(data.message);
+                outputContainer.innerHTML += `<p>You rated the advice <span style="font-weight: bold; color: #f09819;">${rating}</span> <br> <br> ${data.message}</p>`;
+            } catch (error) {
+                console.error('Error:', error);
+                outputContainer.innerHTML += "<p>Error while submitting your rating. Please try again.</p>";
+            }
+    
+            document.getElementById("rate-response").style.display = "none";
+            document.getElementById("rating-input").value = "";
+    
+            currentRating = 0;
+            setRating(0);
         } else {
-          outputContainer.innerHTML += "<p>Please enter a rating between 1 and 5</p>";
+            outputContainer.innerHTML += "<p>Please enter a rating between 1 and 5</p>";
         }
-      });
+    });
 
   // GENERIC OBJECTION SEND TO ENDPOINT /CHATBOT
   async function sendGenericObjection(objection) {
@@ -294,16 +311,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     document.getElementById('enter-objection-btn').addEventListener('click', function() {
-        document.getElementById('prompt-container').scrollIntoView({ behavior: 'smooth' });
+      var element = document.getElementById('prompt-container');
+      element.scrollIntoView({ behavior: 'smooth' });
+      window.scrollBy(0, -1500); 
+      
+      setTimeout(function() {
+          document.getElementById('objection-input').focus();
+      }, 500);
+
+      setRating(0);
   });
-
-    // document.getElementById('enter-product-objection-btn').addEventListener('click', function() {
-     //   document.getElementById('product-objection-input').scrollIntoView({ behavior: 'smooth' });
-    // });
-
-    // document.getElementById('enter-product-question-btn').addEventListener('click', function() {
-    //   document.getElementById('product-advice-input').scrollIntoView({ behavior: 'smooth' });
-    // });
 
     let hideRatingElements = document.querySelectorAll('.hide-rating');
 
@@ -317,3 +334,79 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
       });
     });
+
+    let currentRating = 0;
+
+    function setRating(value) {
+      const stars = document.getElementsByClassName("fa-star");
+      currentRating = value;
+      
+      for (let i = 0; i < stars.length; i++) {
+          if (i < value) {
+              stars[i].classList.add("checked");
+          } else {
+              stars[i].classList.remove("checked");
+          }
+      }
+      
+      document.getElementById("rating-input").value = value;
+    }
+    
+    function highlightStars(value) {
+      const stars = document.getElementsByClassName("fa-star");
+    
+      for (let i = 0; i < stars.length; i++) {
+          if (i < value) {
+              stars[i].classList.add("highlight");
+          } else {
+              stars[i].classList.remove("highlight");
+          }
+      }
+    }
+    
+    document.getElementById("stars-container").addEventListener("mouseout", function() {
+        highlightStars(currentRating);
+    });
+
+    $('.option-btn').click(function() {
+      $('#chat-container').css('display', 'block');
+      $('#below-chat-container').css('display', 'block');
+    });
+    
+// BUTTON CLICK EVENT
+$('#objection-advice-btn, #product-objection-advice-btn, #product-advice-btn').click(function() {
+  $('#below-chat-container').css('display', 'block');
+});
+
+  // CARD TOGGLE FUNCTIONALITY
+  $('#sales-objections-option').click(function() {
+    if($('#sales-objections-card').hasClass('hide-card')) {
+      $('#sales-objections-card').removeClass('hide-card');
+      $('#product-objections-card').addClass('hide-card');
+      $('#product-question-card').addClass('hide-card');
+    } else {
+      $('#sales-objections-card').addClass('hide-card');
+    }
+  });
+
+  $('#product-objections-option').click(function() {
+    if($('#product-objections-card').hasClass('hide-card')) {
+      $('#product-objections-card').removeClass('hide-card');
+      $('#sales-objections-card').addClass('hide-card');
+      $('#product-question-card').addClass('hide-card');
+    } else {
+      $('#product-objections-card').addClass('hide-card');
+    }
+  });
+
+  $('#product-question-option').click(function() {
+    if($('#product-question-card').hasClass('hide-card')) {
+      $('#product-question-card').removeClass('hide-card');
+      $('#sales-objections-card').addClass('hide-card');
+      $('#product-objections-card').addClass('hide-card');
+    } else {
+      $('#product-question-card').addClass('hide-card');
+    }
+  });
+
+
