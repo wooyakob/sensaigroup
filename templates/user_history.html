@@ -9,6 +9,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='user_styles.css') }}">
 </head>
+
+<header class="sticky-top bg-light">
+  <div class="container-fluid d-flex justify-content-between align-items-center py-2">
+      <div class="d-flex align-items-center">
+          <a href="/">
+              <img src="{{ url_for('static', filename='sensai_rounded.png') }}" alt="SensAI Logo" class="img-fluid logo">
+          </a>
+          <h1 class="ml-2 mb-0"><span class="text-black">Sens</span><span class="text-orange">AI</span></h1>
+</header>
+
 <body>
   
   <div class="header-buttons">

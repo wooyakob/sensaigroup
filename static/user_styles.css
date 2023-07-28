@@ -89,3 +89,15 @@ th {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+.logo {
+  max-height: 50px;
+}
+
+.logo {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.logo:hover {
+  box-shadow: 0 0 10px #ffae42, 0 0 20px #ffae42, 0 0 30px #ffae42;
+}
