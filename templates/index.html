@@ -98,12 +98,12 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <p class="text-muted">Enter a sales objection raised when selling a specific product</p>
-                                    <textarea id="product-objection-input" class="form-control" placeholder="Enter your own product objection or choose from the examples"></textarea>
                                     <select id="product-objection-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
                                         {% endfor %}
                                     </select>
+                                    <textarea id="product-objection-input" class="form-control" placeholder="Enter your own product objection or choose from the examples"></textarea>
                                     <button id="product-objection-advice-btn" class="btn btn-primary active">Submit Product Objection</button>
                                 </div>
                             </div>
@@ -142,12 +142,12 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <p class="text-muted">Enter a question about a specific product and get an answer</p>
-                                    <textarea id="product-advice-input" class="form-control" placeholder="Ask your own product question or choose from the examples"></textarea>
                                     <select id="product-question-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
                                         {% endfor %}
                                     </select>
+                                    <textarea id="product-advice-input" class="form-control" placeholder="Ask your own product question or choose from the examples"></textarea>
                                     <button id="product-advice-btn" class="btn btn-primary active">Ask Product Question</button>
                                 </div>
                             </div>
