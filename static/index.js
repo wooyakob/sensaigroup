@@ -409,4 +409,6 @@ $('#objection-advice-btn, #product-objection-advice-btn, #product-advice-btn').c
     }
   });
 
-
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+  });
