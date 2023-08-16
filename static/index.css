@@ -326,7 +326,7 @@ textarea {
   padding: 10px 20px;
   font-size: 14px;
   height: 40px;
-  width: 120px;
+  width: auto;
   background-color: #000000;
   border: none;
   color: white;
