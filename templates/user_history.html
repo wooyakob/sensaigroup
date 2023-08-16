@@ -44,6 +44,7 @@
           <th>Objection</th>
           <th>AI Response</th>
           <th>Timestamp</th>
+          <th>Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -51,7 +52,8 @@
         <tr>
           <td>{{ interaction.objection }}</td>
           <td>{{ interaction.ai_response|safe }}</td>
-          <td>{{ interaction.timestamp }}</td>
+          <td>{{ interaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td>{{ interaction.rating }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -67,6 +69,7 @@
           <th>Product Selected</th>
           <th>AI Response</th>
           <th>Timestamp</th>
+          <th>Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -75,7 +78,8 @@
           <td>{{ interaction.product_objection }}</td>
           <td>{{ interaction.product_selected }}</td>
           <td>{{ interaction.ai_response|safe }}</td>
-          <td>{{ interaction.timestamp }}</td>
+          <td>{{ interaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
+          <td>{{ interaction.rating }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -91,6 +95,7 @@
           <th>Product Selected</th>
           <th>AI Response</th>
           <th>Timestamp</th>
+          <th>Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -99,7 +104,8 @@
           <td>{{ interaction.product_advice }}</td>
           <td>{{ interaction.product_selected }}</td>
           <td>{{ interaction.ai_response|safe }}</td>
-          <td>{{ interaction.timestamp }}</td>
+          <td>{{ interaction.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td>{{ interaction.rating }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -111,7 +117,6 @@
   <script src="/static/uhistory.js"></script>
 
 </body>
-
 
 
 </html>
