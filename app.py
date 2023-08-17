@@ -18,11 +18,13 @@ from flask_mail import Mail, Message
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from flask_migrate import Migrate
+from products import products
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
+    app.register_blueprint(products)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
     migrate = Migrate(app, db)
