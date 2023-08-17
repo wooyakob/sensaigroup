@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Dashboard</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,14 +18,13 @@
 
 <body>
     <header class="admin-header">
-        <h1>Admin Dashboard</h1>
+        <h1>Dashboard</h1>
     </header>
 
     <nav>
         <ul class="admin-links">
             <li><a href="{{ url_for('reports') }}">Reports</a></li>
-            <li><a href="{{ url_for('create_user') }}">Create Users</a></li>
-            <li><a href="/admin/product/">Manage Products</a></li>
+            <li><a href="{{ url_for('products') }}">Products</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
