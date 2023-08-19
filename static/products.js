@@ -33,7 +33,12 @@ document.addEventListener("DOMContentLoaded", function() {
             method: "POST",
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server responded with status: ${response.statusText}`);
+            }
+            return response.json();
+        })
         .then(data => {
             // Handle the response data here
             console.log(data);
