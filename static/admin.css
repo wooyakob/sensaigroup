@@ -1,4 +1,39 @@
-. title {
-    color: #f09819;
-    font-size: medium;
+.admin-header {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-links {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
+    list-style: none;
+  }
+  
+  .admin-links a {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #000000;
+    border: 2px solid #f09819;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .admin-links a:hover {
+    background-color: #f09819;
+    color: #ffffff;
+  }
+
+.footer {
+    background-color: #f1f1f1; 
+    padding: 20px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }

@@ -2,18 +2,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // File Drop Zone
     const dropzone = document.getElementById("dropzone");
+    
     dropzone.addEventListener("dragover", event => {
         event.preventDefault();
-        dropzone.classList.add("hover");
+        dropzone.classList.add("dragover");
     });
 
     dropzone.addEventListener("dragleave", () => {
-        dropzone.classList.remove("hover");
+        dropzone.classList.remove("dragover");
     });
 
     dropzone.addEventListener("drop", event => {
         event.preventDefault();
-        dropzone.classList.remove("hover");
+        dropzone.classList.remove("dragover");
         const file = event.dataTransfer.files[0];
         uploadFile(file);
     });

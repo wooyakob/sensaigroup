@@ -3,14 +3,13 @@
     padding: 20px;
     text-align: center;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, border-color 0.2s;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 .dropzone.dragover {
-    background: black;
-}
-
-.dropzone.hover {
-    background-color: black
+    background-color: #f8f8f8;  /* slightly lighter background */
+    border-color: black;        /* change the border color to black */
 }
 
