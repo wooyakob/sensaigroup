@@ -31,27 +31,34 @@
 
     <section class="product-section">
         <form action="/add_product" method="post">
+            <!-- Product Name -->
             <div class="form-group">
                 <label for="productName">Product Name</label>
                 <input type="text" class="form-control" id="productName" name="product_name" required>
             </div>
+            <!-- Product Info -->
             <div class="form-group">
                 <label for="productInfo">Product Info</label>
                 <textarea class="form-control" id="productInfo" rows="4" name="product_info" required></textarea>
             </div>
+            <!-- Design Rationale -->
             <div class="form-group">
                 <label for="designRationale">Design Rationale (optional)</label>
                 <textarea class="form-control" id="designRationale" rows="4" name="design_rationale"></textarea>
             </div>
+            <!-- File Upload Section -->
+            <div class="form-group">
+                <label for="fileInput">Upload a File (optional)</label>
+                <div class="dropzone" id="dropzone">            
+                    Drag & Drop your file, or <button type="button" onclick="document.getElementById('fileInput').click();">Browse</button>
+                    <input type="file" id="fileInput" style="display: none;" accept=".pdf" />
+                </div>
+            </div>
+            
+            <!-- Hidden Field and Submit Button -->
+            <input type="hidden" name="text_file_path" id="textFilePath">
             <button type="submit" class="btn btn-primary">Add Product</button>
         </form>
-    </section>
-
-    <section class="upload-section">
-        <div class="dropzone" id="dropzone">            
-            Drag & Drop your file, or <button type="button" onclick="document.getElementById('fileInput').click();">Browse</button>
-            <input type="file" id="fileInput" style="display: none;" accept=".pdf" />
-        </div>
     </section>
     
     <script src="{{ url_for('static', filename='products.js') }}"></script>

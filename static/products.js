@@ -16,13 +16,21 @@ document.addEventListener("DOMContentLoaded", function() {
         event.preventDefault();
         dropzone.classList.remove("dragover");
         const file = event.dataTransfer.files[0];
-        uploadFile(file);
+        if(file.type === "application/pdf") {
+            uploadFile(file);
+        } else {
+            alert("Only PDF files are allowed.");
+        }
     });
 
     // File Input Change
     document.getElementById("fileInput").addEventListener("change", event => {
         const file = event.target.files[0];
-        uploadFile(file);
+        if(file.type === "application/pdf") {
+            uploadFile(file);
+        } else {
+            alert("Only PDF files are allowed.");
+        }
     });
 
     // AJAX Upload
@@ -41,12 +49,14 @@ document.addEventListener("DOMContentLoaded", function() {
             return response.json();
         })
         .then(data => {
-            // Handle the response data here
             console.log(data);
             if (data.error) {
                 alert(data.error);
             } else if (data.text) {
                 alert(data.text);
+            } else if (data.text_file) {
+                document.getElementById("textFilePath").value = data.text_file;
+                alert("File uploaded and processed successfully.");
             }
         })
         .catch(error => {
