@@ -25,7 +25,7 @@ $(document).ready(function() {
                     },
                     title: {
                         display: true,
-                        text: 'Objections Data'
+                        text: 'Sales Team Objections Data'
                     }
                 }
             }
