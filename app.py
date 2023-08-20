@@ -50,7 +50,6 @@ app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
 app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
 
-
 def get_product_context(product_id):
     product = Product.query.get(product_id)
     if product is None:
@@ -64,6 +63,26 @@ def get_product_context(product_id):
     
     return product_info
 
+@app.route('/api/objections_data', methods=['GET'])
+def objections_data():
+    total_objections = db.session.query(Interaction).filter(Interaction.objection.isnot(None)).count()
+    total_product_objections = db.session.query(Interaction).filter(Interaction.product_objection.isnot(None)).count()
+    total_product_advice = db.session.query(Interaction).filter(Interaction.product_advice.isnot(None)).count()
+
+
+    data = {
+        'labels': ['Objections', 'Product Objections', 'Product Questions'],
+        'datasets': [{
+            'data': [total_objections, total_product_objections, total_product_advice],
+            'backgroundColor': ['red', 'black', 'orange']
+        }]
+    }
+    return jsonify(data)
+
+@app.route('/api/total_users')
+def total_users():
+    total = User.query.count()
+    return jsonify(total=total)
 
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():

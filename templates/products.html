@@ -14,22 +14,20 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
     <script src="{{ url_for('static', filename='products.js') }}"></script>
-</head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}">
 
 <body>
     <header class="admin-header">
         <h1>Products</h1>
     </header>
 
-
     <section class="upload-section">
         <div class="dropzone" id="dropzone">
-            Drag & Drop your file or <button type="button" onclick="document.getElementById('fileInput').click();">Browse</button>
-            <input type="file" id="fileInput" style="display: none;" accept=".pdf,.doc,.docx" />
+            Drag & Drop your file, or <button type="button" onclick="document.getElementById('fileInput').click();">Browse</button>
+            <input type="file" id="fileInput" style="display: none;" accept=".pdf" />
         </div>
     </section>
     
-
     <nav>
         <ul class="admin-links">
             <li><a href="/admin_dash">Dashboard</a></li>
