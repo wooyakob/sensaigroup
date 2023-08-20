@@ -45,3 +45,6 @@ body {
   width: 100%;
 }
 
+#objectionsChart {
+  height: 400px;
+}

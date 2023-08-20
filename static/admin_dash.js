@@ -19,6 +19,7 @@ $(document).ready(function() {
             type: 'bar',
             data: data,
             options: {
+                responsive: true,
                 plugins: {
                     legend: {
                         display: false
@@ -39,8 +40,3 @@ $(document).ready(function() {
         $("#totalUsers").text( data.total + '/25');
     });
 });
-
-
-
-
-
