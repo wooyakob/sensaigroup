@@ -84,6 +84,33 @@ def total_users():
     total = User.query.count()
     return jsonify(total=total)
 
+
+@app.route('/add_product', methods=['GET', 'POST'])
+def add_product():
+    if request.method == 'POST':
+        product_name = request.form['product_name']
+        product_info = request.form['product_info']
+        design_rationale = request.form.get('design_rationale')  # This is optional
+
+        # Basic validation (you might want more thorough checks)
+        if not product_name or not product_info:
+            flash('Product name and info are required!')
+            return redirect(url_for('add_product'))
+
+        # Create slug from product name (this is a simple approach; you might want something more robust)
+        slug = product_name.lower().replace(' ', '-')
+
+        product = Product(product_name=product_name, slug=slug, product_info=product_info, design_rationale=design_rationale)
+
+        db.session.add(product)
+        db.session.commit()
+
+        flash('Product added successfully!')
+        return redirect(url_for('add_product'))  # Redirect back to the same page for now
+
+    return render_template('products.html') 
+
+
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':

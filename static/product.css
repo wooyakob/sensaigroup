@@ -76,3 +76,49 @@ body {
 .admin-links a:hover {
     color: #ff512f;
 }
+
+.product-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+form {
+    width: 60%;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border: 2px solid #f09819;
+    border-radius: 5px;
+    transition: border 0.3s;
+}
+
+.form-control:focus {
+    border-color: #ff512f;
+    box-shadow: none;
+}
+
+.btn.btn-primary {
+    background: linear-gradient(270deg, #f09819, #ff512f);
+    border: none;
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.2s ease;
+    font-weight: bold;
+}
+
+.btn.btn-primary:hover {
+    background-position: right bottom;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}

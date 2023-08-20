@@ -13,12 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
-    <script src="{{ url_for('static', filename='products.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}">
+</head>
 
 <body>
     <header class="admin-header">
-        <h1>Products</h1>
+        <h1>Add Products</h1>
     </header>
 
     <nav>
@@ -29,22 +29,35 @@
         </ul>
     </nav>
 
+    <section class="product-section">
+        <form action="/add_product" method="post">
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="product_name" required>
+            </div>
+            <div class="form-group">
+                <label for="productInfo">Product Info</label>
+                <textarea class="form-control" id="productInfo" rows="4" name="product_info" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="designRationale">Design Rationale (optional)</label>
+                <textarea class="form-control" id="designRationale" rows="4" name="design_rationale"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </section>
+
     <section class="upload-section">
-        <div class="dropzone" id="dropzone">
-            
+        <div class="dropzone" id="dropzone">            
             Drag & Drop your file, or <button type="button" onclick="document.getElementById('fileInput').click();">Browse</button>
             <input type="file" id="fileInput" style="display: none;" accept=".pdf" />
         </div>
     </section>
     
-
+    <script src="{{ url_for('static', filename='products.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-    <script src="/static/products.js"></script>
 </body>
-
-
-
 </html>
