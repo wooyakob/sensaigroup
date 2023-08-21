@@ -3,6 +3,7 @@
 <head>
     <title>User Activity Report</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +20,7 @@
 </head>
 <body>
     <div class="back-button">
-        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary btn-sm mr-2">Back to Dashboard</a>
+        <a href="{{ url_for('reports') }}" class="btn btn-primary btn-sm mr-2">Reports</a>
         <a href="{{ url_for('download_user_activity_report') }}" class="btn btn-primary btn-sm mr-2">Download Report</a>
     </div>
 

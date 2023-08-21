@@ -1,0 +1,50 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.admin-header {
+  text-align: center;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.admin-links {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.admin-links li {
+  margin: 0 15px;
+}
+
+.admin-links a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.admin-links a:hover {
+  color: #ff512f;
+}
+
+.footer {
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+#objectionsChart {
+  height: 400px;
+}

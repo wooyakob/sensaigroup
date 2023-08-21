@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // PRODUCT OBJECTION SEND TO ENDPOINT /product_objection_advice
   async function sendProductObjection(message, productId) {
-    const TIMEOUT = 60000;
+    const TIMEOUT = 120000;
 
     const fetchPromise = fetch('/product_objection_advice', {
       method: 'POST',
@@ -409,4 +409,6 @@ $('#objection-advice-btn, #product-objection-advice-btn, #product-advice-btn').c
     }
   });
 
-
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+  });
