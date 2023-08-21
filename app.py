@@ -55,13 +55,17 @@ def get_product_context(product_id):
     if product is None:
         return None
 
-    product_info = f"""
+    # If context exists, append it to product_info with a newline in between. 
+    # If not, just use product_info as is.
+    product_info_text = product.product_info + (("\n\n" + product.context) if product.context else "")
+    
+    context_string = f"""
     You are currently discussing the product named {product.product_name}. 
-    Product Info: {product.product_info}. 
+    Product Info: {product_info_text}. 
     Design Rationale: {product.design_rationale}.
     """
     
-    return product_info
+    return context_string
 
 @app.route('/api/objections_data', methods=['GET'])
 def objections_data():
