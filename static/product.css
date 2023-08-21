@@ -1,0 +1,124 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.admin-header {
+    text-align: center;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.upload-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    margin: 20px 0;
+}
+
+.dropzone {
+    width: 60%;
+    padding: 20px;
+    border: 2px dashed #f09819;
+    background-color: #ffffff;
+    text-align: center;
+    transition: background-color 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+
+.dropzone:hover {
+    background-color: #f9f9f9;
+}
+
+.dropzone button {
+    background: linear-gradient(270deg, #f09819, #ff512f);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.2s ease;
+    font-weight: bold;
+}
+
+.dropzone button:hover {
+    background-position: right bottom;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.admin-links {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background: #ffffff;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.admin-links li {
+    margin: 0 15px;
+}
+
+.admin-links a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.admin-links a:hover {
+    color: #ff512f;
+}
+
+.product-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+form {
+    width: 60%;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border: 2px solid #f09819;
+    border-radius: 5px;
+    transition: border 0.3s;
+}
+
+.form-control:focus {
+    border-color: #ff512f;
+    box-shadow: none;
+}
+
+.btn.btn-primary {
+    background: linear-gradient(270deg, #f09819, #ff512f);
+    border: none;
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.2s ease;
+    font-weight: bold;
+}
+
+.btn.btn-primary:hover {
+    background-position: right bottom;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}

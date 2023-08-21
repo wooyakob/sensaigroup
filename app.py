@@ -18,11 +18,13 @@ from flask_mail import Mail, Message
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from flask_migrate import Migrate
+from products import products
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
+    app.register_blueprint(products)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
     migrate = Migrate(app, db)
@@ -48,19 +50,79 @@ app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
 app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
 mail = Mail(app)
 
-
 def get_product_context(product_id):
     product = Product.query.get(product_id)
     if product is None:
         return None
 
-    product_info = f"""
+    # If context exists, append it to product_info with a newline in between. 
+    # If not, just use product_info as is.
+    product_info_text = product.product_info + (("\n\n" + product.context) if product.context else "")
+    
+    context_string = f"""
     You are currently discussing the product named {product.product_name}. 
-    Product Info: {product.product_info}. 
+    Product Info: {product_info_text}. 
     Design Rationale: {product.design_rationale}.
     """
     
-    return product_info
+    return context_string
+
+@app.route('/api/objections_data', methods=['GET'])
+def objections_data():
+    total_objections = db.session.query(Interaction).filter(Interaction.objection.isnot(None)).count()
+    total_product_objections = db.session.query(Interaction).filter(Interaction.product_objection.isnot(None)).count()
+    total_product_advice = db.session.query(Interaction).filter(Interaction.product_advice.isnot(None)).count()
+
+
+    data = {
+        'labels': ['Objections', 'Product Objections', 'Product Questions'],
+        'datasets': [{
+            'data': [total_objections, total_product_objections, total_product_advice],
+            'backgroundColor': ['red', 'black', 'orange']
+        }]
+    }
+    return jsonify(data)
+
+@app.route('/api/total_users')
+def total_users():
+    total = User.query.count()
+    return jsonify(total=total)
+
+
+@app.route('/add_product', methods=['GET', 'POST'])
+def add_product():
+    if request.method == 'POST':
+        product_name = request.form['product_name']
+        product_info = request.form['product_info']
+        design_rationale = request.form.get('design_rationale', None)
+        text_file_path = request.form.get('text_file_path', None)
+
+        # Basic validation
+        if not product_name or not product_info:
+            flash('Product name and info are required!')
+            return redirect(url_for('add_product'))
+
+        # Create slug from product name
+        slug = product_name.lower().replace(' ', '-')
+
+        # Read context from text file (extracted from PDF)
+        context = None
+        if text_file_path and os.path.exists(text_file_path):
+            with open(text_file_path, 'r', encoding='utf-8') as f:
+                context = f.read()
+            # Optionally, delete the text file afterward if not needed
+            os.remove(text_file_path)
+
+        # Create a new product with the extracted context
+        new_product = Product(product_name=product_name, slug=slug, product_info=product_info,
+                              design_rationale=design_rationale, context=context)
+        db.session.add(new_product)
+        db.session.commit()
+
+        flash('Product added successfully!')
+        return redirect('/admin_dash')
+
+    return render_template('products.html') 
 
 
 @app.route('/admin/createuser', methods=['GET', 'POST'])
@@ -238,6 +300,13 @@ def reports():
     else:
         return render_template('reports.html')
 
+@app.route('/admin/products', methods=['GET'])
+def products():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    else:
+        return render_template('products.html')
+
 @app.route('/admin/reports/logins', methods=['GET'])
 def report_logins():
     if not current_user.is_authenticated or not current_user.is_admin:
@@ -342,9 +411,7 @@ def chatbot():
             """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
             "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
             "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
-            "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself.\n\n"                            
-            "You are currently working for Paragon 28 as a sales representative. Paragon 28 was established in 2010, as an orthopedic foot and ankle company.\n\n"
-            "The name “Paragon 28” was chosen to show that we are exclusively a foot and ankle company, with the “28” representing the number of bones in the foot.\n\n"""
+            "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the medical device yourself.\n\n"""                           
         },
         {"role": "user", "content": user_objection},
     ]

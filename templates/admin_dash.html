@@ -4,49 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Paragon 28</title>
+    <title>Dashboard</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
     <header class="admin-header">
-        <h1>Admin Dashboard</h1>
+        <h1>Dashboard</h1>
+        <h3>Sales Organization: <span id="totalUsers">/25</span></h3>
     </header>
+    
 
     <nav>
         <ul class="admin-links">
             <li><a href="{{ url_for('reports') }}">Reports</a></li>
-            <li><a href="{{ url_for('create_user') }}">Create Users</a></li>
-            <li><a href="/admin/product/">Manage Products</a></li>
+            <li><a href="{{ url_for('products') }}">Products</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
 
-    <section class="admin-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="admin-section">
-                        <h2>Reports</h2>
-                        <p>Here you can get detailed information about your users</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- SensAI Metrics Section -->
+    <section class="container mt-4">
+        <h2>SensAI Metrics</h2>
+ 
+        <canvas id="objectionsChart" width="100" height="50"></canvas>
+
     </section>
 
     <footer class="footer bg-white py-3">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
+                    © 2023 SensAI. All rights reserved.
+                </div>
+                <div class="col-md-6 text-right">
+                    Manager's Portal
                 </div>
             </div>
         </div>

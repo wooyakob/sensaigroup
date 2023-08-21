@@ -38,33 +38,34 @@
     </div>
 
     <div class="container chat-container">
-        <h2>You can use <span class="text-black">Sens</span><span class="text-orange">AI</span> in one of three ways. <br> <br> Please select <span class="text-orange">one</span> of the following options: <br><br> </h2>
+        <h2>You can use <span class="text-black">Sens</span><span class="text-orange">AI</span> in three ways. <br> <br> Select <span class="text-orange">one</span> to move forward.<br><br> </h2>
         <div class="button-container">
             <button id="sales-objections-option" class="option-btn">Sales Objections</button>
             <button id="product-objections-option" class="option-btn">Product Objections</button>
             <button id="product-question-option" class="option-btn">Product Questions</button>
         </div>
+
+
         <div id="chat-container" class="card">
-    
             <div class="card-body">
-                <div class="row">
+                <div class="row justify-content-center">
                     <!-- GENERIC OBJECTIONS -->
-                    
-                    <div class="col-lg-4 mx-auto">
+                    <div class="col-lg-4">
                         <div class="card mt-3 hide-card" id="sales-objections-card" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Sales Objections</span>
-                                <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button>
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2">Sales Objections</span>
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter a generic sales objection"></i>
+                                </div>
+                                <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button> 
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
-                                    <p class="text-muted">Enter a sales objection to get advice on how to handle it</p>
                                     <textarea id="objection-input" class="form-control" placeholder="Enter your own sales objection or choose from the examples" title="Type the sales objection here"></textarea>
                                     <button id="objection-advice-btn" class="btn btn-primary active mt-3">Submit Sales Objection</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 
                             <div class="modal fade" id="objectionExamplesModal" tabindex="-1" role="dialog" aria-labelledby="objectionExamplesModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -86,68 +87,70 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- PRODUCT OBJECTIONS -->
-                    <div class="col-lg-4 mx-auto">
-                        <div class="card mt-3 hide-card" id="product-objections-card" style="background-color: #D3D3D3;">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Product Objections</span>
-                                <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
+                        <!-- PRODUCT OBJECTIONS -->
+                        <div class="col-lg-4">
+                            <div class="card mt-3 hide-card" id="product-objections-card" style="background-color: #D3D3D3;">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <span class="mr-2">Product Objections</span>
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter a sales objection raised when selling a specific product"></i>
+                                    </div>
+                                    <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
                             </div>
-                            <div class="card-body">
-                                <div class="example-objections d-flex flex-column">
-                                    <p class="text-muted">Enter a sales objection raised when selling a specific product</p>
-                                    <textarea id="product-objection-input" class="form-control" placeholder="Enter your own product objection or choose from the examples"></textarea>
-                                    <select id="product-objection-select" class="form-control mb-3">
-                                        {% for product in products %}
-                                        <option value="{{ product.id }}">{{ product.product_name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <button id="product-objection-advice-btn" class="btn btn-primary active">Submit Product Objection</button>
+                                <div class="card-body">
+                                    <div class="example-objections d-flex flex-column">
+                                        <select id="product-objection-select" class="form-control mb-3">
+                                            {% for product in products %}
+                                            <option value="{{ product.id }}">{{ product.product_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <textarea id="product-objection-input" class="form-control" placeholder="Enter your own product objection or choose from the examples"></textarea>
+                                        <button id="product-objection-advice-btn" class="btn btn-primary active">Submit Product Objection</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                            <div class="modal fade" id="productObjectionsExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productObjectionsExamplesModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="productObjectionsExamplesModalLabel">Example Product Objections</h5>
-                                            <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <ul>
-                                                <li onclick="populateProductObjection(this)">I do not understand how your product works</li>
-                                                <li onclick="populateProductObjection(this)">I am unclear on the product's clinical purpose</li>
-                                                <li onclick="populateProductObjection(this)">Why should I buy your product</li>
-                                            </ul>
+                                <div class="modal fade" id="productObjectionsExamplesModal" tabindex="-1" role="dialog" aria-labelledby="productObjectionsExamplesModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="productObjectionsExamplesModalLabel">Example Product Objections</h5>
+                                                <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul>
+                                                    <li onclick="populateProductObjection(this)">I do not understand how your product works</li>
+                                                    <li onclick="populateProductObjection(this)">I am unclear on the product's clinical purpose</li>
+                                                    <li onclick="populateProductObjection(this)">Why should I buy your product</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
                     <!-- PRODUCT Question -->
-                    <div class="col-lg-4 mx-auto">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4">
                         <div class="card mt-3 hide-card" id="product-question-card" style="background-color: #D3D3D3;">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <span>Product Question</span>
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2">Product Question</span>
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" title="Ask a question about a specific product"></i>
+                                </div>
                                 <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productAdviceExamplesModal">Examples</button>
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
-                                    <p class="text-muted">Enter a question about a specific product and get an answer</p>
-                                    <textarea id="product-advice-input" class="form-control" placeholder="Ask your own product question or choose from the examples"></textarea>
                                     <select id="product-question-select" class="form-control mb-3">
                                         {% for product in products %}
                                         <option value="{{ product.id }}">{{ product.product_name }}</option>
                                         {% endfor %}
                                     </select>
+                                    <textarea id="product-advice-input" class="form-control" placeholder="Ask your own product question or choose from the examples"></textarea>
                                     <button id="product-advice-btn" class="btn btn-primary active">Ask Product Question</button>
                                 </div>
                             </div>
@@ -172,9 +175,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
 
 
     <div id="below-chat-container" style="display: none;">

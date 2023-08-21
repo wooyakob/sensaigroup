@@ -74,6 +74,7 @@ class Product(db.Model):
     slug = db.Column(db.String(200), unique=True, nullable=True)
     product_info = db.Column(db.Text, nullable=False)
     design_rationale = db.Column(db.Text, nullable=True)
+    context = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
