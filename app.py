@@ -61,11 +61,11 @@ def get_product_context(product_id):
     
     context_string = f"""
     You are currently discussing the product named {product.product_name}. 
-    Product Info: {product_info_text}. 
-    Design Rationale: {product.design_rationale}.
+    Product Info: {product_info_text}.
     """
     
     return context_string
+
 
 @app.route('/api/objections_data', methods=['GET'])
 def objections_data():
@@ -94,7 +94,6 @@ def add_product():
     if request.method == 'POST':
         product_name = request.form['product_name']
         product_info = request.form['product_info']
-        design_rationale = request.form.get('design_rationale', None)
         text_file_path = request.form.get('text_file_path', None)
 
         # Basic validation
@@ -114,16 +113,14 @@ def add_product():
             os.remove(text_file_path)
 
         # Create a new product with the extracted context
-        new_product = Product(product_name=product_name, slug=slug, product_info=product_info,
-                              design_rationale=design_rationale, context=context)
+        new_product = Product(product_name=product_name, slug=slug, product_info=product_info, context=context)
         db.session.add(new_product)
         db.session.commit()
 
         flash('Product added successfully!')
         return redirect('/admin_dash')
 
-    return render_template('products.html') 
-
+    return render_template('products.html')
 
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():
