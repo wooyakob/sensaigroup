@@ -19,12 +19,14 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from flask_migrate import Migrate
 from products import products
+from users import users_blueprint
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(products)
+    app.register_blueprint(users_blueprint)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
     migrate = Migrate(app, db)
