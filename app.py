@@ -295,6 +295,13 @@ def reports():
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('reports.html')
+    
+@app.route('/admin/users', methods=['GET'])
+def users():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    else:
+        return render_template('users.html')
 
 @app.route('/admin/products', methods=['GET'])
 def products():

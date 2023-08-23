@@ -4,7 +4,6 @@ from datetime import datetime
 from extensions import db
 from argon2 import PasswordHasher
 
-
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
