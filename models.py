@@ -9,7 +9,6 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
-    company = db.Column(db.String(120))
     email = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(300), nullable=False)
@@ -55,7 +54,7 @@ class Interaction(db.Model):
 class LoginActivity(db.Model):
     __tablename__ = "login_activity"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     username = db.Column(db.String(100))
     login_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
