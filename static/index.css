@@ -179,13 +179,12 @@ textarea {
 
 .container.chat-container {
   border-radius: 15px;
-  overflow: auto;
   border: none;
   box-shadow:  10px 10px 20px #d1d1f1,
               -10px -10px 20px #ffffff;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 4rem;
+  gap: 20px;
   max-height: 800px;
   margin-top: 30px;
 }
@@ -257,6 +256,8 @@ textarea {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .modal-example-btn:hover, .modal-example-btn:active {
@@ -472,7 +473,7 @@ textarea {
 }
 
 .card {
-  flex: 1;            
+  flex: 0.9;            
   margin-bottom: 2rem;
   background-color: #f8f9fa;
   border: none;
@@ -481,10 +482,22 @@ textarea {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: auto
+  margin-top: auto;
   margin-bottom: auto;
 }
 
+#sales-objections-card,
+#product-objections-card,
+#product-question-card
+
+{
+  max-width: 800px;
+  max-height: fit-content; 
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px; 
+
+}
 
 @media (max-width: 576px) {
   .card-container .card {
