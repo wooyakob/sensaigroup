@@ -47,13 +47,6 @@ h5 {
   padding: 2rem; 
 }
 
-@media (max-width: 768px) {
-  .header-buttons {
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-}
-
 .prompt {
   cursor: pointer;
   display: inline-block;
@@ -75,24 +68,9 @@ h5 {
   margin-bottom: 20px;
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.card {
-  flex: 1;            
-  margin-bottom: 2rem;
-  background-color: #f8f9fa;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .chat-message {
   margin-bottom: 10px;
 }
-
 
 .input-expand {
   min-width: 20px;
@@ -107,26 +85,6 @@ h5 {
   width: 100%;
 }
 
-.rate-response {
-  margin-top: 80px;
-}
-
-@media (max-width: 576px) {
-  .card {
-    padding: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .container.chat-container {
-    padding: 1rem;
-  }
-
-  .card-body {
-    padding: 1rem;
-  }
-}
-
 textarea {
   resize: vertical;
   overflow: auto;
@@ -134,10 +92,10 @@ textarea {
 }
 
 .rate-response {
+  margin-top: 80px;
   display: none;
   max-width: fit-content;
 }
-
 
 @keyframes loading {
   from { width: 0; }
@@ -225,7 +183,6 @@ textarea {
   border: none;
   box-shadow:  10px 10px 20px #d1d1f1,
               -10px -10px 20px #ffffff;
-
   max-width: 1600px;
   margin: 0 auto;
   padding: 4rem;
@@ -237,10 +194,6 @@ textarea {
   box-shadow: inset 5px 5px 10px #d1d1d1,
               inset -5px -5px 10px #ffffff;
 } 
-
-.logo {
-  max-height: 50px;
-}
 
 .small-input {
   width: 200px;
@@ -282,42 +235,6 @@ textarea {
 {
   background-position: right bottom;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-@media (max-width: 768px) {
-  #history-btn, 
-  #logout-btn, 
-  #login-btn,
-  #rate-submit-btn,
-  #enter-objection-btn,
-  #enter-product-question-btn,
-  #enter-product-objection-btn
-  {
-    padding: 10px 15px;
-    font-size: 14px; 
-    width: 90%;
-    height: 40px; 
-    margin-bottom: 10px;
-    text-align: center; 
-  }
-}
-
-@media (max-width: 576px) {
-  #history-btn, 
-  #logout-btn, 
-  #login-btn,
-  #rate-submit-btn,
-  #enter-objection-btn,
-  #enter-product-question-btn,
-  #enter-product-objection-btn
-  {
-    padding: 8px 12px;
-    font-size: 12px;
-    width: 95%;
-    height: 35px;
-    margin-bottom: 10px;
-    text-align: center; 
-  }
 }
 
 .card-header {
@@ -368,28 +285,6 @@ textarea {
   min-height: calc(100vh - 20px);
 }
 
-@media (max-width: 768px) {
-  .modal-example-btn {
-    padding: 6px 10px;
-    font-size: 10px;
-    height: 30px;
-    width: 25%;
-    margin-bottom: 10px;
-    box-shadow: 0 4px #666666;
-  }
-}
-
-@media (max-width: 576px) {
-  .modal-example-btn {
-    padding: 4px 8px;
-    font-size: 8px;
-    height: 25px;
-    width: 65%;
-    margin-bottom: 10px;
-    box-shadow: 0 3px #666666;
-  }
-}
-
 .example-objections {
   display: flex;
   flex-direction: column;
@@ -415,7 +310,6 @@ textarea {
   box-shadow: 0 9px #999;
 }
 
-
 .follow-up-btn:hover {
   background-color: #34495e;
   color: #ecf0f1;
@@ -427,35 +321,14 @@ textarea {
   transform: translateY(4px);
 }
 
-@media (max-width: 768px) {
-  .follow-up-btn {
-    padding: 10px 15px;
-    font-size: 14px; 
-    width: 90%;
-    height: 40px; 
-    margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 576px) {
-  .follow-up-btn {
-    padding: 8px 12px;
-    font-size: 12px;
-    width: 95%;
-    height: 35px;
-    margin-bottom: 10px;
-  }
-}
-
-
 .logo {
   transition: box-shadow 0.3s ease-in-out;
+  max-height: 50px;
 }
 
 .logo:hover {
   box-shadow: 0 0 10px #ffae42, 0 0 20px #ffae42, 0 0 30px #ffae42;
 }
-
 
 .container.chat-output-container {
   border-radius: 15px;
@@ -537,26 +410,6 @@ textarea {
   transform: translateY(4px);
 }
 
-@media (max-width: 768px) {
-  .rating-btn {
-    padding: 10px 15px;
-    font-size: 14px; 
-    width: 90%;
-    height: 40px; 
-    margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 576px) {
-  .rating-btn {
-    padding: 8px 12px;
-    font-size: 12px;
-    width: 95%;
-    height: 35px;
-    margin-bottom: 10px;
-  }
-}
-
 .fa-star {
   color: gray;
   cursor: pointer;
@@ -576,18 +429,6 @@ textarea {
   display: none;
 }
 
-.card-container .row {
-  flex-grow: 1;
-  width: 100%;
-  margin: auto;
-}
-
-@media (max-width: 576px) {
-  .card-container .card {
-      max-width: 100%;
-  }
-}
-
 .button-container {
   display: flex;
   justify-content: center;
@@ -595,6 +436,7 @@ textarea {
   flex-wrap: wrap;
   width: 100%;
 }
+
 .option-btn {
   padding: 10px 20px;
   height: 50px;
@@ -616,4 +458,158 @@ textarea {
   animation: loading 2s linear infinite;
   background-image: linear-gradient(to right, #ff512f, #f09819);
   border-radius: 5px;
+}
+
+
+.card {
+  border: none;
+  flex-direction: row;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;            
+  margin-bottom: 2rem;
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto
+  margin-bottom: auto;
+}
+
+
+@media (max-width: 576px) {
+  .card-container .card {
+      max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .rating-btn {
+    padding: 10px 15px;
+    font-size: 14px; 
+    width: 90%;
+    height: 40px; 
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .rating-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    width: 95%;
+    height: 35px;
+    margin-bottom: 10px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .follow-up-btn {
+    padding: 10px 15px;
+    font-size: 14px; 
+    width: 90%;
+    height: 40px; 
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .follow-up-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    width: 95%;
+    height: 35px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-example-btn {
+    padding: 6px 10px;
+    font-size: 10px;
+    height: 30px;
+    width: 25%;
+    margin-bottom: 10px;
+    box-shadow: 0 4px #666666;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-example-btn {
+    padding: 4px 8px;
+    font-size: 8px;
+    height: 25px;
+    width: 65%;
+    margin-bottom: 10px;
+    box-shadow: 0 3px #666666;
+  }
+}
+
+@media (max-width: 768px) {
+  #history-btn, 
+  #logout-btn, 
+  #login-btn,
+  #rate-submit-btn,
+  #enter-objection-btn,
+  #enter-product-question-btn,
+  #enter-product-objection-btn
+  {
+    padding: 10px 15px;
+    font-size: 14px; 
+    width: 90%;
+    height: 40px; 
+    margin-bottom: 10px;
+    text-align: center; 
+  }
+}
+
+@media (max-width: 576px) {
+  #history-btn, 
+  #logout-btn, 
+  #login-btn,
+  #rate-submit-btn,
+  #enter-objection-btn,
+  #enter-product-question-btn,
+  #enter-product-objection-btn
+  {
+    padding: 8px 12px;
+    font-size: 12px;
+    width: 95%;
+    height: 35px;
+    margin-bottom: 10px;
+    text-align: center; 
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container.chat-container {
+    padding: 1rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 }
