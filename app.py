@@ -88,7 +88,6 @@ def total_users():
     total = User.query.count()
     return jsonify(total=total)
 
-
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
     if request.method == 'POST':
