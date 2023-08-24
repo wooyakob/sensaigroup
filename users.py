@@ -3,9 +3,6 @@ from app import User
 from extensions import db
 from flask_mail import Message
 
-
-
-
 users_blueprint = Blueprint('users', __name__)
 
 @users_blueprint.route('/admin/createuser', methods=['GET', 'POST'])
@@ -34,6 +31,8 @@ def create_user():
                         f"Your credentials:\n"
                         f"Username: {username}\n"
                         f"Password: {password}")
+            current_app.extensions['mail'].send(msg)
+
 
         return redirect(url_for('admin_dashboard'))
 
