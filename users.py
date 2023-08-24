@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, current_app
 from app import User
 from extensions import db
+from flask_mail import Message
+
+
+
 
 users_blueprint = Blueprint('users', __name__)
 
@@ -21,6 +25,11 @@ def create_user():
 
         db.session.add(new_user)
         db.session.commit()
+
+        if new_user:  # After successfully creating user
+            msg = Message("Welcome to Our Platform", recipients=[email])
+            msg.body = "Thank you for joining our platform! Here's a link to login: [your_login_link_here]"
+            current_app.extensions['mail'].send(msg)
 
         return redirect(url_for('admin_dashboard'))
 

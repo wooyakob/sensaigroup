@@ -29,12 +29,23 @@ def create_app():
     app.register_blueprint(users_blueprint)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
+    app.config["MAIL_SERVER"] = "smtp.mail.me.com"
+    app.config["MAIL_PORT"] = 587
+    app.config["MAIL_USE_TLS"] = True
+    app.config["MAIL_USERNAME"] = "jake_wood@mac.com"
+    app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+    app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
+    app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+
     migrate = Migrate(app, db)
     init_app(app)
     init_admin(app)
+    mail.init_app(app)
 
     return app
 
+mail = Mail()
 app = create_app()
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
@@ -43,14 +54,6 @@ logging.basicConfig(level=logging.DEBUG)
 ph = PasswordHasher()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-app.config["MAIL_SERVER"] = "smtp.mail.me.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "jake_wood@mac.com"
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
-app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
-mail = Mail(app)
 
 def get_product_context(product_id):
     product = Product.query.get(product_id)
