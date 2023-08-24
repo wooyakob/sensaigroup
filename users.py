@@ -26,10 +26,14 @@ def create_user():
         db.session.add(new_user)
         db.session.commit()
 
-        if new_user:  # After successfully creating user
-            msg = Message("Welcome to Our Platform", recipients=[email])
-            msg.body = "Thank you for joining our platform! Here's a link to login: [your_login_link_here]"
-            current_app.extensions['mail'].send(msg)
+        if new_user:
+            login_url = request.url_root.rstrip('/') + url_for('login')
+            msg = Message("Welcome to SensAI", recipients=[email])
+            msg.body = (f"Thank you for joining SensAI! "
+                        f"Here's a link to login: {login_url}\n\n"
+                        f"Your credentials:\n"
+                        f"Username: {username}\n"
+                        f"Password: {password}")
 
         return redirect(url_for('admin_dashboard'))
 
