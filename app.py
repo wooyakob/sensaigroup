@@ -119,7 +119,7 @@ def add_product():
         db.session.commit()
 
         flash('Product added successfully!')
-        return redirect('/admin_dash')
+        return redirect(url_for('products'))
 
     return render_template('products.html')
 
