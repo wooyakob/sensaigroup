@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <title>Add Users</title>
  
@@ -7,27 +10,59 @@
     <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
     <link rel="stylesheet" href="/static/users.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
-<form action="/admin/createuser" method="post">
-    <label for="first_name">First Name:</label>
-    <input type="text" name="first_name" required>
+<body>
+    <div class="top-section">
+        <header class="admin-header">
+            <h1>Users</h1>
+        </header>
+    
+        <nav>
+            <ul class="admin-links">
+                <li><a href="{{ url_for('reports') }}">Reports</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="/admin_dash">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
 
-    <label for="last_name">Last Name:</label>
-    <input type="text" name="last_name" required>
+    <div class="bottom-section">
+        <form action="/admin/createuser" method="post">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" class="form-control" required>
+            </div>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" required>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" class="form-control" required>
+            </div>
 
-    <label for="username">Username:</label>
-    <input type="text" name="username" required>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
 
-    <input type="submit" value="Create User" class="btn-primary">
-</form>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
 
-{% if error_message %}
-<p style="color: red;">{{ error_message }}</p>
-{% endif %}
+            <input type="submit" value="Create User" class="btn btn-primary">
+        </form>
+        
+        {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
