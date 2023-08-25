@@ -4,13 +4,11 @@ from datetime import datetime
 from extensions import db
 from argon2 import PasswordHasher
 
-
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
-    company = db.Column(db.String(120))
     email = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(300), nullable=False)
@@ -56,7 +54,7 @@ class Interaction(db.Model):
 class LoginActivity(db.Model):
     __tablename__ = "login_activity"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     username = db.Column(db.String(100))
     login_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
@@ -73,7 +71,6 @@ class Product(db.Model):
     product_name = db.Column(db.String(200), unique=True, nullable=False)
     slug = db.Column(db.String(200), unique=True, nullable=True)
     product_info = db.Column(db.Text, nullable=False)
-    design_rationale = db.Column(db.Text, nullable=True)
     context = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
@@ -81,6 +78,5 @@ class Product(db.Model):
             'product_name': self.product_name,
             'slug': self.slug,
             'product_info': self.product_info,
-            'design_rationale': self.design_rationale,
             'id': self.id
         }

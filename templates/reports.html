@@ -23,8 +23,9 @@
 
     <nav>
         <ul class="admin-links">
-            <li><a href="/admin_dash">Dashboard</a></li>
+            <li><a href="{{ url_for('users') }}">Users</a></li>
             <li><a href="{{ url_for('products') }}">Products</a></li>
+            <li><a href="/admin_dash">Dashboard</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
