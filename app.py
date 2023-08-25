@@ -19,20 +19,36 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from flask_migrate import Migrate
 from products import products
+from users import users_blueprint
+from charts import charts
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(products)
+    app.register_blueprint(users_blueprint)
+    app.register_blueprint(charts)
+
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
+
+    app.config["MAIL_SERVER"] = "smtp.mail.me.com"
+    app.config["MAIL_PORT"] = 587
+    app.config["MAIL_USE_TLS"] = True
+    app.config["MAIL_USERNAME"] = "jake_wood@mac.com"
+    app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+    app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
+    app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
     migrate = Migrate(app, db)
     init_app(app)
     init_admin(app)
+    mail.init_app(app)
 
     return app
 
+mail = Mail()
 app = create_app()
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
@@ -41,14 +57,6 @@ logging.basicConfig(level=logging.DEBUG)
 ph = PasswordHasher()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-app.config["MAIL_SERVER"] = "smtp.mail.me.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "jake_wood@mac.com"
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = "jake_wood@mac.com"
-app.config['EMAIL_SECRET_KEY'] = os.getenv("EMAIL_SECRET_KEY")
-mail = Mail(app)
 
 def get_product_context(product_id):
     product = Product.query.get(product_id)
@@ -61,40 +69,16 @@ def get_product_context(product_id):
     
     context_string = f"""
     You are currently discussing the product named {product.product_name}. 
-    Product Info: {product_info_text}. 
-    Design Rationale: {product.design_rationale}.
+    Product Info: {product_info_text}.
     """
     
     return context_string
-
-@app.route('/api/objections_data', methods=['GET'])
-def objections_data():
-    total_objections = db.session.query(Interaction).filter(Interaction.objection.isnot(None)).count()
-    total_product_objections = db.session.query(Interaction).filter(Interaction.product_objection.isnot(None)).count()
-    total_product_advice = db.session.query(Interaction).filter(Interaction.product_advice.isnot(None)).count()
-
-
-    data = {
-        'labels': ['Objections', 'Product Objections', 'Product Questions'],
-        'datasets': [{
-            'data': [total_objections, total_product_objections, total_product_advice],
-            'backgroundColor': ['red', 'black', 'orange']
-        }]
-    }
-    return jsonify(data)
-
-@app.route('/api/total_users')
-def total_users():
-    total = User.query.count()
-    return jsonify(total=total)
-
 
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
     if request.method == 'POST':
         product_name = request.form['product_name']
         product_info = request.form['product_info']
-        design_rationale = request.form.get('design_rationale', None)
         text_file_path = request.form.get('text_file_path', None)
 
         # Basic validation
@@ -114,16 +98,14 @@ def add_product():
             os.remove(text_file_path)
 
         # Create a new product with the extracted context
-        new_product = Product(product_name=product_name, slug=slug, product_info=product_info,
-                              design_rationale=design_rationale, context=context)
+        new_product = Product(product_name=product_name, slug=slug, product_info=product_info, context=context)
         db.session.add(new_product)
         db.session.commit()
 
         flash('Product added successfully!')
-        return redirect('/admin_dash')
+        return redirect(url_for('products'))
 
-    return render_template('products.html') 
-
+    return render_template('products.html')
 
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():
@@ -299,6 +281,13 @@ def reports():
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('reports.html')
+    
+@app.route('/admin/users', methods=['GET'])
+def users():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin not authenticated"})
+    else:
+        return render_template('users.html')
 
 @app.route('/admin/products', methods=['GET'])
 def products():
