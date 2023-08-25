@@ -20,6 +20,7 @@ from argon2.exceptions import VerifyMismatchError
 from flask_migrate import Migrate
 from products import products
 from users import users_blueprint
+from charts import charts
 
 load_dotenv()
 
@@ -27,6 +28,8 @@ def create_app():
     app = Flask(__name__)
     app.register_blueprint(products)
     app.register_blueprint(users_blueprint)
+    app.register_blueprint(charts)
+
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
     app.config["MAIL_SERVER"] = "smtp.mail.me.com"
@@ -70,28 +73,6 @@ def get_product_context(product_id):
     """
     
     return context_string
-
-
-@app.route('/api/objections_data', methods=['GET'])
-def objections_data():
-    total_objections = db.session.query(Interaction).filter(Interaction.objection.isnot(None)).count()
-    total_product_objections = db.session.query(Interaction).filter(Interaction.product_objection.isnot(None)).count()
-    total_product_advice = db.session.query(Interaction).filter(Interaction.product_advice.isnot(None)).count()
-
-
-    data = {
-        'labels': ['Objections', 'Product Objections', 'Product Questions'],
-        'datasets': [{
-            'data': [total_objections, total_product_objections, total_product_advice],
-            'backgroundColor': ['red', 'black', 'orange']
-        }]
-    }
-    return jsonify(data)
-
-@app.route('/api/total_users')
-def total_users():
-    total = User.query.count()
-    return jsonify(total=total)
 
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
