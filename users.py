@@ -24,7 +24,7 @@ def create_user():
         db.session.commit()
 
         if new_user:
-            login_url = request.url_root.rstrip('/') + url_for('login')
+            login_url = "http://salesensai.com/login"
             msg = Message("Welcome to SensAI", recipients=[email])
             msg.body = (f"Thank you for joining SensAI! "
                         f"Here's a link to login: {login_url}\n\n"
