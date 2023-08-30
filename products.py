@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, flash, redirect, url_for
 import PyPDF2
 import os
 import string
 from docx import Document
+from app import db
+from models import Product
 
 products = Blueprint('products', __name__)
 
@@ -21,7 +23,6 @@ def show_products():
 
 @products.route('/upload_endpoint', methods=['POST'])
 def upload_file():
-    print("Upload endpoint hit")
     if 'file' not in request.files:
         return jsonify({"error": "No file part"})
     
@@ -30,37 +31,61 @@ def upload_file():
     if file.filename == '':
         return jsonify({"error": "No file selected"})
 
+    printable_text = ""
     if file and allowed_file(file.filename):
-        filename = os.path.join(UPLOAD_FOLDER, file.filename)
-        print(f"Attempting to save file to {filename}")
-        file.save(filename)
-        print(f"File saved to {filename}")
-
-    if filename.endswith('.pdf'):
-        with open(filename, 'rb') as pdf_file:
-            reader = PyPDF2.PdfReader(pdf_file)
-            text = ""
+        if file.filename.endswith('.pdf'):
+            reader = PyPDF2.PdfReader(file)
             for page_num in range(len(reader.pages)):
-                text += reader.pages[page_num].extract_text()
-            
-            printable_text = ''.join(filter(lambda x: x in string.printable, text))
+                printable_text += reader.pages[page_num].extract_text()
 
-    elif filename.endswith('.doc') or filename.endswith('.docx'):
-        doc = Document(filename)
-        fullText = []
-        for para in doc.paragraphs:
-            fullText.append(para.text)
-        printable_text = '\n'.join(fullText)
-    
-    elif filename.endswith('.txt'):
-        with open(filename, 'r', encoding='utf-8') as txt_file:
-            printable_text = txt_file.read()
+        elif file.filename.endswith('.doc') or file.filename.endswith('.docx'):
+            doc = Document(file.stream)
+            fullText = []
+            for para in doc.paragraphs:
+                fullText.append(para.text)
+            printable_text = '\n'.join(fullText)
 
+        elif file.filename.endswith('.txt'):
+            printable_text = file.stream.read().decode('utf-8')
+
+        else:
+            return jsonify({"error": "File type not supported"})
     else:
-        return jsonify({"error": "File type not supported"})
+        return jsonify({"error": "Invalid file"})
 
-    text_filename = os.path.join(UPLOAD_FOLDER, file.filename.rsplit('.', 1)[0] + ".txt")
-    with open(text_filename, 'w', encoding='utf-8') as text_file:
-        text_file.write(printable_text)
+    printable_text = ''.join(filter(lambda x: x in string.printable, printable_text))
                     
-    return jsonify({"text_file": text_filename})
+    return jsonify({"text": printable_text})  # Return the extracted text
+
+@products.route('/add_product', methods=['GET', 'POST'])
+def add_product():
+    if request.method == 'POST':
+        product_name = request.form['product_name']
+        product_info = request.form['product_info']
+        text_file_path = request.form.get('text_file_path', None)
+
+        # Basic validation
+        if not product_name or not product_info:
+            flash('Product name and info are required!')
+            return redirect(url_for('add_product'))
+
+        # Create slug from product name
+        slug = product_name.lower().replace(' ', '-')
+
+        # Read context from text file (extracted from PDF)
+        context = request.form.get('text_file_path', None)  # This will now have the actual text instead of a path
+        if text_file_path and os.path.exists(text_file_path):
+            with open(text_file_path, 'r', encoding='utf-8') as f:
+                context = f.read()
+            # Optionally, delete the text file afterward if not needed
+            os.remove(text_file_path)
+
+        # Create a new product with the extracted context
+        new_product = Product(product_name=product_name, slug=slug, product_info=product_info, context=context)
+        db.session.add(new_product)
+        db.session.commit()
+
+        flash('Product added successfully!')
+        return redirect(url_for('products'))
+
+    return render_template('products.html')

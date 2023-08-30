@@ -66,8 +66,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (data.error) {
                     alert(data.error);
                     reject(data.error);
-                } else if (data.text_file) {
-                    document.getElementById("textFilePath").value = data.text_file;
+                } else if (data.text) {
+                    document.getElementById("textFilePath").value = data.text;
                     resolve();
                 } else {
                     reject(new Error('Unknown error occurred.'));
