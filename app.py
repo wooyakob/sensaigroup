@@ -74,39 +74,6 @@ def get_product_context(product_id):
     
     return context_string
 
-@app.route('/add_product', methods=['GET', 'POST'])
-def add_product():
-    if request.method == 'POST':
-        product_name = request.form['product_name']
-        product_info = request.form['product_info']
-        text_file_path = request.form.get('text_file_path', None)
-
-        # Basic validation
-        if not product_name or not product_info:
-            flash('Product name and info are required!')
-            return redirect(url_for('add_product'))
-
-        # Create slug from product name
-        slug = product_name.lower().replace(' ', '-')
-
-        # Read context from text file (extracted from PDF)
-        context = None
-        if text_file_path and os.path.exists(text_file_path):
-            with open(text_file_path, 'r', encoding='utf-8') as f:
-                context = f.read()
-            # Optionally, delete the text file afterward if not needed
-            os.remove(text_file_path)
-
-        # Create a new product with the extracted context
-        new_product = Product(product_name=product_name, slug=slug, product_info=product_info, context=context)
-        db.session.add(new_product)
-        db.session.commit()
-
-        flash('Product added successfully!')
-        return redirect(url_for('products'))
-
-    return render_template('products.html')
-
 @app.route('/admin/createuser', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
