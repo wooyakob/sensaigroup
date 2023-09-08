@@ -31,9 +31,9 @@
     <div id="prompt-container" class="mt-4 d-flex flex-row flex-wrap justify-content-start align-items-center">
         <div id="prompts"></div>
         <div class="btn-group ml-5" role="group" aria-label="Button group">
+                <a id="history-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('admin_dashboard') }}">Dashboard</a>
                 <a id="history-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('user_history') }}">History</a>
                 <a id="logout-btn" class="btn btn-primary active my-2" href="{{ url_for('logout') }}">Logout</a>
-
         </div>
     </div>
 

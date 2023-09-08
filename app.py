@@ -63,8 +63,6 @@ def get_product_context(product_id):
     if product is None:
         return None
 
-    # If context exists, append it to product_info with a newline in between. 
-    # If not, just use product_info as is.
     product_info_text = product.product_info + (("\n\n" + product.context) if product.context else "")
     
     context_string = f"""
@@ -244,28 +242,28 @@ def load_user(user_id):
 
 @app.route('/admin/reports', methods=['GET'])
 def reports():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('reports.html')
     
 @app.route('/admin/users', methods=['GET'])
 def users():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('users.html')
 
 @app.route('/admin/products', methods=['GET'])
 def products():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('products.html')
 
 @app.route('/admin/reports/logins', methods=['GET'])
 def report_logins():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     
     logins = LoginActivity.query.all()
@@ -274,7 +272,7 @@ def report_logins():
 
 @app.route('/admin/reports/user_activity', methods=['GET'])
 def report_user_activity():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     
     interactions = Interaction.query.all()
@@ -286,7 +284,7 @@ def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username, is_admin=True).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             try:
                 if ph.verify(user.password, password):
