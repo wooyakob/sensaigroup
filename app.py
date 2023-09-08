@@ -6,7 +6,7 @@ import pandas as pd
 import logging
 from datetime import datetime
 import re
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app
 from itsdangerous import URLSafeTimedSerializer
 import os
 from openai.error import OpenAIError
@@ -343,6 +343,45 @@ def login():
 @login_required
 def admin_dashboard():
     return render_template('admin_dash.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not all([first_name, last_name, email, username, password]):
+            flash('Missing required fields', 'danger')
+            return render_template('signup.html')
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email already in use', 'danger')
+            return render_template('signup.html')
+
+        new_user = User(first_name=first_name, last_name=last_name, email=email, username=username, is_admin=False)
+        new_user.set_password(password)
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        if new_user:
+            login_url = "http://salesensai.com/login"
+            msg = Message("Welcome to SensAI", recipients=[email])
+            msg.body = (f"Thank you for joining SensAI! "
+                        f"Here's a link to login: {login_url}\n\n"
+                        f"Your credentials:\n"
+                        f"Username: {username}\n"
+                        f"Password: {password}")
+            current_app.extensions['mail'].send(msg)
+            
+            flash('Successfully registered! Please check your email for login details.', 'success')
+            return redirect(url_for('login'))  # Assuming you have a 'login' function/route
+
+    return render_template('signup.html')
 
 @app.route('/logout')
 @login_required

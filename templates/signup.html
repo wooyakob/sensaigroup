@@ -17,10 +17,13 @@
     <div class="top-section">
         <header class="admin-header">
             <h1>Sign Up</h1>
+            <div class="home-section">
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-return-home">Return Home</a>
+            </div>
         </header>
     </div>
 
-        <form action="/admin/createuser" method="post">
+        <form action="/signup" method="post">
             <div class="form-group">
                 <label for="first_name">First Name:</label>
                 <input type="text" name="first_name" class="form-control" required>
@@ -46,7 +49,7 @@
                 <input type="password" name="password" class="form-control" required>
             </div>
 
-            <input type="submit" value="Create User" class="btn btn-primary">
+            <input type="submit" value="Sign Up" class="btn btn-primary">
         </form>
         
         {% if error_message %}
