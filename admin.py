@@ -18,7 +18,7 @@ class InteractionModelView(ModelView):
     column_searchable_list = ['user.first_name', 'user.last_name', 'user.email', 'user.username']
 
     def is_accessible(self):
-        if current_user.is_authenticated and current_user.is_admin:
+        if current_user.is_authenticated:
             return True
         return False
 
@@ -47,7 +47,7 @@ class ProductModelView(ModelView):
     column_searchable_list = ['product_name']
 
     def is_accessible(self):
-        if current_user.is_authenticated and current_user.is_admin:
+        if current_user.is_authenticated:
             return True
         return False
 

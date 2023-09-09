@@ -67,6 +67,8 @@ class LoginActivity(db.Model):
 
 class Product(db.Model):
     __tablename__ = "products"
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='products')
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(200), unique=True, nullable=False)
     slug = db.Column(db.String(200), unique=True, nullable=True)
