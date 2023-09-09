@@ -6,7 +6,7 @@ import pandas as pd
 import logging
 from datetime import datetime
 import re
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app
 from itsdangerous import URLSafeTimedSerializer
 import os
 from openai.error import OpenAIError
@@ -63,8 +63,6 @@ def get_product_context(product_id):
     if product is None:
         return None
 
-    # If context exists, append it to product_info with a newline in between. 
-    # If not, just use product_info as is.
     product_info_text = product.product_info + (("\n\n" + product.context) if product.context else "")
     
     context_string = f"""
@@ -244,28 +242,28 @@ def load_user(user_id):
 
 @app.route('/admin/reports', methods=['GET'])
 def reports():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('reports.html')
     
 @app.route('/admin/users', methods=['GET'])
 def users():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('users.html')
 
 @app.route('/admin/products', methods=['GET'])
 def products():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     else:
         return render_template('products.html')
 
 @app.route('/admin/reports/logins', methods=['GET'])
 def report_logins():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     
     logins = LoginActivity.query.all()
@@ -274,7 +272,7 @@ def report_logins():
 
 @app.route('/admin/reports/user_activity', methods=['GET'])
 def report_user_activity():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not current_user.is_authenticated:
         return jsonify({"error": "Admin not authenticated"})
     
     interactions = Interaction.query.all()
@@ -286,7 +284,7 @@ def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username, is_admin=True).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             try:
                 if ph.verify(user.password, password):
@@ -318,8 +316,8 @@ def index():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    products = Product.query.all()
-    return render_template('index.html', products=products) 
+    user_products = Product.query.filter_by(user_id=current_user.id).all()
+    return render_template('index.html', products=user_products) 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -346,6 +344,45 @@ def login():
 def admin_dashboard():
     return render_template('admin_dash.html')
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        email = request.form.get('email')
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not all([first_name, last_name, email, username, password]):
+            flash('Missing required fields', 'danger')
+            return render_template('signup.html')
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email already in use', 'danger')
+            return render_template('signup.html')
+
+        new_user = User(first_name=first_name, last_name=last_name, email=email, username=username, is_admin=False)
+        new_user.set_password(password)
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        if new_user:
+            login_url = "http://salesensai.com/login"
+            msg = Message("Welcome to SensAI", recipients=[email])
+            msg.body = (f"Thank you for joining SensAI! "
+                        f"Here's a link to login: {login_url}\n\n"
+                        f"Your credentials:\n"
+                        f"Username: {username}\n"
+                        f"Password: {password}")
+            current_app.extensions['mail'].send(msg)
+            
+            flash('Successfully registered! Please check your email for login details.', 'success')
+            return redirect(url_for('login'))  # Assuming you have a 'login' function/route
+
+    return render_template('signup.html')
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -366,8 +403,8 @@ def chatbot():
         {"role": "system", "content":
             """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
             "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
-            "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
-            "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the medical device yourself.\n\n"""                           
+            "You are a top performing sales representative. You understand how to handle customer objections professionally.\n\n"
+            "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product or service yourself.\n\n"""                           
         },
         {"role": "user", "content": user_objection},
     ]
@@ -416,7 +453,7 @@ def product_objection_advice():
 
     instructions = """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
         "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
-        "You are a medical device sales expert and top performing sales representative. You understand how to handle customer objections professionally.\n\n"
+        "You are a top performing sales representative. You understand how to handle customer objections professionally.\n\n"
         "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself."""
 
     messages = [
