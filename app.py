@@ -189,9 +189,9 @@ def reset_password(token):
         if new_password != confirm_password:
             flash("New password and confirm password do not match.")
             return redirect(url_for("reset_password", token=token))
-        if not is_strong_password(new_password):
-            flash("Password should include upper and lowercase letters, digits, symbols, and at least 15 characters.")
-            return redirect(url_for("reset_password", token=token))
+        # if not is_strong_password(new_password):
+           # flash("Password should include upper and lowercase letters, digits, symbols, and at least 15 characters.")
+           # return redirect(url_for("reset_password", token=token))
         email = token_to_email(token)
         user = User.query.filter_by(email=email).first()
         if user is None:
