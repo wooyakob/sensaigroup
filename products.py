@@ -5,6 +5,7 @@ import string
 from docx import Document
 from app import db
 from models import Product
+from flask_login import current_user
 
 products = Blueprint('products', __name__)
 
@@ -19,7 +20,9 @@ def allowed_file(filename):
 
 @products.route('/products')
 def show_products():
-    return render_template('products.html')
+    user = current_user
+    user_products = Product.query.filter_by(user_id=user.id).all()
+    return render_template('products.html', products=user_products)
 
 @products.route('/upload_endpoint', methods=['POST'])
 def upload_file():
@@ -81,7 +84,7 @@ def add_product():
             os.remove(text_file_path)
 
         # Create a new product with the extracted context
-        new_product = Product(product_name=product_name, slug=slug, product_info=product_info, context=context)
+        new_product = Product(product_name=product_name, slug=slug, product_info=product_info, context=context, user_id=current_user.id,)
         db.session.add(new_product)
         db.session.commit()
 

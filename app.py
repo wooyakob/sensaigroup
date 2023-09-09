@@ -316,8 +316,8 @@ def index():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    products = Product.query.all()
-    return render_template('index.html', products=products) 
+    user_products = Product.query.filter_by(user_id=current_user.id).all()
+    return render_template('index.html', products=user_products) 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
