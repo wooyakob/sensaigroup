@@ -95,3 +95,23 @@ form {
     background-position: right bottom;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
 }
+
+.btn-return-home {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-return-home:hover {
+    background-position: right bottom;
+    transform: scale(1.05);
+}
+
+.btn-orange {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    border: 1px solid white;
+  }
