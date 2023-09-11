@@ -271,7 +271,6 @@ textarea {
   box-shadow: 0 2px #666666;
   outline: none; 
   transform: translateY(2px);
-  text-decoration: underline; 
 }
 
 .modal-example-btn:active, .modal-example-btn:focus {
