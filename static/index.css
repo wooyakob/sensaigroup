@@ -464,7 +464,6 @@ textarea {
 
 .card {
   border: none;
-  flex-direction: row;
 }
 
 .card-container {
@@ -498,6 +497,8 @@ textarea {
   border-radius: 5px; 
 
 }
+
+
 
 @media (max-width: 576px) {
   .card-container .card {
@@ -626,3 +627,4 @@ textarea {
     gap: 0.25rem;
   }
 }
+
