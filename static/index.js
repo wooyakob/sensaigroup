@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       return data.response_text;
     } catch (error) {
       console.error(error); 
-      return 'An error occurred. Please refresh and enter another product objection'; 
+      return 'An error occurred. Please add or select a product, hit refresh and enter another product objection'; 
     }
   }
 
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       return data.response_text;
     } catch (error) {
       console.error(error); 
-      return 'An error occurred. Please refresh and ask another product question'; 
+      return 'An error occurred. Please add or select a product, hit refresh and enter another product question'; 
     }
   }
 
