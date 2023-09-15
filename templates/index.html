@@ -31,8 +31,8 @@
     <div id="prompt-container" class="mt-4 d-flex flex-row flex-wrap justify-content-start align-items-center">
         <div id="prompts"></div>
         <div class="btn-group ml-5" role="group" aria-label="Button group">
-                <a id="history-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('products') }}">Products</a>
-                <a id="history-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('user_history') }}">History</a>
+                <a id="history-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('products') }}">Add Products</a>
+                <a id="history-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('user_history') }}">View History</a>
                 <a id="logout-btn" class="btn btn-primary active my-2" href="{{ url_for('logout') }}">Logout</a>
         </div>
     </div>
@@ -57,7 +57,7 @@
                                     <span class="mr-2">Sales Objections</span>
                                     <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter a generic sales objection"></i>
                                 </div>
-                                <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button> 
+                                <button type="button" class="modal-example-btn" data-toggle="modal" data-target="#objectionExamplesModal">Examples</button> 
                             </div>
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
@@ -72,7 +72,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="objectionExamplesModalLabel">Sales Objections</h5>
-                                            <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="modal-example-btn" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -96,14 +96,18 @@
                                         <span class="mr-2">Product Objections</span>
                                         <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter a sales objection raised when selling a specific product"></i>
                                     </div>
-                                    <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
+                                    <button type="button" class="modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
                             </div>
                                 <div class="card-body">
                                     <div class="example-objections d-flex flex-column">
                                         <select id="product-objection-select" class="form-control mb-3">
-                                            {% for product in products %}
-                                            <option value="{{ product.id }}">{{ product.product_name }}</option>
-                                            {% endfor %}
+                                            {% if products %}
+                                                {% for product in products %}
+                                                    <option value="{{ product.id }}">{{ product.product_name }}</option>
+                                                {% endfor %}
+                                            {% else %}
+                                                <option disabled selected>Add a product at the top of the page first</option>
+                                            {% endif %}
                                         </select>
                                         <textarea id="product-objection-input" class="form-control" placeholder="Enter your own product objection or choose from the examples"></textarea>
                                         <button id="product-objection-advice-btn" class="btn btn-primary active">Submit Product Objection</button>
@@ -116,7 +120,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="productObjectionsExamplesModalLabel">Example Product Objections</h5>
-                                                <button type="button" class="btn btn-primary modal-example-btn" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="modal-example-btn" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -146,9 +150,13 @@
                             <div class="card-body">
                                 <div class="example-objections d-flex flex-column">
                                     <select id="product-question-select" class="form-control mb-3">
-                                        {% for product in products %}
-                                        <option value="{{ product.id }}">{{ product.product_name }}</option>
-                                        {% endfor %}
+                                        {% if products %}
+                                            {% for product in products %}
+                                                <option value="{{ product.id }}">{{ product.product_name }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                            <option disabled selected>Add a product at the top of the page first</option>
+                                        {% endif %}
                                     </select>
                                     <textarea id="product-advice-input" class="form-control" placeholder="Ask your own product question or choose from the examples"></textarea>
                                     <button id="product-advice-btn" class="btn btn-primary active">Ask Product Question</button>

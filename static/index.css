@@ -211,7 +211,7 @@ textarea {
   padding: 10px 20px;
   font-size: 14px; 
   height: 50px;
-  width: 100px;
+  width: auto;
   background: linear-gradient(270deg, #f09819, #ff512f);
   border: none;
   color: white;
@@ -271,7 +271,6 @@ textarea {
   box-shadow: 0 2px #666666;
   outline: none; 
   transform: translateY(2px);
-  text-decoration: underline; 
 }
 
 .modal-example-btn:active, .modal-example-btn:focus {
@@ -464,7 +463,6 @@ textarea {
 
 .card {
   border: none;
-  flex-direction: row;
 }
 
 .card-container {
@@ -498,6 +496,8 @@ textarea {
   border-radius: 5px; 
 
 }
+
+
 
 @media (max-width: 576px) {
   .card-container .card {
@@ -598,7 +598,7 @@ textarea {
     padding: 8px 12px;
     font-size: 12px;
     width: 95%;
-    height: 35px;
+    height: auto;
     margin-bottom: 10px;
     text-align: center; 
   }
@@ -626,3 +626,4 @@ textarea {
     gap: 0.25rem;
   }
 }
+
