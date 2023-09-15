@@ -21,6 +21,16 @@
     <form method="POST" action="/login">
         <h3>Login</h3>
 
+        <div style="display: flex; justify-content: center;">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" style="text-align: center;">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
 
