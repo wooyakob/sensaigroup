@@ -240,6 +240,42 @@ textarea {
   font-size: 1.25rem;
 }
 
+#add-product-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  height: 40px;
+  width: auto;
+  background-color: #000000;
+  border: none;
+  color: white;
+  box-shadow: 0 6px #666666;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#add-product-btn:hover, #add-product-btn:active {
+  background-color: #000000;
+  box-shadow: 0 4px #666666;
+  text-shadow: 0 0 10px white, 0 0 15px white; 
+}
+
+#add-product-btn:focus {
+  background-color: #000000;
+  box-shadow: 0 2px #666666;
+  outline: none; 
+  transform: translateY(2px);
+}
+
+#add-product-btn:active, #add-product-btn:focus {
+  outline: none !important; 
+  box-shadow: none !important;
+}
+
+
+
 .modal-backdrop.show {
     opacity: 0;
 }

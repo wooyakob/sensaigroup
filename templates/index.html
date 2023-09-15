@@ -96,6 +96,7 @@
                                         <span class="mr-2">Product Objections</span>
                                         <i class="fas fa-info-circle" data-toggle="tooltip" title="Enter a sales objection raised when selling a specific product"></i>
                                     </div>
+                                    <a id="add-product-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('products') }}">Add Products</a>
                                     <button type="button" class="modal-example-btn" data-toggle="modal" data-target="#productObjectionsExamplesModal">Examples</button>
                             </div>
                                 <div class="card-body">
@@ -106,7 +107,7 @@
                                                     <option value="{{ product.id }}">{{ product.product_name }}</option>
                                                 {% endfor %}
                                             {% else %}
-                                                <option disabled selected>Add a product at the top of the page first</option>
+                                                <option disabled selected>Please click add products first to enter product objections</option>
                                             {% endif %}
                                         </select>
                                         <textarea id="product-objection-input" class="form-control" placeholder="Enter your own product objection or choose from the examples"></textarea>
@@ -145,6 +146,7 @@
                                     <span class="mr-2">Product Question</span>
                                     <i class="fas fa-info-circle" data-toggle="tooltip" title="Ask a question about a specific product"></i>
                                 </div>
+                                <a id="add-product-btn" class="mr-3 btn btn-primary active my-2" href="{{ url_for('products') }}">Add Products</a>
                                 <button type="button" class="btn btn-primary modal-example-btn" data-toggle="modal" data-target="#productAdviceExamplesModal">Examples</button>
                             </div>
                             <div class="card-body">
@@ -155,7 +157,7 @@
                                                 <option value="{{ product.id }}">{{ product.product_name }}</option>
                                             {% endfor %}
                                         {% else %}
-                                            <option disabled selected>Add a product at the top of the page first</option>
+                                            <option disabled selected>Please click add products first to ask product questions</option>
                                         {% endif %}
                                     </select>
                                     <textarea id="product-advice-input" class="form-control" placeholder="Ask your own product question or choose from the examples"></textarea>

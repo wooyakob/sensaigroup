@@ -89,6 +89,6 @@ def add_product():
         db.session.commit()
 
         flash('Product added successfully!')
-        return redirect(url_for('products'))
+        return redirect(url_for('dashboard'))
 
     return render_template('products.html')
