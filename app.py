@@ -6,7 +6,7 @@ import pandas as pd
 import logging
 from datetime import datetime
 import re
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app
+from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app, session
 from itsdangerous import URLSafeTimedSerializer
 import os
 from openai.error import OpenAIError
@@ -321,6 +321,8 @@ def dashboard():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    session.pop('_flashes', None)
+
     if request.method == 'POST':
         username = request.form['username'] 
         password = request.form['password']
