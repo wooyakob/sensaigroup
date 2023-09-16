@@ -72,9 +72,6 @@ def add_product():
             flash('Product name and info are required!')
             return redirect(url_for('add_product'))
 
-        # Create slug from product name
-        slug = product_name.lower().replace(' ', '-')
-
         # Read context from text file (extracted from PDF)
         context = request.form.get('text_file_path', None)  # This will now have the actual text instead of a path
         if text_file_path and os.path.exists(text_file_path):
@@ -84,7 +81,7 @@ def add_product():
             os.remove(text_file_path)
 
         # Create a new product with the extracted context
-        new_product = Product(product_name=product_name, slug=slug, product_info=product_info, context=context, user_id=current_user.id,)
+        new_product = Product(product_name=product_name, product_info=product_info, context=context, user_id=current_user.id,)
         db.session.add(new_product)
         db.session.commit()
 
