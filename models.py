@@ -70,15 +70,13 @@ class Product(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='products')
     id = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.String(200), unique=True, nullable=False)
-    slug = db.Column(db.String(200), unique=True, nullable=True)
+    product_name = db.Column(db.String(200), unique=False, nullable=False)
     product_info = db.Column(db.Text, nullable=False)
     context = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
             'product_name': self.product_name,
-            'slug': self.slug,
             'product_info': self.product_info,
             'id': self.id
         }
