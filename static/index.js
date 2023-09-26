@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const rateResponse = document.getElementById("rate-response"); 
 
             chatOutput.innerHTML = "";
+            const userObjectionElement = document.createElement("p");
+            userObjectionElement.innerHTML = "<strong>Objection:</strong> " + objection;
+            chatOutput.appendChild(userObjectionElement);
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
 
@@ -41,6 +44,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           const productObjection = productObjectionInput.value;
           const productSelect = document.getElementById("product-objection-select");
           const productId = productSelect.value;
+          const productName = productSelect.options[productSelect.selectedIndex].text;
         
           if (productObjection && productObjection.trim() !== "" && productId) {
             lastProductObjection = productObjection; 
@@ -50,6 +54,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const rateResponse = document.getElementById("rate-response");
         
             chatOutput.innerHTML = "";
+            const userObjectionElement = document.createElement("p");
+            userObjectionElement.innerHTML = "<strong>Product Objection:</strong> " + productObjection + "<br><strong>Product:</strong> " + productName;
+            chatOutput.appendChild(userObjectionElement);
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
         
@@ -79,6 +86,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           const productObjection = productObjectionInput.value;
           const productSelect = document.getElementById("product-question-select");
           const productId = productSelect.value;
+          const productName = productSelect.options[productSelect.selectedIndex].text;
       
           if (productObjection && productObjection.trim() !== "" && productId) {
               lastProductObjection = productObjection; 
@@ -88,6 +96,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
               const rateResponse = document.getElementById("rate-response");
       
               chatOutput.innerHTML = "";
+              const userObjectionElement = document.createElement("p");
+              userObjectionElement.innerHTML = "<strong>Product Question:</strong> " + productObjection + "<br><strong>Product:</strong> " + productName;
+              chatOutput.appendChild(userObjectionElement);
               loadingBar.classList.remove("d-none");
               rateResponse.style.display = "none";
       
