@@ -413,7 +413,7 @@ def chatbot():
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=500,
         )
@@ -465,7 +465,7 @@ def product_objection_advice():
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=500,
         )
@@ -515,7 +515,7 @@ def product_advice():
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=500,
         )
