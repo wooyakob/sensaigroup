@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'salesensei'
           slot-name: 'development'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_872AFC69A5F448C6A4780D8EA400A487 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F0B6994D0D0F40C98A79AC5457A45B7C }}
