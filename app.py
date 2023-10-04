@@ -21,6 +21,9 @@ from flask_migrate import Migrate
 from products import products
 from users import users_blueprint
 from charts import charts
+import requests
+import json
+
 
 load_dotenv()
 
@@ -56,7 +59,12 @@ app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 logging.basicConfig(level=logging.DEBUG)
 ph = PasswordHasher()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("AZURE_OPENAI_KEY")
+openai.api_base = os.getenv("AZURE_OPENAI_ENDPOINT")
+openai.api_type = 'azure'
+openai.api_version = '2023-05-15'
+deployment_name='GPT432K'
+resource_name='gpt4azureopenai'
 
 def get_product_context(product_id):
     product = Product.query.get(product_id)
@@ -402,25 +410,21 @@ def chatbot():
     user_objection = request.json.get('user_objection')
 
     messages = [
-        {"role": "system", "content":
-            """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
-            "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
-            "You are a top performing sales representative. You understand how to handle customer objections professionally.\n\n"
-            "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product or service yourself.\n\n"""                           
-        },
-        {"role": "user", "content": user_objection},
+        {"role": "system", "content": "You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate."},
+        {"role": "user", "content": user_objection}
     ]
 
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=500,
+        response = requests.post(
+            f"https://{resource_name}.openai.azure.com/openai/deployments/{deployment_name}/chat/completions?api-version={openai.api_version}",
+            headers={"Content-Type": "application/json", "api-key": openai.api_key},
+            data=json.dumps({"messages": messages})
         )
-    except openai.error.ServiceUnavailableError:
-        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        return jsonify({"error": f"AI service error: {err}"}), 500
 
-    response_text = response.choices[0].message.content.strip()
+    response_text = response.json()['choices'][0]['message']['content'].strip()
     response_text = response_text.replace('\n', '<br>')
     response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
@@ -453,7 +457,7 @@ def product_objection_advice():
     if product_context is None:
         return jsonify({'error': 'Invalid product ID'})
 
-    instructions = """You will respond in English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
+    instructions = """You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate.\n\n"
         "You value conciseness and brevity. Your responses will be short and to the point. You will not use long, complex sentences.\n\n"
         "You are a top performing sales representative. You understand how to handle customer objections professionally.\n\n"
         "You address the specific objection entered and deal with it in a structured and logical way. You handle the objection as if you were selling the product yourself."""
@@ -464,15 +468,16 @@ def product_objection_advice():
     ]
 
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=500,
+        response = requests.post(
+            f"https://{resource_name}.openai.azure.com/openai/deployments/{deployment_name}/chat/completions?api-version={openai.api_version}",
+            headers={"Content-Type": "application/json", "api-key": openai.api_key},
+            data=json.dumps({"messages": messages})
         )
-    except openai.error.ServiceUnavailableError:
-        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        return jsonify({"error": f"AI service error: {err}"}), 500
 
-    response_text = response.choices[0].message.content.strip()
+    response_text = response.json()['choices'][0]['message']['content'].strip()
     response_text = response_text.replace('\n', '<br>')
     response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
@@ -483,7 +488,7 @@ def product_objection_advice():
             product_objection=message,
             ai_response=response_text,
             product_selected=product_id
-    )
+        )
         db.session.add(interaction)
         db.session.commit()
     except SQLAlchemyError as e:
@@ -492,7 +497,7 @@ def product_objection_advice():
     return jsonify({"response_text": response_text, "regenerate": True})
 
 
-#INTERACTION ENDPOINTS. PRODUCT ADVICE
+#INTERACTION ENDPOINTS. PRODUCT Question
 
 @app.route('/product_advice', methods=['POST'])
 def product_advice():
@@ -506,7 +511,7 @@ def product_advice():
     if product_context is None:
         return jsonify({'error': 'Invalid product ID'})
 
-    instructions = """You are a knowledgeable sales representative for the products in question. Answer the user's question about the product accurately and succinctly, using the provided product context when relevant."""
+    instructions = """You are a knowledgeable sales representative for the product in question. Answer the user's question about the product accurately and succinctly using the provided product context when relevant."""
 
     messages = [
         {"role": "system", "content": instructions + "\n\n" + product_context},
@@ -514,15 +519,16 @@ def product_advice():
     ]
 
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=500,
+        response = requests.post(
+            f"https://{resource_name}.openai.azure.com/openai/deployments/{deployment_name}/chat/completions?api-version={openai.api_version}",
+            headers={"Content-Type": "application/json", "api-key": openai.api_key},
+            data=json.dumps({"messages": messages})
         )
-    except openai.error.ServiceUnavailableError:
-        return jsonify({"error": "AI service is currently unavailable. Please try again later."})
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        return jsonify({"error": f"AI service error: {err}"}), 500
 
-    response_text = response.choices[0].message.content.strip()
+    response_text = response.json()['choices'][0]['message']['content'].strip()
     response_text = response_text.replace('\n', '<br>')
     response_text = '<p>' + '</p><p>'.join(response_text.split('\n\n')) + '</p>'
 
