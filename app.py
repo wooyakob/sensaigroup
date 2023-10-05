@@ -511,7 +511,7 @@ def product_advice():
     if product_context is None:
         return jsonify({'error': 'Invalid product ID'})
 
-    instructions = """You are a knowledgeable sales representative for the product in question. Answer the user's question about the product accurately and succinctly using the provided product context when relevant."""
+    instructions = """You are a knowledgeable sales representative for the product in question. Answer the user's question about the product accurately and succinctly using the product context when relevant."""
 
     messages = [
         {"role": "system", "content": instructions + "\n\n" + product_context},
