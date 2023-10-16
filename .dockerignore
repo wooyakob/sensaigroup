@@ -1,5 +1,5 @@
 *.env # 
-venv/
+new_env/
 __pycache__/
 *.pyc
 *.pyo

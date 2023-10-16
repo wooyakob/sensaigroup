@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 from extensions import db
 from models import Interaction
-from app import User
 
 charts = Blueprint('charts', __name__)
 

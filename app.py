@@ -410,7 +410,7 @@ def chatbot():
     user_objection = request.json.get('user_objection')
 
     messages = [
-        {"role": "system", "content": "You will respond in plain English. You will respond in an informal conversational manner. You will be polite, friendly, and professional but not too formal or corporate."},
+        {"role": "system", "content": "You will respond in plain English. You will respond in a conversational manner. You will be polite, friendly and professional but not too formal or corporate."},
         {"role": "user", "content": user_objection}
     ]
 
@@ -548,6 +548,5 @@ def product_advice():
     return jsonify({"response_text": response_text, "regenerate": True})
 
 if __name__ == "__main__":
-    with app.app_context():
-        create_admin() 
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+    with app.app_context(): 
+        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))

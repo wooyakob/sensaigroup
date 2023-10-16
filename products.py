@@ -3,7 +3,7 @@ import PyPDF2
 import os
 import string
 from docx import Document
-from app import db
+from extensions import db
 from models import Product
 from flask_login import current_user
 
