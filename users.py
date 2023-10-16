@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, redirect, url_for, current_app
-from app import User
 from extensions import db
 from flask_mail import Message
 

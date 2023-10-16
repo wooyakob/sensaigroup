@@ -548,6 +548,5 @@ def product_advice():
     return jsonify({"response_text": response_text, "regenerate": True})
 
 if __name__ == "__main__":
-    with app.app_context():
-        create_admin() 
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+    with app.app_context(): 
+        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
