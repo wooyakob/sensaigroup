@@ -389,7 +389,7 @@ def signup():
             current_app.extensions['mail'].send(msg)
             
             flash('Successfully registered! Please check your email for login details.', 'success')
-            return redirect(url_for('login'))  # Assuming you have a 'login' function/route
+            return redirect(url_for('login'))
 
     return render_template('signup.html')
 
