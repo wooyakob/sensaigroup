@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById("follow-up-options").style.display = "block";
             rateResponse.style.display = "block"; 
 
-            // Display the "below-chat-container" div
             document.getElementById("below-chat-container").style.display = "block";
           } else {
             alert("Please enter an objection before submitting");
@@ -159,7 +158,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
   // GENERIC OBJECTION SEND TO ENDPOINT /CHATBOT
-  async function sendGenericObjection(objection, userAnswer) { // Add userAnswer as a parameter
+  async function sendGenericObjection(objection, userAnswer) {
     const TIMEOUT = 60000;
 
     const fetchPromise = fetch('/chatbot', {
@@ -167,7 +166,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ user_objection: objection, user_answer: userAnswer }) // Include userAnswer in the request body
+      body: JSON.stringify({ user_objection: objection, user_answer: userAnswer })
     });
 
     const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), TIMEOUT));
@@ -386,12 +385,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
       $('#below-chat-container').css('display', 'block');
     });
     
-// BUTTON CLICK EVENT
 $('#objection-advice-btn, #product-objection-advice-btn, #product-advice-btn').click(function() {
   $('#below-chat-container').css('display', 'block');
 });
 
-  // CARD TOGGLE FUNCTIONALITY
   $('#sales-objections-option').click(function() {
     if($('#sales-objections-card').hasClass('hide-card')) {
       $('#sales-objections-card').removeClass('hide-card');
