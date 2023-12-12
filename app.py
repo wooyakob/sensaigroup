@@ -411,7 +411,7 @@ def chatbot():
     user_answer = request.json.get('user_answer')
 
     messages = [
-        {"role": "system", "content": "You will respond in plain English. You will respond in a conversational manner. You will be polite, friendly and professional but not too formal or corporate."},
+        {"role": "system", "content": "You will review the objection and proposed answer. You will provide feedback on how well they handled the specific objection. You will be professional in your response and suggest areas for the sales rep to improve their answer."},
         {"role": "user", "content": user_objection},
         {"role": "user", "content": user_answer},
     ]
