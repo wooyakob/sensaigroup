@@ -1,6 +1,39 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   let lastObjection = "";
 
+    // Check if the browser supports the SpeechRecognition API
+    if ('webkitSpeechRecognition' in window) {
+      const recognitionObjection = new webkitSpeechRecognition();
+      recognitionObjection.lang = 'en-US';  // Set the language
+
+      // Start the speech recognition for the objection when the user clicks the button
+      document.getElementById('speak-objection-btn').addEventListener('click', () => {
+        recognitionObjection.start();
+      });
+
+      // When the speech recognition results are available, use them as the objection
+      recognitionObjection.onresult = (event) => {
+        const objection = event.results[0][0].transcript;
+        document.getElementById('objection-input').value = objection;
+      };
+
+      const recognitionAnswer = new webkitSpeechRecognition();
+      recognitionAnswer.lang = 'en-US';  // Set the language
+
+      // Start the speech recognition for the answer when the user clicks the button
+      document.getElementById('speak-answer-btn').addEventListener('click', () => {
+        recognitionAnswer.start();
+      });
+
+      // When the speech recognition results are available, use them as the answer
+      recognitionAnswer.onresult = (event) => {
+        const answer = event.results[0][0].transcript;
+        document.getElementById('user-answer-input').value = answer;
+      };
+    } else {
+      // The browser doesn't support the SpeechRecognition API
+      alert('Your browser does not support speech recognition.');
+    }
 
 // EVENT LISTENER FOR GENERIC OBJECTION
         document.getElementById("objection-advice-btn").addEventListener("click", async () => {
