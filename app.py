@@ -408,10 +408,12 @@ def chatbot():
         return jsonify({"error": "User not authenticated"})
 
     user_objection = request.json.get('user_objection')
+    user_answer = request.json.get('user_answer')
 
     messages = [
         {"role": "system", "content": "You will respond in plain English. You will respond in a conversational manner. You will be polite, friendly and professional but not too formal or corporate."},
-        {"role": "user", "content": user_objection}
+        {"role": "user", "content": user_objection},
+        {"role": "user", "content": user_answer},
     ]
 
     try:
