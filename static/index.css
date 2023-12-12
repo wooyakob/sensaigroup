@@ -1,3 +1,8 @@
+.microphone-icon {
+  width: 20px;
+  height: 20px;
+}
+
 html {
   scroll-behavior: smooth;
 }
