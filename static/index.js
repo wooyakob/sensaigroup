@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
 
-
-
             const serverResponse = await sendGenericObjection(objection, userAnswer);
             loadingBar.classList.add("d-none");
 
