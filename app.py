@@ -389,7 +389,7 @@ def signup():
             current_app.extensions['mail'].send(msg)
             
             flash('Successfully registered! Please check your email for login details.', 'success')
-            return redirect(url_for('login'))  # Assuming you have a 'login' function/route
+            return redirect(url_for('login'))
 
     return render_template('signup.html')
 
@@ -408,10 +408,12 @@ def chatbot():
         return jsonify({"error": "User not authenticated"})
 
     user_objection = request.json.get('user_objection')
+    user_answer = request.json.get('user_answer')
 
     messages = [
-        {"role": "system", "content": "You will respond in plain English. You will respond in a conversational manner. You will be polite, friendly and professional but not too formal or corporate."},
-        {"role": "user", "content": user_objection}
+        {"role": "system", "content": "You will review the objection and proposed answer. You will provide feedback on how well they handled the specific objection. You will be professional in your response and suggest areas for the sales rep to improve their answer."},
+        {"role": "user", "content": user_objection},
+        {"role": "user", "content": user_answer},
     ]
 
     try:

@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById("objection-advice-btn").addEventListener("click", async () => {
           const objectionInput = document.getElementById("objection-input");
           const objection = objectionInput.value;
+          const userAnswerInput = document.getElementById("user-answer-input");
+          const userAnswer = userAnswerInput.value;
 
           if (objection && objection.trim() !== "") {
             lastObjection = objection; 
@@ -21,7 +23,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
 
-            const serverResponse = await sendGenericObjection(objection);
+            const serverResponse = await sendGenericObjection(objection, userAnswer);
             loadingBar.classList.add("d-none");
 
             const feedbackElement = document.createElement("p");
@@ -157,7 +159,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
   // GENERIC OBJECTION SEND TO ENDPOINT /CHATBOT
-  async function sendGenericObjection(objection) {
+  async function sendGenericObjection(objection, userAnswer) { // Add userAnswer as a parameter
     const TIMEOUT = 60000;
 
     const fetchPromise = fetch('/chatbot', {
@@ -165,7 +167,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ user_objection: objection })
+      body: JSON.stringify({ user_objection: objection, user_answer: userAnswer }) // Include userAnswer in the request body
     });
 
     const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), TIMEOUT));
