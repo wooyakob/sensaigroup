@@ -20,8 +20,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const userObjectionElement = document.createElement("p");
             userObjectionElement.innerHTML = "<strong>Objection:</strong> " + objection;
             chatOutput.appendChild(userObjectionElement);
+
+            const userAnswerElement = document.createElement("p");
+            userAnswerElement.innerHTML = "<strong>Your Answer:</strong> " + userAnswer;
+            chatOutput.appendChild(userAnswerElement);
+
             loadingBar.classList.remove("d-none");
             rateResponse.style.display = "none";
+
+
 
             const serverResponse = await sendGenericObjection(objection, userAnswer);
             loadingBar.classList.add("d-none");
@@ -229,6 +236,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
     document.getElementById("enter-objection-btn").addEventListener("click", function () {
+      document.getElementById("user-answer-input").value = ""; 
       document.getElementById("follow-up-options").style.display = "none";
       document.getElementById("chat-output").innerHTML = "";
       document.getElementById("objection-input").value = "";
