@@ -1,3 +1,37 @@
+.footer {
+  background-color: #f8f9fa; /* Change to your preferred color */
+  padding: 20px;
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+  padding: 5px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.policy-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  text-decoration: underline;
+  text-decoration-color: orange;
+}
+
+.policy-links a {
+  margin: 5px;
+  color: #000000 !important;
+}
+
+
+
+
 body, html {
   height: 100%;
   margin: 0;
@@ -42,34 +76,13 @@ h5 {
   margin: 0 auto;
 }
 
-.footer {
-  width: 100%;
-  background-color: #fff;
-  color: black;
-  padding: 20px 0;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .social-icon {
   width: 30px;
   margin: 0 5px;
 }
 
-.policy-links a {
-  margin: 0 5px;
-  transition: color 0.3s; 
-}
 
-.policy-links a:hover {
-  color: #f09819; 
-}
-
-.policy-links a:hover {
-  color: #f09819;
-}
 
 .btn-orange {
   background: linear-gradient(to right, #ff512f, #f09819);
