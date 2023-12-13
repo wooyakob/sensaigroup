@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://sensaicontainer.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_4a92ac26cd644d1ca41cdc398a2617a0 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_1e5ddac065294c1d91be30b1f197d1ba }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_435e041e99ce47f5ba68f2992740add2 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_fb5cdb6c2f1143ada68cacba8330bda6 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: sensaicontainer.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4a92ac26cd644d1ca41cdc398a2617a0 }}/sensai-web:${{ github.sha }}
+        tags: sensaicontainer.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_435e041e99ce47f5ba68f2992740add2 }}/sensai-web:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'sensaiwebapp'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_19116f33465f48f1978219ceadc4135f }}
-        images: 'sensaicontainer.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_4a92ac26cd644d1ca41cdc398a2617a0 }}/sensai-web:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f508a8fc362f4290b77a80da8c9bef92 }}
+        images: 'sensaicontainer.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_435e041e99ce47f5ba68f2992740add2 }}/sensai-web:${{ github.sha }}'
