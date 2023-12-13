@@ -1,7 +1,33 @@
+
 .microphone-icon {
   width: 20px;
   height: 20px;
 }
+
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#objection-input, #user-answer-input {
+  flex: 2;
+  margin-right: 10px;
+}
+
+#speak-objection-btn, #speak-answer-btn {
+  margin-right: 10px;
+}
+
+#enter-objection-btn, #enter-answer-btn {
+  margin-right: 10px;
+}
+
+#submit-sales-objection-btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
 
 html {
   scroll-behavior: smooth;
