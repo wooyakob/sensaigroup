@@ -62,9 +62,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             feedbackElement.innerHTML = "<strong>SensAI:</strong> " + serverResponse;
             chatOutput.appendChild(feedbackElement);
 
-            const speech = new SpeechSynthesisUtterance(serverResponse);
-            window.speechSynthesis.speak(speech);
-
             document.getElementById("follow-up-options").style.display = "block";
             rateResponse.style.display = "block"; 
 
