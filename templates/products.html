@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}">
+</head>
+
+<body>
+    <header class="admin-header">
+        <h1>Products</h1>
+    </header>
+
+    <nav>
+        <ul class="admin-links">
+            <!--  <li><a href="{{ url_for('users') }}">Users</a></li>
+          <li><a href="{{ url_for('reports') }}">Reports</a></li>
+            <li><a href="/admin_dash">Dashboard</a></li>-->
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="product-section">
+        <form action="/add_product" method="post">
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="product_name" required>
+            </div>
+            <div class="form-group">
+                <label for="productInfo">Product Info</label>
+                <textarea class="form-control" id="productInfo" rows="4" name="product_info" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="fileInput">Upload a File (optional) - Accepted Formats: TXT, DOC, DOCX, PDF</label>
+                <div class="dropzone" id="dropzone">            
+                    Drag & Drop your file, or <button type="button" onclick="document.getElementById('fileInput').click();">Browse</button>
+                    <input type="file" id="fileInput" style="display: none;" accept=".pdf, .txt, .doc, .docx" />
+                </div>
+            </div>
+        
+            <input type="hidden" name="text_file_path" id="textFilePath">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </section>
+    
+    <script src="{{ url_for('static', filename='products.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+</body>
+</html>

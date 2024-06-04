@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Username</title>
+    <link rel="stylesheet" href="/static/login.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
+</head>
+<body>
+    <h1>Forgot Username</h1>
+    <form method="POST" action="{{ url_for('forgot_username') }}">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control form-control-sm" id="email" name="email" required placeholder="Email">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="return-section">
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Return to Login</a>
+        </div>
+    </form>
+
+</body>
+</html>

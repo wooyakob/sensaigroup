@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SensAI Enabled Sales</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
+</head>
+<body>
+    <header class="sticky-top bg-light">
+        <div class="container-fluid d-flex justify-content-between align-items-center py-2">
+            <div class="d-flex align-items-center">
+                <img src="{{ url_for('static', filename='sensai_rounded.png') }}" alt="SensAI Logo" class="img-fluid logo">
+                <h1 class="ml-2 mb-0"><span class="text-black">Sens</span><span class="text-orange">AI</span></h1>
+            </div>
+            <div class="btn-container">
+                <a href="{{ url_for('signup') }}" class="btn btn-orange">Signup</a>
+                <a href="{{ url_for('login') }}" class="btn btn-orange">Login</a>
+            </div>
+        </div>
+        <div class="text-center py-2">
+        </div>
+    </header>
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>SensAI is a sales training tool that provides product specific responses to overcome sales objections</h2>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h3 class="text-center">
+                    <span class="text-black">Sens</span><span class="text-orange">AI</span>
+                    <span class="text-black">Features</span>
+                </h3>
+                <br>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Engine</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Handle an infinite number of sales objections</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Product Specific</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Overcome product sales objections, or ask product questions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Rating System</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Rate advice and view objection history</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h3 class="text-center">
+                    <span class="text-black">Sens</span><span class="text-orange">AI</span>
+                    <span class="text-black">Benefits</span>
+                </h3>
+                <br>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Reps</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Preparation and follow-up tool for effective training</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Leaders</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Visibility over sales team and unique insights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">Sales Orgs</h5>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-text">Increase average sales performance with consistent training</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <section class="join-revolution text-center py-5">
+        <div class="container">
+            <br>
+            <h2>Join The Sales Revolution</h2>
+            <br>
+            <h4>Experience the transformative power of Sensai for your sales team today</h4>
+            <br>
+            <a href="mailto:jacob@sensaigroup.com?subject=Sensai%20-%20Request%20Demo" class="btn btn-orange">Request Demo</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <br>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/company/sensaigroup/" target="_blank" class="text-white mr-2">
+                <img src="{{ url_for('static', filename='linkedin.png') }}" alt="LinkedIn Logo" class="social-icon">
+            </a>
+            <a href="https://twitter.com/sensai_group" target="_blank" class="text-white">
+                <img src="{{ url_for('static', filename='twitter.png') }}" alt="Twitter Logo" class="social-icon">
+            </a>
+            <a href="https://www.instagram.com/sensai_group/" target="_blank" class="text-white">
+                <img src="{{ url_for('static', filename='instagram.png') }}" alt="Instagram Logo" class="social-icon">
+            </a>
+        </div>
+
+        <footer>
+            <br>
+            <p>&copy; Sensai Group 2023. All rights reserved.</p>
+            <p><strong>Company Name:</strong> Sensai Group</p>
+            <p><strong>Entity ID:</strong> 5880993</p>
+            <p><strong>Address:</strong> 2633 Ariane Drive. San Diego, CA 92117</p>
+            <p><strong>Contact Information:</strong> jacob@sensaigroup.com</p>
+            <div class="policy-links">
+                <a href="https://app.termly.io/document/privacy-policy/072a8aef-e879-45cc-91d4-4e5b8d8c3804" target="_blank" class="text-white mr-2">Privacy Policy</a>
+                <a href="https://app.termly.io/document/terms-of-service/45ab0415-1be1-4f4d-bcc2-ac4d89a23847" target="_blank" class="text-white mr-2">Terms and Conditions</a>
+                <a href="https://app.termly.io/document/cookie-policy/38c64049-2c02-4796-a4b1-aa6356f29ee0" target="_blank" class="text-white">Cookie Policy</a>
+            </div>
+        </footer>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="landing.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sign Up</title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
+    <link rel="stylesheet" href="/static/users.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <div class="top-section">
+        <header class="admin-header">
+            <h1>Sign Up</h1>
+            <div class="home-section">
+                <a href="{{ url_for('index') }}" class="btn btn-orange btn-return-home">Return Home</a>
+            </div>            
+        </header>
+    </div>
+
+        <form action="/signup" method="post">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <input type="submit" value="Sign Up" class="btn btn-primary">
+        </form>
+        
+        {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Login | Sales SensAI: AI Enabled Sales Training</title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon2.ico">
+    <link rel="stylesheet" href="/static/login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <form method="POST" action="/admin_login">
+        <h3>Admin Login</h3>
+
+        <label for="username">Admin Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Admin Username" required>
+
+        <label for="password">Admin Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Admin Password" required>
+
+        <button type="submit" class="btn btn-secondary btn-login">Login</button>
+
+        <div class="links-section">
+            <p><a href="/forgot_username">Forgot Username</a> | <a href="/forgot_password">Forgot Password</a></p>
+            <p><a href="{{ url_for('index') }}" class="btn btn-secondary btn-return-home">Return Home</a></p>
+        </div>
+    </form>
+</body>
+
+</html>
